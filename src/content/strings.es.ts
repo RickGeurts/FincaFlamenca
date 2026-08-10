@@ -3,9 +3,109 @@
 export const STRINGS = {
   appName: "Finca Flamenca",
 
-  // Tabs
-  farmTab: "Granja",
-  lessonsTab: "Lecciones",
+  // El pueblo: the places she travels between, instead of tabs
+  villageLabel: "El pueblo",
+  places: {
+    finca: "Finca",
+    escuela: "Escuela",
+    mercado: "Mercado",
+    criadero: "Criadero",
+    alcaldia: "Alcaldía",
+  },
+  placeLocked: (unit: number) => `Se abre en la unidad ${unit}`,
+  back: "Volver",
+
+  // Farm tools (the dock at the left edge)
+  toolTill: "Arar",
+  toolSeed: "Sembrar",
+  toolArrange: "Ordenar",
+  toolZoom: "Zoom",
+  toolSeedHint: "Toca un campo arado para sembrar 🌱",
+  settings: "Ajustes",
+
+  // Choosing the voice that reads the Dutch aloud
+  voiceTitle: "La voz que te habla",
+  voiceBody:
+    "Tu teléfono trae varias voces neerlandesas y no suenan igual. Escúchalas y quédate con la que más te guste.",
+  voiceAuto: "La mejor que encuentre",
+  voiceTry: "🔊 Probar",
+  voiceSample: "Goedemiddag! De koe eet gras in de wei.",
+  voiceNone:
+    "Este dispositivo no trae voces en neerlandés. El juego funciona igual: todo lo que se escucha también se lee.",
+  voiceFlemish: "🇧🇪 flamenca",
+
+  alertsMore: (n: number) => `+${n} más`,
+  // Second line of an alert card. The Dutch stands alone here, under the
+  // animal's name, so she reads a real little sentence: «Manchas heeft honger».
+  alertHungerNl: "heeft honger",
+  alertProduce: "algo para recoger",
+  alertWilted: "se marchitaron 🥀",
+  alertWiltedTitle: "Tus cultivos",
+
+  // La escuela
+  schoolTitle: "La escuela",
+  schoolClassrooms: "Aulas · nivel A1",
+  dailyReview: "Repaso del día",
+  reviewReward: (n: number, munten: number) =>
+    `${n === 1 ? "1 palabra" : `${n} palabras`} para repasar · +${munten} 🪙`,
+  reviewNow: "Repasar",
+  // The ring measures the words of the unit she already has in her head,
+  // because that is the progress the game actually keeps. A "lessons done"
+  // count would have to be invented, and invented progress is not progress.
+  wordsOfUnit: (done: number, total: number) => `${done} de ${total} palabras`,
+  continueUnit: "Seguir",
+  enterUnit: "Entrar",
+  unitLockedXp: (missing: number) => `Se desbloquea con ${missing} XP más`,
+  openQuests: "Misiones abiertas",
+  questAt: (place: string) => `En ${place}`,
+
+  // Sendero (the lesson path)
+  pathTitle: (unit: number) => `Aula ${unit} · sendero`,
+  pathReview: "Repaso · sendero",
+  pathRevive: "Revivir · sendero",
+  pathStop: (n: number, total: number) => `Parada ${n} de ${total}`,
+  sessionEarnings: (n: number) => `🪙 +${n}`,
+
+  // Session end
+  earnedLabel: "Ganaste",
+  earnedBase: {
+    lesson: "Lección",
+    review: "Repaso diario",
+    revive: "Repaso para revivir",
+  },
+  earnedPerfect: "✨ Lección perfecta",
+  earnedStreak: (multiplier: number) => `🔥 Bonus de racha ×${multiplier}`,
+  earnedXpLine: "⭐ Experiencia",
+  boxUp: "Palabras que subieron de caja",
+  anotherLesson: "Otra lección",
+
+  // El mercado / el criadero
+  marketTitle: "El mercado",
+  marketTitleNl: "de markt",
+  marketHint:
+    "Al comprar algo nuevo aprendes su palabra: te la muestro con su artículo y su audio.",
+  marketCategories: {
+    seeds: "Semillas",
+    animals: "Animales",
+    nature: "Natura",
+    water: "Agua",
+    farm: "Granja",
+    home: "Casa",
+    pasture: "Prados",
+  },
+  cannotAffordMeta: "Practica un poco más 🌱",
+  noFieldForSeed: "Primero ara un campo con «Arar» 🌾",
+
+  // Word card
+  inASentence: "En una frase",
+  listen: "🔊 Escuchar",
+  listenSlow: "🐢 lento",
+  // Saying it out loud is for fun only: nothing is won or lost, so even the
+  // "not quite" wording invites another go instead of marking a mistake.
+  sayIt: "🎤 Decirlo",
+  sayItListening: "🎤 Escuchando...",
+  sayItGood: "¡Sonó muy bien! 💚",
+  sayItAgain: "🎤 Otra vez",
 
   // Home / lessons
   lessons: "Lecciones",

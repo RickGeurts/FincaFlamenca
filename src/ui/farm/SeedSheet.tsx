@@ -28,8 +28,8 @@ export function SeedSheet({ plotId, onPlanted, onClose }: Props) {
   if (!selected) {
     return (
       <Modal onClose={onClose}>
-        <h2 className="mb-3 text-lg font-extrabold text-farm-700">{STRINGS.seedShopTitle} 🌱</h2>
-        <div className="flex flex-col gap-2">
+        <h2 className="mb-3 text-lg font-black text-ink-900">{STRINGS.seedShopTitle} 🌱</h2>
+        <div className="flex flex-col gap-2.5">
           {CROPS.map((crop) => {
             const affordable = munten >= crop.seedCost;
             const word = WORDS_BY_ID.get(crop.word);
@@ -38,28 +38,35 @@ export function SeedSheet({ plotId, onPlanted, onClose }: Props) {
                 key={crop.id}
                 disabled={!affordable}
                 onClick={() => setSelected(crop)}
-                className="flex items-center justify-between rounded-xl border-2 border-farm-200 bg-white px-3 py-2 text-left disabled:opacity-40"
+                className={`flex items-center gap-3 rounded-[20px] border-2 p-3 text-left disabled:opacity-50 ${
+                  crop.prestige ? "border-warn-border bg-warn-bg/40" : "border-farm-200 bg-white"
+                }`}
               >
-                <span className="flex items-center gap-3">
-                  <PropThumb kind="crop" id={crop.id} emoji={crop.emoji} />
-                  <span>
-                    <span className="block font-bold">
-                      {word?.article} {word?.nl}
-                      {crop.prestige && " ⭐"}
-                    </span>
-                    <span className="block text-xs text-farm-700/60">
-                      {STRINGS.growTimeLabel}: {formatDuration(crop.growMs)} ·{" "}
-                      {STRINGS.sellsForLabel}: {crop.sellPrice} 🪙
-                    </span>
+                <PropThumb kind="crop" id={crop.id} emoji={crop.emoji} />
+                <span className="flex min-w-0 flex-1 flex-col leading-[1.25]">
+                  <span className="truncate text-base font-black text-ink-900">
+                    {word?.article} {word?.nl}
+                    {crop.prestige && " ⭐"}
+                  </span>
+                  <span className="truncate text-xs font-bold text-ink-500">
+                    {affordable
+                      ? `${formatDuration(crop.growMs)} · ${STRINGS.sellsForLabel} ${crop.sellPrice} 🪙`
+                      : STRINGS.cannotAffordMeta}
                   </span>
                 </span>
-                <span className="font-extrabold">{crop.seedCost} 🪙</span>
+                <span
+                  className={`shrink-0 rounded-[14px] px-3.5 py-2.5 text-sm font-black ${
+                    affordable ? "bg-leaf-500 text-white" : "bg-farm-100 text-ink-500"
+                  }`}
+                >
+                  {crop.seedCost} 🪙
+                </span>
               </button>
             );
           })}
         </div>
         {munten < Math.min(...CROPS.map((c) => c.seedCost)) && (
-          <p className="mt-3 rounded-xl bg-amber-100 p-3 text-sm font-bold text-amber-800">
+          <p className="mt-3 rounded-[20px] border-2 border-warn-border bg-warn-bg p-3 text-sm font-black text-warn-text">
             {STRINGS.notEnoughMunten}
           </p>
         )}
@@ -81,7 +88,7 @@ export function SeedSheet({ plotId, onPlanted, onClose }: Props) {
   );
 }
 
-function PurchaseConfirm({
+export function PurchaseConfirm({
   crop,
   isFirstPurchase,
   onConfirm,

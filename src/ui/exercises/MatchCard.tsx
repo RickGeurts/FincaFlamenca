@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { STRINGS } from "../../content/strings.es";
 import type { MatchExercise } from "../../content/types";
 import type { GradeResult } from "../../learning/grader";
 import { shuffle } from "../../learning/lesson";
@@ -48,11 +47,11 @@ export function MatchCard({ exercise, locked, onResult }: Props) {
     }
   };
 
-  const buttonBase = "min-h-11 rounded-xl border-2 px-3 py-3 font-bold transition-colors";
+  const buttonBase =
+    "min-h-14 rounded-2xl border-2 border-b-[5px] px-3 py-3 font-black text-[15px] transition-colors";
 
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <h2 className="font-bold text-farm-700/80">{STRINGS.matchPrompt}</h2>
+    <div className="flex flex-1 flex-col justify-center gap-4">
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-2">
           {left.map((nl) => (
@@ -62,10 +61,10 @@ export function MatchCard({ exercise, locked, onResult }: Props) {
               onClick={() => pickNl(nl)}
               className={`${buttonBase} ${
                 matched.has(nl)
-                  ? "border-lime-200 bg-lime-50 text-lime-400"
+                  ? "border-ok-border bg-ok-bg text-ok-text"
                   : selectedNl === nl
-                    ? "border-leaf-500 bg-lime-50"
-                    : "border-farm-200 bg-white"
+                    ? "border-leaf-500 bg-ok-bg"
+                    : "border-farm-200 bg-white text-ink-900"
               }`}
             >
               {nl}
@@ -80,10 +79,10 @@ export function MatchCard({ exercise, locked, onResult }: Props) {
               onClick={() => pickEs(es)}
               className={`${buttonBase} ${
                 matchedEs.has(es)
-                  ? "border-lime-200 bg-lime-50 text-lime-400"
+                  ? "border-ok-border bg-ok-bg text-ok-text"
                   : shakeEs === es
-                    ? "border-rose-400 bg-rose-50"
-                    : "border-farm-200 bg-white"
+                    ? "border-bad-border bg-bad-bg"
+                    : "border-farm-200 bg-white text-ink-900"
               }`}
             >
               {es}

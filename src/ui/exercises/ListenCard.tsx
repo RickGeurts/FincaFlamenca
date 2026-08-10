@@ -12,6 +12,9 @@ interface Props {
   onResult: (r: GradeResult) => void;
 }
 
+/** Slow enough to pick the words apart, without turning into a robot. */
+const SLOW_RATE = 0.55;
+
 export function ListenCard({ exercise, locked, onResult }: Props) {
   const [text, setText] = useState("");
   const audioAvailable = canSpeak();
@@ -23,23 +26,31 @@ export function ListenCard({ exercise, locked, onResult }: Props) {
   const submit = () => text.trim() && onResult(gradeExercise(exercise, text));
 
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <h2 className="font-bold text-farm-700/80">{STRINGS.listenPrompt}</h2>
+    <div className="flex flex-1 flex-col items-center justify-center gap-4">
       {audioAvailable ? (
-        <button
-          onClick={() => speak(exercise.audio_nl, { rate: 0.7 })}
-          className="self-center rounded-2xl bg-white px-8 py-6 text-4xl shadow-sm active:bg-farm-100"
-          aria-label={STRINGS.listenReplay}
-        >
-          🔊
-        </button>
+        <>
+          <button
+            onClick={() => speak(exercise.audio_nl)}
+            aria-label={STRINGS.listenReplay}
+            className="flex h-[110px] w-[110px] items-center justify-center rounded-full bg-leaf-500 text-5xl shadow-[0_10px_24px_rgba(70,100,20,.32)] active:bg-leaf-600"
+          >
+            🔊
+          </button>
+          <div className="flex items-center gap-3 text-sm font-extrabold text-ink-500">
+            <button onClick={() => speak(exercise.audio_nl)}>{STRINGS.listenReplay}</button>
+            <span aria-hidden>·</span>
+            <button onClick={() => speak(exercise.audio_nl, { rate: SLOW_RATE })}>
+              {STRINGS.listenSlow}
+            </button>
+          </div>
+        </>
       ) : (
         // Playable without sound: show the sentence instead of blocking her.
-        <p className="rounded-2xl bg-white px-5 py-4 text-center shadow-sm">
-          <span className="mb-1 block text-xs font-bold text-farm-700/60">
+        <p className="text-center">
+          <span className="mb-1 block text-xs font-black text-ink-400">
             {STRINGS.noAudioWarning}
           </span>
-          <span className="text-xl font-extrabold">{exercise.audio_nl}</span>
+          <span className="text-xl font-black text-ink-900">{exercise.audio_nl}</span>
         </p>
       )}
       <textarea
@@ -57,7 +68,7 @@ export function ListenCard({ exercise, locked, onResult }: Props) {
         autoCorrect="off"
         spellCheck={false}
         rows={2}
-        className="rounded-2xl border-2 border-farm-200 bg-white p-4 text-lg font-semibold focus:border-leaf-500 focus:outline-none"
+        className="w-full resize-none border-b-[3px] border-farm-200 bg-transparent px-1 py-3 text-xl font-black text-ink-900 placeholder:text-ink-300 focus:border-leaf-500 focus:outline-none"
       />
       <CheckButton disabled={locked || !text.trim()} onClick={submit} />
     </div>

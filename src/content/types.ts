@@ -9,6 +9,13 @@ export interface Word {
   es: string; // "vaca"
   category: string; // "animals", "food", "greetings", ...
   unit: number; // course unit that introduces it
+  /**
+   * One short sentence using the word, shown on its card. Optional: a word
+   * without one simply shows no sentence panel, so content can be filled in
+   * word by word instead of all at once.
+   */
+  example_nl?: string;
+  example_es?: string;
 }
 
 export interface ChoiceExercise {

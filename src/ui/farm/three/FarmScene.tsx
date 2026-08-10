@@ -68,6 +68,11 @@ interface Props {
   coins: FloatingCoin[];
   /** Ploughing mode: taps on grass turn it into farmland. */
   tilling: boolean;
+  /**
+   * Show the camera's own turn/zoom cluster. Optional and on by default, so
+   * every existing caller keeps exactly the behaviour it had.
+   */
+  showControls?: boolean;
   onMoveObject: (objectId: string, col: number, row: number) => void;
   onRotateObject: (objectId: string, rot: Quarter) => void;
   onDeleteObject: (objectId: string) => void;
@@ -94,6 +99,7 @@ export function FarmScene({
   now,
   coins,
   tilling,
+  showControls = true,
   onMoveObject,
   onRotateObject,
   onDeleteObject,
@@ -179,7 +185,9 @@ export function FarmScene({
   };
 
   return (
-    <div className="relative h-[460px] overflow-hidden rounded-3xl bg-gradient-to-b from-sky-200 via-sky-100 to-farm-100 shadow-sm">
+    // The scene owns the whole screen now; the farm's controls float on top of
+    // it rather than sitting in a box above a stack of buttons.
+    <div className="absolute inset-0 overflow-hidden bg-gradient-to-b from-sky-200 via-sky-100 to-farm-100">
       <Canvas
         shadows
         dpr={[1, 2]}
@@ -285,39 +293,47 @@ export function FarmScene({
         </Suspense>
       </Canvas>
 
-      <div className="absolute bottom-3 left-3 z-10 flex gap-2">
-        <button
-          onClick={() => rotateBy(-ROTATE_STEP)}
-          aria-label={STRINGS.rotateLeft}
-          className="h-11 w-11 rounded-xl bg-white/90 text-xl font-extrabold text-farm-700 shadow-sm active:bg-farm-100"
-        >
-          ↺
-        </button>
-        <button
-          onClick={() => rotateBy(ROTATE_STEP)}
-          aria-label={STRINGS.rotateRight}
-          className="h-11 w-11 rounded-xl bg-white/90 text-xl font-extrabold text-farm-700 shadow-sm active:bg-farm-100"
-        >
-          ↻
-        </button>
-      </div>
-
-      <div className="absolute bottom-3 right-3 z-10 flex flex-col gap-2">
-        <button
-          onClick={() => zoomBy(0.8)}
-          aria-label={STRINGS.zoomIn}
-          className="h-11 w-11 rounded-xl bg-white/90 text-xl font-extrabold text-farm-700 shadow-sm active:bg-farm-100"
-        >
-          +
-        </button>
-        <button
-          onClick={() => zoomBy(1.25)}
-          aria-label={STRINGS.zoomOut}
-          className="h-11 w-11 rounded-xl bg-white/90 text-xl font-extrabold text-farm-700 shadow-sm active:bg-farm-100"
-        >
-          −
-        </button>
-      </div>
+      {/*
+        Turning and zooming the camera. They sit above the tool dock and out of
+        the way of the village rail along the bottom, and stay hidden until she
+        asks for them — the farm is nicer to look at without buttons on it.
+      */}
+      {showControls && (
+        <div className="animate-fade-up absolute bottom-40 left-3.5 z-10 flex flex-col gap-2 rounded-[22px] bg-farm-50/92 p-2.5 shadow-[0_10px_26px_rgba(90,50,10,.24)]">
+          <div className="flex gap-2">
+            <button
+              onClick={() => rotateBy(-ROTATE_STEP)}
+              aria-label={STRINGS.rotateLeft}
+              className="h-11 w-11 rounded-xl bg-white text-xl font-black text-farm-700 shadow-sm active:bg-farm-100"
+            >
+              ↺
+            </button>
+            <button
+              onClick={() => rotateBy(ROTATE_STEP)}
+              aria-label={STRINGS.rotateRight}
+              className="h-11 w-11 rounded-xl bg-white text-xl font-black text-farm-700 shadow-sm active:bg-farm-100"
+            >
+              ↻
+            </button>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => zoomBy(0.8)}
+              aria-label={STRINGS.zoomIn}
+              className="h-11 w-11 rounded-xl bg-white text-xl font-black text-farm-700 shadow-sm active:bg-farm-100"
+            >
+              +
+            </button>
+            <button
+              onClick={() => zoomBy(1.25)}
+              aria-label={STRINGS.zoomOut}
+              className="h-11 w-11 rounded-xl bg-white text-xl font-black text-farm-700 shadow-sm active:bg-farm-100"
+            >
+              −
+            </button>
+          </div>
+        </div>
+      )}
 
       {/*
         The bin only exists while something is held: it rises from the bottom

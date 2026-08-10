@@ -48,13 +48,42 @@ export interface AnswerRecord {
   correct: boolean;
 }
 
+/** A word that changed Leitner box during a session, for the end screen. */
+export interface BoxChange {
+  wordId: string;
+  from: number;
+  to: number;
+}
+
 export interface SessionSummary extends SessionReward {
   correct: number;
   total: number;
   kind: SessionKind;
+  /**
+   * Which words moved up or down a box. Collected where the boxes are actually
+   * written; diffing state afterwards would miss a word that ended where it
+   * started after moving both ways.
+   */
+  boxChanges: BoxChange[];
 }
 
+/** Where in the village she is. Travelling replaces the old two tabs. */
+export type Place = "finca" | "escuela" | "mercado" | "criadero" | "alcaldia";
+
+/** Which farm tool the dock has selected. Dragging works regardless. */
+export type FarmTool = "none" | "till" | "seed" | "arrange";
+
 interface GameState {
+  /** Persisted, so reopening the game lands her where she left off. */
+  place: Place;
+  /** Not persisted: a tool is a moment's intent, not a setting. */
+  farmTool: FarmTool;
+  /** Which shelf of the market is open. Not persisted either. */
+  marketCategory: string;
+  setPlace(place: Place): void;
+  setFarmTool(tool: FarmTool): void;
+  setMarketCategory(category: string): void;
+
   player: Player;
   words: Record<string, WordProgress>;
   exposures: Record<string, number>; // tap-to-learn exposure counts
@@ -229,6 +258,22 @@ export const useGameStore = create<GameState>()(
       hydrated: false,
       devFast: import.meta.env.DEV,
 
+      place: "finca",
+      farmTool: "none",
+      marketCategory: "seeds",
+
+      setPlace(place) {
+        setState({ place, farmTool: "none" });
+      },
+
+      setFarmTool(tool) {
+        setState({ farmTool: tool });
+      },
+
+      setMarketCategory(category) {
+        setState({ marketCategory: category });
+      },
+
       finishSession({ kind, unitWords = [], answers, now = Date.now() }) {
         const state = getState();
 
@@ -236,11 +281,20 @@ export const useGameStore = create<GameState>()(
         for (const id of unitWords) {
           if (!words[id]) words[id] = initProgress(id, now);
         }
+        // Where each word stood before the session, so the end screen can say
+        // what moved. Only words she actually answered on are recorded.
+        const before = new Map<string, number>();
         for (const answer of answers) {
           for (const id of answer.wordIds) {
             const progress = words[id] ?? initProgress(id, now);
+            if (!before.has(id)) before.set(id, progress.box);
             words[id] = review(progress, answer.correct, now);
           }
+        }
+        const boxChanges: BoxChange[] = [];
+        for (const [wordId, from] of before) {
+          const to = words[wordId].box;
+          if (to !== from) boxChanges.push({ wordId, from, to });
         }
 
         const streak = touchStreak(state.player.streak, dateString(now));
@@ -258,7 +312,7 @@ export const useGameStore = create<GameState>()(
         };
 
         setState({ player, words });
-        return { ...reward, correct, total, kind };
+        return { ...reward, correct, total, kind, boxChanges };
       },
 
       tillTile(tileId) {
@@ -492,6 +546,7 @@ export const useGameStore = create<GameState>()(
       version: 5,
       storage: createJSONStorage(() => idbStorage),
       partialize: (s) => ({
+        place: s.place,
         player: s.player,
         words: s.words,
         exposures: s.exposures,
@@ -530,6 +585,9 @@ export const useGameStore = create<GameState>()(
           ...current,
           ...saved,
           farm: normalizeFarm(saved.farm),
+          // Saves from before the village existed have no place; the farm is
+          // the right thing to open on anyway.
+          place: saved.place ?? "finca",
           purchasedCrops: saved.purchasedCrops ?? [],
           purchasedDecor: saved.purchasedDecor ?? [],
           purchasedAnimals: saved.purchasedAnimals ?? [],

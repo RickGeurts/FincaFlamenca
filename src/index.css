@@ -8,6 +8,33 @@
   --color-farm-700: #b45309;
   --color-leaf-500: #65a30d;
   --color-leaf-600: #4d7c0f;
+
+  /* Text, darkest to lightest. Warm browns, never grey — grey text on a warm
+     background reads as "disabled" even when it is not. */
+  --color-ink-950: #2a1c10;
+  --color-ink-900: #3d2a17;
+  --color-ink-700: #6b4f31;
+  --color-ink-500: #8a6c4a;
+  --color-ink-400: #a58a68;
+  --color-ink-300: #c9b393;
+
+  /* Answer states. Deliberately soft: a wrong answer is information, not an
+     alarm, so nothing here is a full-strength red. */
+  --color-ok-bg: #ecfccb;
+  --color-ok-border: #a3e635;
+  --color-ok-text: #3f6212;
+  --color-warn-bg: #fef3c7;
+  --color-warn-border: #fcd34d;
+  --color-warn-text: #92400e;
+  --color-warn-text-2: #a16207;
+  --color-bad-bg: #fef2f2;
+  --color-bad-border: #fca5a5;
+  --color-bad-text: #b91c1c;
+
+  /* The one true red in the whole game: the count of words waiting to be
+     reviewed. If it shows up anywhere else, that is a bug. */
+  --color-badge: #e11d48;
+
   --font-sans: "Nunito", "Segoe UI", system-ui, sans-serif;
 }
 
@@ -107,4 +134,51 @@ button {
 }
 .animate-coin-float {
   animation: coin-float 1s ease-out both;
+}
+
+/* Arriving in a new place: a short fade with a small lift, so travelling
+   between the farm and the village reads as a move rather than a redraw. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.14s ease-out both;
+}
+
+/* A hint that appears over the scene and gets out of the way again. */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-toast-in {
+  animation: toast-in 0.16s ease-out both;
+}
+
+/* Someone who has asked for less movement gets the information without the
+   theatre: fades stay, loops and overshoot go. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop-in,
+  .animate-drop-in,
+  .animate-fade-up,
+  .animate-toast-in {
+    animation-duration: 0.01ms;
+  }
+  .animate-sway,
+  .animate-ready-bob,
+  .animate-coin-float {
+    animation: none;
+  }
 }

@@ -118,6 +118,34 @@ describe("content integrity", () => {
     }
   });
 
+  it("gives every object on the farm a sentence for its word card", () => {
+    // The card shows the word doing something. A crop or animal she can tap
+    // and get no sentence for is a card with a hole in it.
+    const shown = new Set<string>([
+      ...CROPS.map((c) => c.word),
+      ...ANIMAL_SPECIES.flatMap((s) => [s.word, s.produceWord]),
+      ...DECOR.map((d) => d.word),
+    ]);
+    for (const id of shown) {
+      const word = WORDS_BY_ID.get(id);
+      expect(word?.example_nl, `"${id}" has no example sentence`).toBeTruthy();
+      expect(word?.example_es, `"${id}" has no Spanish for its example`).toBeTruthy();
+    }
+  });
+
+  it("writes example sentences as sentences", () => {
+    for (const word of VOCAB) {
+      if (!word.example_nl) continue;
+      expect(word.example_nl.endsWith("."), `${word.id}: "${word.example_nl}"`).toBe(true);
+      // The word itself has to actually appear in its own example.
+      expect(
+        word.example_nl.toLowerCase().includes(word.nl.toLowerCase()),
+        `${word.id} is missing from its own example`,
+      ).toBe(true);
+      expect(word.example_es, `${word.id} has Dutch but no Spanish`).toBeTruthy();
+    }
+  });
+
   it("accepts common alternative translations for gracias", () => {
     const ex = UNITS[0].exercises.find(
       (e) => e.type === "translate" && e.prompt_es === "Sí, gracias.",

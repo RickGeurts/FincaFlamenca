@@ -1,47 +1,138 @@
 import { STRINGS } from "../content/strings.es";
+import { WORDS_BY_ID } from "../content";
 import type { SessionSummary } from "../state/store";
 
 interface Props {
   summary: SessionSummary;
   onDone: () => void;
+  /** Offered only when there is something to repeat. */
+  onAgain?: () => void;
 }
 
-export function SessionEnd({ summary, onDone }: Props) {
+/** Never more chips than this; the rest are counted. */
+const MAX_CHIPS = 8;
+
+export function SessionEnd({ summary, onDone, onAgain }: Props) {
+  const title =
+    summary.kind === "lesson"
+      ? STRINGS.lessonComplete
+      : summary.kind === "review"
+        ? STRINGS.reviewComplete
+        : STRINGS.reviveComplete;
+
+  // What the coins were made of. Only the lines that actually applied are
+  // drawn, so the sum on the card always adds up to the number above it.
+  const base = Math.round(summary.munten / summary.multiplier);
+  const bonus = summary.munten - base;
+
+  const moved = summary.boxChanges.slice(0, MAX_CHIPS);
+  const extra = summary.boxChanges.length - moved.length;
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
-      <div className="text-6xl">
-        {summary.kind === "revive" ? "🌱" : summary.perfect ? "🌟" : "🎉"}
+    <div className="relative min-h-dvh bg-farm-50">
+      <div className="h-[300px] bg-gradient-to-b from-leaf-600 to-leaf-500" />
+
+      <div className="absolute inset-x-0 top-14 flex flex-col items-center gap-2.5 px-6 text-center">
+        <span className="text-[72px] leading-none">
+          {summary.kind === "revive" ? "🌱" : summary.perfect ? "🌟" : "🎉"}
+        </span>
+        <h1 className="text-[26px] font-black text-white [text-wrap:pretty]">{title}</h1>
+        <span className="text-[15px] font-extrabold text-ok-bg">
+          {summary.correct} / {summary.total}
+        </span>
       </div>
-      <h1 className="text-2xl font-extrabold text-farm-700">
-        {summary.kind === "lesson"
-          ? STRINGS.lessonComplete
-          : summary.kind === "review"
-            ? STRINGS.reviewComplete
-            : STRINGS.reviveComplete}
-      </h1>
-      <p className="text-farm-700/80">
-        {summary.correct} / {summary.total}
-      </p>
-      <div className="flex flex-col items-center gap-1 rounded-2xl bg-farm-100 px-8 py-4 shadow-sm">
-        {summary.munten > 0 && (
-          <span className="text-xl font-extrabold">🪙 {STRINGS.earnedMunten(summary.munten)}</span>
+
+      <div className="absolute inset-x-[18px] top-[262px] flex flex-col gap-3.5 rounded-[26px] border-2 border-farm-200 bg-white p-[18px] shadow-[0_12px_30px_rgba(120,70,20,.14)]">
+        <div className="flex items-center justify-between">
+          <span className="text-[15px] font-black text-ink-700">{STRINGS.earnedLabel}</span>
+          <span className="text-[26px] font-black text-ink-900">🪙 +{summary.munten}</span>
+        </div>
+        <div className="h-0.5 bg-farm-100" />
+        {base > 0 && (
+          <Line label={STRINGS.earnedBase[summary.kind]} value={`+${base} 🪙`} />
         )}
-        <span className="font-bold text-farm-700/80">⭐ {STRINGS.earnedXp(summary.xp)}</span>
         {summary.perfect && (
-          <span className="text-sm font-bold text-leaf-600">{STRINGS.perfectBonus}</span>
+          <Line label={STRINGS.earnedPerfect} value="" tone="leaf" />
         )}
-        {summary.multiplier > 1 && (
-          <span className="text-sm font-bold text-farm-600">
-            🔥 {STRINGS.streakBonus(summary.multiplier)}
-          </span>
+        {bonus > 0 && (
+          <Line
+            label={STRINGS.earnedStreak(summary.multiplier)}
+            value={`+${bonus} 🪙`}
+            tone="warn"
+          />
+        )}
+        <Line label={STRINGS.earnedXpLine} value={`+${summary.xp} XP`} tone="leaf" />
+      </div>
+
+      <div className="px-[18px] pb-40 pt-[190px]">
+        {moved.length > 0 && (
+          <div className="flex flex-col gap-2.5">
+            <span className="text-xs font-black uppercase tracking-[0.12em] text-ink-400">
+              {STRINGS.boxUp}
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {moved.map((change) => {
+                const word = WORDS_BY_ID.get(change.wordId);
+                if (!word) return null;
+                const up = change.to > change.from;
+                return (
+                  <span
+                    key={change.wordId}
+                    className={`rounded-full border-2 px-3.5 py-2 text-sm font-black ${
+                      up
+                        ? "border-ok-border bg-ok-bg text-ok-text"
+                        : "border-warn-border bg-warn-bg text-warn-text"
+                    }`}
+                  >
+                    {word.article ? `${word.article} ${word.nl}` : word.nl} {up ? "↑" : "↓"}
+                  </span>
+                );
+              })}
+              {extra > 0 && (
+                <span className="rounded-full bg-farm-100 px-3.5 py-2 text-sm font-black text-ink-500">
+                  {STRINGS.alertsMore(extra)}
+                </span>
+              )}
+            </div>
+          </div>
         )}
       </div>
-      <button
-        onClick={onDone}
-        className="min-h-11 rounded-xl bg-leaf-500 px-8 py-3 font-bold text-white active:bg-leaf-600"
-      >
-        {STRINGS.backHome}
-      </button>
+
+      <div className="fixed inset-x-0 bottom-0 mx-auto flex max-w-md flex-col gap-2.5 bg-gradient-to-t from-farm-50 via-farm-50 to-transparent px-[18px] pb-[calc(24px+env(safe-area-inset-bottom))] pt-6">
+        <button
+          onClick={onDone}
+          className="h-[60px] w-full rounded-[18px] border-b-[5px] border-leaf-600 bg-leaf-500 font-black text-[17px] text-white active:translate-y-0.5 active:border-b-0"
+        >
+          {STRINGS.backHome} 🏡
+        </button>
+        {onAgain && (
+          <button
+            onClick={onAgain}
+            className="h-14 w-full rounded-[18px] bg-farm-100 font-black text-base text-farm-700 active:bg-farm-200"
+          >
+            {STRINGS.anotherLesson}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Line({
+  label,
+  value,
+  tone = "ink",
+}: {
+  label: string;
+  value: string;
+  tone?: "ink" | "warn" | "leaf";
+}) {
+  const color =
+    tone === "warn" ? "text-warn-text-2" : tone === "leaf" ? "text-leaf-600" : "text-ink-700";
+  return (
+    <div className={`flex items-center justify-between text-sm font-extrabold ${color}`}>
+      <span>{label}</span>
+      <span>{value}</span>
     </div>
   );
 }

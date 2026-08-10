@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { STRINGS } from "../../content/strings.es";
 import type { AssembleExercise } from "../../content/types";
 import type { GradeResult } from "../../learning/grader";
 import { gradeExercise, shuffle } from "../../learning/lesson";
@@ -24,9 +23,8 @@ export function AssembleCard({ exercise, locked, onResult }: Props) {
   const sentence = pickedTiles.map((t) => t.text).join(" ");
 
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <h2 className="font-bold text-farm-700/80">{STRINGS.assemblePrompt}</h2>
-      <p className="rounded-2xl bg-white px-5 py-4 text-xl font-extrabold shadow-sm">
+    <div className="flex flex-1 flex-col justify-center gap-4">
+      <p className="text-center text-xl font-black text-ink-900 [text-wrap:pretty]">
         {exercise.prompt_es}
       </p>
 
@@ -37,7 +35,7 @@ export function AssembleCard({ exercise, locked, onResult }: Props) {
               key={tile.id}
               disabled={locked}
               onClick={() => setPicked((p) => p.filter((id) => id !== tile.id))}
-              className="min-h-11 rounded-xl bg-leaf-500 px-4 py-2 font-bold text-white"
+              className="rounded-2xl bg-leaf-500 px-4 py-3 font-black text-[17px] text-white"
             >
               {tile.text}
             </button>
@@ -53,8 +51,10 @@ export function AssembleCard({ exercise, locked, onResult }: Props) {
               key={tile.id}
               disabled={locked || used}
               onClick={() => setPicked((p) => [...p, tile.id])}
-              className={`min-h-11 rounded-xl border-2 px-4 py-2 font-bold ${
-                used ? "border-farm-100 bg-farm-100 text-transparent" : "border-farm-200 bg-white"
+              className={`rounded-2xl border-2 border-b-[5px] px-4 py-3 font-black text-[17px] ${
+                used
+                  ? "border-farm-100 bg-farm-100 text-transparent"
+                  : "border-farm-200 bg-white text-ink-900"
               }`}
             >
               {tile.text}

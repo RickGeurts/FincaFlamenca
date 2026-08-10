@@ -16,9 +16,8 @@ export function TranslateCard({ exercise, locked, onResult }: Props) {
   const submit = () => text.trim() && onResult(gradeExercise(exercise, text));
 
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <h2 className="font-bold text-farm-700/80">{STRINGS.translatePrompt}</h2>
-      <p className="rounded-2xl bg-white px-5 py-4 text-xl font-extrabold shadow-sm">
+    <div className="flex flex-1 flex-col justify-center gap-5">
+      <p className="text-center text-xl font-black text-ink-900 [text-wrap:pretty]">
         {exercise.prompt_es}
       </p>
       <textarea
@@ -36,7 +35,7 @@ export function TranslateCard({ exercise, locked, onResult }: Props) {
         autoCorrect="off"
         spellCheck={false}
         rows={2}
-        className="rounded-2xl border-2 border-farm-200 bg-white p-4 text-lg font-semibold focus:border-leaf-500 focus:outline-none"
+        className="w-full resize-none border-b-[3px] border-farm-200 bg-transparent px-1 py-3 text-xl font-black text-ink-900 placeholder:text-ink-300 focus:border-leaf-500 focus:outline-none"
       />
       <CheckButton disabled={locked || !text.trim()} onClick={submit} />
     </div>
