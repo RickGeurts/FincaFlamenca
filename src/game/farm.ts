@@ -6,6 +6,7 @@ import type { PlantedCrop } from "./crops";
 import { DECOR_BY_ID, decorSize, getSpeciesDef } from "./economy";
 import { animalSpace, penSpace } from "./pen";
 import {
+  PLACE_COLS,
   PLACE_ROWS,
   UNIT_SPEC,
   animalKey,
@@ -463,6 +464,54 @@ export function untillTile(farm: FarmState, tileId: string): FarmState {
     ...farm,
     tiles: farm.tiles.map((t) => (t.id === tileId ? { id: t.id, kind: "grass" } : t)),
   };
+}
+
+/**
+ * How big the meadow is at each level of land. Level 1 is what she starts
+ * with; the town hall sells her the rest of the island.
+ *
+ * Both steps keep the parity of the island grid (7 x 8): a meadow with a
+ * different parity would sit half a cell off centre, and everything from
+ * ploughing to placing a pen is reckoned in whole cells.
+ */
+export const LAND_SIZES: readonly { cols: number; rows: number }[] = [
+  { cols: FARM_COLS, rows: FARM_ROWS },
+  { cols: PLACE_COLS, rows: PLACE_ROWS },
+];
+
+export function landSize(level: number): { cols: number; rows: number } {
+  return LAND_SIZES[Math.min(Math.max(level, 1), LAND_SIZES.length) - 1];
+}
+
+/**
+ * Grow the meadow, keeping every crop on the patch of ground it was planted
+ * on. Tiles are stored by index, and a wider grid renumbers every index — so
+ * the old tiles are matched up by their cell on the island, not by position in
+ * the array. Get that wrong and her coffee moves house overnight.
+ *
+ * Newly revealed ground is plain grass, including the cells under the
+ * farmhouse and the mill: `canTill` already refuses those, so they simply
+ * stay lawn.
+ */
+export function expandFarm(farm: FarmState, level: number): FarmState {
+  const size = landSize(level);
+  if (size.cols <= farm.cols && size.rows <= farm.rows) return farm;
+
+  const old = new Map<string, Tile>();
+  farm.tiles.forEach((tile, i) => {
+    const cell = tileCell(farm.cols, farm.rows, i);
+    old.set(`${cell.col},${cell.row}`, tile);
+  });
+
+  const tiles: Tile[] = Array.from({ length: size.cols * size.rows }, (_, i) => {
+    const cell = tileCell(size.cols, size.rows, i);
+    const kept = old.get(`${cell.col},${cell.row}`);
+    // Ids follow the new grid so they stay unique and diffable; the crop and
+    // whether it was ploughed is what actually had to survive.
+    return kept ? { ...kept, id: `t${i + 1}` } : { id: `t${i + 1}`, kind: "grass" };
+  });
+
+  return { ...farm, cols: size.cols, rows: size.rows, tiles };
 }
 
 /**

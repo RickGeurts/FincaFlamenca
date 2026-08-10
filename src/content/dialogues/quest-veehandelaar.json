@@ -1,0 +1,51 @@
+{
+  "id": "veehandelaar-koe",
+  "title_es": "Tu primera vaca",
+  "title_nl": "Bij de veehandelaar",
+  "summary_es": "Habla de usted y llévate un prado",
+  "location": "criadero",
+  "npc_emoji": "🧑‍🌾",
+  "requires": { "unit": 3 },
+  "reward": { "munten": 150, "unlock": "decor:wei2" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Goedemiddag! Waarmee kan ik u helpen?",
+      "npc_es_hint": "¡Buenas tardes! ¿En qué puedo ayudarle?",
+      "choices": [
+        {
+          "nl": "Goedemiddag. Ik wil graag een koe kopen.",
+          "goto": "eten",
+          "quality": "best"
+        },
+        { "nl": "Ik wil een koe.", "goto": "eten", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "eten",
+      "npc_nl": "Een koe, heel goed. Weet u wat een koe eet?",
+      "npc_es_hint": "Una vaca, muy bien. ¿Sabe qué come una vaca?",
+      "choices": [
+        { "nl": "Een koe eet gras.", "goto": "wei", "quality": "best" },
+        { "nl": "Een koe eet hooi.", "goto": "wei", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "wei",
+      "npc_nl": "Juist. Een koe heeft ook een wei nodig. Ik geef u een kleine wei cadeau.",
+      "npc_es_hint": "Exacto. Una vaca también necesita un prado. Le regalo un prado pequeño.",
+      "ask_es": "Dale las gracias de forma formal.",
+      "answer_nl": "Dank u wel!",
+      "accept": ["dank u", "dank u wel", "hartelijk dank", "dankuwel"],
+      "hint_nl": ["Dank", "u", "wel"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Graag gedaan! Tot ziens en veel succes met uw koe.",
+      "npc_es_hint": "¡De nada! Hasta luego y mucha suerte con su vaca.",
+      "end": true
+    }
+  ]
+}

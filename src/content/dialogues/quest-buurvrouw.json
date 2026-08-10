@@ -1,0 +1,56 @@
+{
+  "id": "buurvrouw-welkom",
+  "title_es": "Conoce a tu vecina",
+  "title_nl": "De buurvrouw",
+  "summary_es": "Salúdala y despídete en neerlandés",
+  "location": "finca",
+  "npc_emoji": "👩‍🌾",
+  "requires": { "unit": 1 },
+  "reward": { "munten": 100 },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Hallo! Ik ben Anke, je buurvrouw.",
+      "npc_es_hint": "¡Hola! Soy Anke, tu vecina.",
+      "choices": [
+        { "nl": "Hallo Anke, aangenaam!", "goto": "koffie", "quality": "best" },
+        { "nl": "Hallo.", "goto": "koffie", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "koffie",
+      "npc_nl": "Wil je een kop koffie?",
+      "npc_es_hint": "¿Quieres una taza de café?",
+      "choices": [
+        { "nl": "Ja, graag. Dank je wel!", "goto": "boerderij", "quality": "best" },
+        { "nl": "Nee, dank je.", "goto": "boerderij", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "boerderij",
+      "npc_nl": "Mooi, jouw boerderij! Heb je dieren?",
+      "npc_es_hint": "¡Qué bonita tu granja! ¿Tienes animales?",
+      "choices": [
+        { "nl": "Ja, ik heb een kip.", "goto": "afscheid", "quality": "best" },
+        { "nl": "Nee, nog niet.", "goto": "afscheid", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "afscheid",
+      "npc_nl": "Leuk je te ontmoeten! Ik ga naar huis.",
+      "npc_es_hint": "¡Qué gusto conocerte! Me voy a casa.",
+      "ask_es": "Despídete de Anke.",
+      "answer_nl": "Tot ziens!",
+      "accept": ["tot ziens", "dag Anke", "doei", "dag"],
+      "hint_nl": ["Tot", "ziens"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Tot ziens! Tot morgen.",
+      "npc_es_hint": "¡Hasta luego! Hasta mañana.",
+      "end": true
+    }
+  ]
+}

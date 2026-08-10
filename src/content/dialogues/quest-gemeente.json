@@ -1,0 +1,61 @@
+{
+  "id": "gemeente-land-1",
+  "title_es": "Comprar terreno en el ayuntamiento",
+  "title_nl": "Op het gemeentehuis",
+  "summary_es": "Trámite formal: más tierra para tu finca",
+  "location": "alcaldia",
+  "npc_emoji": "🧑‍💼",
+  "requires": { "unit": 5 },
+  "reward": { "munten": 150, "unlock": "landLevel:2" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Goedemiddag! Waarmee kan ik u helpen?",
+      "npc_es_hint": "¡Buenas tardes! ¿En qué puedo ayudarle?",
+      "choices": [
+        { "nl": "Goedemiddag. Ik wil graag land kopen.", "goto": "wonen", "quality": "best" },
+        { "nl": "Land. Kopen. Nu.", "goto": "wonen", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "wonen",
+      "npc_nl": "Dat kan. Woont u hier in het dorp?",
+      "npc_es_hint": "Se puede. ¿Vive usted aquí en el pueblo?",
+      "choices": [
+        { "nl": "Ja, ik woon hier.", "goto": "formulier", "quality": "best" },
+        { "nl": "Ja, ik woon naast Anke.", "goto": "formulier", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "formulier",
+      "npc_nl": "Ik vul het formulier in. Wilt u het land naast uw huis?",
+      "npc_es_hint": "Lleno el formulario. ¿Quiere el terreno al lado de su casa?",
+      "choices": [
+        { "nl": "Ja, graag. Dat is perfect.", "goto": "beleefd", "quality": "best" },
+        { "nl": "Ja, dat is goed.", "goto": "beleefd", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "beleefd",
+      "npc_nl": "Nog één ding. Vraagt u het netjes?",
+      "npc_es_hint": "Una cosa más. ¿Lo pide con cortesía?",
+      "ask_es": "Pide el terreno de forma formal.",
+      "answer_nl": "Mag ik het land alstublieft?",
+      "accept": [
+        "mag ik het land alstublieft",
+        "mag ik het land",
+        "ik wil graag land kopen alstublieft",
+        "mag ik alstublieft het land"
+      ],
+      "hint_nl": ["Mag", "ik", "alstublieft"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Uitstekend! Het land is van u. Hier is ook een subsidie.",
+      "npc_es_hint": "¡Excelente! El terreno es suyo. Aquí tiene también una subvención.",
+      "end": true
+    }
+  ]
+}

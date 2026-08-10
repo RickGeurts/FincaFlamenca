@@ -96,6 +96,27 @@ export const STRINGS = {
   cannotAffordMeta: "Practica un poco más 🌱",
   noFieldForSeed: "Primero ara un campo con «Arar» 🌾",
 
+  // Misiones (story quests)
+  questStep: (n: number, total: number) => `Paso ${n} de ${total}`,
+  questWriteAnswer: "Escribe tu respuesta en neerlandés",
+  questChoose: "Elige qué decir",
+  questSend: "Enviar",
+  questHint: "💡 Pista",
+  revealSpanish: "👁 Ver en español",
+  // A slip in a conversation is not a mistake to be marked; the neighbour
+  // understood you. She is simply shown how it is usually said.
+  questCorrection: "Se dice así:",
+  questDoneTitle: "¡Misión cumplida!",
+  questLandGrew: "¡Tu finca creció! 🌾",
+  questGift: "Un regalo para tu finca 🎁",
+  questAgain: "Ya la hiciste antes, así que esta vez es un detalle pequeño.",
+  questBack: "Volver al pueblo",
+  questStart: "Empezar la conversación",
+  questReplay: "Repetirla",
+  questNoneHere: "Aquí no hay nadie esperándote todavía. ¡Vuelve más tarde!",
+  alcaldiaTitle: "La alcaldía",
+  alcaldiaSubtitle: "het gemeentehuis",
+
   // Word card
   inASentence: "En una frase",
   listen: "🔊 Escuchar",

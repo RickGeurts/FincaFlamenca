@@ -1,8 +1,10 @@
 import { STRINGS } from "../content/strings.es";
-import { UNITS } from "../content";
+import { QUESTS, UNITS } from "../content";
 import { ECONOMY, xpRequiredForUnit } from "../game/economy";
+import { openQuests } from "../quests/quests";
 import type { Player } from "../game/types";
 import type { WordProgress } from "../learning/srs";
+import { QuestRow } from "./quests/QuestRow";
 
 interface Props {
   player: Player;
@@ -11,6 +13,7 @@ interface Props {
   onBack: () => void;
   onStartLesson: (unit: number) => void;
   onStartReview: () => void;
+  onStartQuest: (questId: string) => void;
 }
 
 /**
@@ -42,8 +45,12 @@ export function School({
   onBack,
   onStartLesson,
   onStartReview,
+  onStartQuest,
 }: Props) {
   const current = Math.max(...player.unlockedUnits);
+  // Only what she has not done yet. A finished conversation is still there to
+  // replay, but at its own door, not on a list of things outstanding.
+  const quests = openQuests(QUESTS, player.unlockedUnits, player.completedQuests);
 
   return (
     <div className="animate-fade-up absolute inset-0 overflow-y-auto bg-farm-50">
@@ -150,6 +157,23 @@ export function School({
             </button>
           );
         })}
+
+        {quests.length > 0 && (
+          <div className="mt-1.5 flex flex-col gap-2.5">
+            <span className="text-xs font-black uppercase tracking-[0.12em] text-ink-400">
+              {STRINGS.openQuests}
+            </span>
+            {quests.map((quest) => (
+              <QuestRow
+                key={quest.id}
+                quest={quest}
+                place={STRINGS.places[quest.location === "finca" ? "finca" : quest.location]}
+                done={false}
+                onStart={() => onStartQuest(quest.id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

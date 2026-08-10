@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { STRINGS } from "../content/strings.es";
-import { getUnit, VOCAB } from "../content";
+import { getQuest, getUnit, VOCAB } from "../content";
 import type { Exercise } from "../content/types";
 import {
   buildLessonSession,
@@ -18,6 +18,8 @@ import { LessonPlayer, type LessonResults } from "../ui/LessonPlayer";
 import { SessionEnd } from "../ui/SessionEnd";
 import { SettingsSheet } from "../ui/SettingsSheet";
 import { PlaceRail, type PlaceDef } from "../ui/village/PlaceRail";
+import { QuestScreen } from "../ui/quests/QuestScreen";
+import { QuestPlace } from "../ui/quests/QuestPlace";
 
 type View =
   | { name: "village" }
@@ -30,6 +32,7 @@ const ALCALDIA_UNIT = 5;
 export function Shell() {
   const [view, setView] = useState<View>({ name: "village" });
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [questId, setQuestId] = useState<string | null>(null);
   const hydrated = useGameStore((s) => s.hydrated);
   const player = useGameStore((s) => s.player);
   const words = useGameStore((s) => s.words);
@@ -152,9 +155,11 @@ export function Shell() {
     {
       id: "alcaldia",
       icon: "🏛️",
-      // Locked on two counts: she has not reached unit 5, and the quests that
-      // give the town hall a reason to exist are not written yet.
-      lockedReason: STRINGS.placeLocked(ALCALDIA_UNIT),
+      // The town hall is the formal-register unit's own place; there is
+      // nothing to do there until she has the words for it.
+      lockedReason: player.unlockedUnits.includes(ALCALDIA_UNIT)
+        ? undefined
+        : STRINGS.placeLocked(ALCALDIA_UNIT),
     },
   ];
 
@@ -164,11 +169,32 @@ export function Shell() {
     setPlace(next);
   };
 
+  /** Walk into a conversation, travelling to whoever is holding it. */
+  const startQuest = (id: string) => {
+    const quest = getQuest(id);
+    if (!quest) return;
+    setPlace(quest.location === "finca" ? "finca" : quest.location);
+    setQuestId(id);
+  };
+
+  const quest = questId === null ? undefined : getQuest(questId);
+  if (quest) {
+    return (
+      <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-hidden bg-farm-50">
+        <QuestScreen quest={quest} onLeave={() => setQuestId(null)} />
+      </div>
+    );
+  }
+
   return (
     <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-hidden bg-farm-50">
       {place === "finca" && (
         <>
-          <FarmView onStartRevive={startRevive} onSettings={() => setSettingsOpen(true)} />
+          <FarmView
+            onStartRevive={startRevive}
+            onSettings={() => setSettingsOpen(true)}
+            onStartQuest={startQuest}
+          />
           <PlaceRail places={places} current={place} onTravel={travel} />
         </>
       )}
@@ -181,11 +207,20 @@ export function Shell() {
           onBack={() => setPlace("finca")}
           onStartLesson={startLesson}
           onStartReview={startReview}
+          onStartQuest={startQuest}
         />
       )}
 
       {(place === "mercado" || place === "criadero") && (
-        <Market breeder={place === "criadero"} onBack={() => setPlace("finca")} />
+        <Market
+          breeder={place === "criadero"}
+          onBack={() => setPlace("finca")}
+          onStartQuest={startQuest}
+        />
+      )}
+
+      {place === "alcaldia" && (
+        <QuestPlace onBack={() => setPlace("finca")} onStartQuest={startQuest} />
       )}
 
       {settingsOpen && <SettingsSheet onClose={() => setSettingsOpen(false)} />}

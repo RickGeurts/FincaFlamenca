@@ -25,6 +25,7 @@ import * as animals from "../game/animals";
 import {
   addAnimal,
   addDecor,
+  expandFarm,
   initialFarm,
   migrateDecorToItems,
   migratePlotsToTiles,
@@ -41,6 +42,8 @@ import {
 } from "../game/farm";
 import type { Quarter } from "../game/placement";
 import { initProgress, review, type WordProgress } from "../learning/srs";
+import { getQuest } from "../content";
+import { parseUnlock, payoutFor } from "../quests/quests";
 import { dateString } from "../utils/time";
 
 export interface AnswerRecord {
@@ -65,6 +68,15 @@ export interface SessionSummary extends SessionReward {
    * started after moving both ways.
    */
   boxChanges: BoxChange[];
+}
+
+/** What a finished quest handed over, so the screen can celebrate it. */
+export interface QuestOutcome {
+  munten: number;
+  /** Set when the meadow just grew. */
+  landLevel?: number;
+  /** Decor kind she was given, if any and if there was room for it. */
+  gift?: string;
 }
 
 /** Where in the village she is. Travelling replaces the old two tabs. */
@@ -124,6 +136,12 @@ interface GameState {
   markAnimalPurchased(speciesId: string): void;
   /** Remove an object, refunding half its price. Returns munten given back. */
   removeObject(objectId: string): number;
+
+  /**
+   * Finish a conversation and collect what it is worth. Safe to call again on
+   * a replay: it pays the small thank-you and unlocks nothing twice.
+   */
+  completeQuest(questId: string): QuestOutcome;
 
   // Embedded learning
   logExposure(wordId: string, now?: number): void;
@@ -409,6 +427,48 @@ export const useGameStore = create<GameState>()(
           },
         });
         return def.produceSellPrice;
+      },
+
+      completeQuest(questId) {
+        const state = getState();
+        const quest = getQuest(questId);
+        if (!quest) return { munten: 0 };
+
+        const already = state.player.completedQuests.includes(questId);
+        const payout = payoutFor(quest, already);
+        const unlock = parseUnlock(payout.unlock);
+
+        let farm = state.farm;
+        let landLevel = state.player.landLevel;
+        let gift: string | undefined;
+
+        if (unlock?.kind === "landLevel") {
+          landLevel = Math.max(landLevel, unlock.level);
+          farm = expandFarm(farm, landLevel);
+        } else if (unlock?.kind === "decor") {
+          const wider = addDecor(farm, unlock.decorKind);
+          // A full island means the present cannot be handed over. She keeps
+          // the coins and the quest still counts — losing both to a lack of
+          // space would be the game punishing her for decorating.
+          if (wider !== farm) {
+            farm = wider;
+            gift = unlock.decorKind;
+          }
+        }
+
+        setState({
+          player: {
+            ...state.player,
+            munten: state.player.munten + payout.munten,
+            landLevel,
+            completedQuests: already
+              ? state.player.completedQuests
+              : [...state.player.completedQuests, questId],
+          },
+          farm,
+        });
+
+        return { munten: payout.munten, landLevel: unlock?.kind === "landLevel" ? landLevel : undefined, gift };
       },
 
       renameAnimal(animalId, name) {

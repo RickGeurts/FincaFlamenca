@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { STRINGS } from "../../content/strings.es";
-import { VOCAB, unreviewedContent } from "../../content";
+import { QUESTS, VOCAB, unreviewedContent } from "../../content";
+import { openQuests } from "../../quests/quests";
 import type { ChoiceExercise } from "../../content/types";
 import { getCropDef, getDecorDef, getSpeciesDef } from "../../game/economy";
 import * as crops from "../../game/crops";
@@ -45,9 +46,10 @@ const TOAST_MS = 4000;
 interface Props {
   onStartRevive: () => void;
   onSettings: () => void;
+  onStartQuest: (questId: string) => void;
 }
 
-export function FarmView({ onStartRevive, onSettings }: Props) {
+export function FarmView({ onStartRevive, onSettings, onStartQuest }: Props) {
   const now = useNow();
   const farm = useGameStore((s) => s.farm);
   const player = useGameStore((s) => s.player);
@@ -152,9 +154,20 @@ export function FarmView({ onStartRevive, onSettings }: Props) {
   );
   const hasField = farm.tiles.some((t) => t.kind === "field");
 
-  // What the farm is asking for, most urgent first: withering crops, then
-  // hungry animals, then anything waiting to be collected.
+  // What the farm is asking for, most urgent first: somebody at the gate,
+  // then withering crops, then hungry animals, then anything to collect.
   const alerts: FarmAlert[] = [];
+  for (const quest of openQuests(QUESTS, player.unlockedUnits, player.completedQuests)) {
+    if (quest.location !== "finca") continue;
+    alerts.push({
+      id: `quest:${quest.id}`,
+      emoji: quest.npc_emoji,
+      title: quest.title_es,
+      detail: quest.summary_es,
+      tone: "neutral",
+      onTap: () => onStartQuest(quest.id),
+    });
+  }
   if (hasWilted) {
     alerts.push({
       id: "wilted",

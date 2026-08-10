@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { STRINGS } from "../../content/strings.es";
-import { WORDS_BY_ID } from "../../content";
+import { QUESTS, WORDS_BY_ID } from "../../content";
+import { questsAt } from "../../quests/quests";
+import { QuestRow } from "../quests/QuestRow";
 import {
   ANIMAL_SPECIES,
   CROPS,
@@ -57,8 +59,18 @@ type Picked =
  * is a place she travels to rather than a dialog over the farm, so shopping
  * has room to teach a word properly.
  */
-export function Market({ breeder, onBack }: { breeder: boolean; onBack: () => void }) {
+export function Market({
+  breeder,
+  onBack,
+  onStartQuest,
+}: {
+  breeder: boolean;
+  onBack: () => void;
+  onStartQuest: (questId: string) => void;
+}) {
   const munten = useGameStore((s) => s.player.munten);
+  const unlockedUnits = useGameStore((s) => s.player.unlockedUnits);
+  const completedQuests = useGameStore((s) => s.player.completedQuests);
   const farm = useGameStore((s) => s.farm);
   const category = useGameStore((s) => s.marketCategory) as Category;
   const setCategory = useGameStore((s) => s.setMarketCategory);
@@ -74,6 +86,8 @@ export function Market({ breeder, onBack }: { breeder: boolean; onBack: () => vo
 
   const [picked, setPicked] = useState<Picked>({ kind: "none" });
   const [problem, setProblem] = useState<string | null>(null);
+
+  const questsHere = questsAt(QUESTS, breeder ? "criadero" : "mercado", unlockedUnits);
 
   /** A seed bought here goes into the first field standing empty. */
   const freeField = farm.tiles.find((t) => t.kind === "field" && !t.crop);
@@ -219,6 +233,18 @@ export function Market({ breeder, onBack }: { breeder: boolean; onBack: () => vo
         </nav>
 
         <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-3.5">
+          {/* Somebody here wants to talk to her. It goes above the goods:
+              a conversation pays more than anything on these shelves costs. */}
+          {questsHere.map((quest) => (
+            <QuestRow
+              key={quest.id}
+              quest={quest}
+              place={STRINGS.places[breeder ? "criadero" : "mercado"]}
+              done={completedQuests.includes(quest.id)}
+              onStart={() => onStartQuest(quest.id)}
+            />
+          ))}
+
           {problem && (
             <p className="rounded-[20px] border-2 border-warn-border bg-warn-bg p-3 text-sm font-black text-warn-text">
               {problem}

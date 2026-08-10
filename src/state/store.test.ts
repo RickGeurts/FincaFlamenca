@@ -5,7 +5,8 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { initialFarm, type FarmState } from "../game/farm";
-import { getDecorDef, getSpeciesDef } from "../game/economy";
+import { ECONOMY, getDecorDef, getSpeciesDef } from "../game/economy";
+import { getQuest } from "../content";
 import { SAVE_VERSION, exportSave, parseSave } from "./store";
 import { animalKey, decorKey } from "../game/placement";
 
@@ -279,5 +280,76 @@ describe("buying animals from the fokker", () => {
   it("rejects an unknown species rather than charging for nothing", async () => {
     const store = await loadStore();
     expect(() => store.getState().buyAnimal("eenhoorn")).toThrow();
+  });
+});
+
+describe("finishing a quest", () => {
+  beforeEach(() => mem.clear());
+
+  it("pays the reward and records it as done", async () => {
+    const store = await loadStore();
+    const before = store.getState().player.munten;
+
+    const outcome = store.getState().completeQuest("buurvrouw-welkom");
+
+    expect(outcome.munten).toBe(getQuest("buurvrouw-welkom")!.reward.munten);
+    expect(store.getState().player.munten).toBe(before + outcome.munten);
+    expect(store.getState().player.completedQuests).toContain("buurvrouw-welkom");
+  });
+
+  it("grows the meadow when the town hall sells her land", async () => {
+    const store = await loadStore();
+    const before = store.getState().farm.tiles.length;
+
+    const outcome = store.getState().completeQuest("gemeente-land-1");
+
+    expect(outcome.landLevel).toBe(2);
+    expect(store.getState().player.landLevel).toBe(2);
+    expect(store.getState().farm.tiles.length).toBeGreaterThan(before);
+  });
+
+  it("hands over the promised pasture", async () => {
+    const store = await loadStore();
+    const before = store.getState().farm.decor.filter((d) => d.kind === "wei2").length;
+
+    const outcome = store.getState().completeQuest("veehandelaar-koe");
+
+    expect(outcome.gift).toBe("wei2");
+    expect(store.getState().farm.decor.filter((d) => d.kind === "wei2")).toHaveLength(before + 1);
+  });
+
+  it("pays a small thank-you on a replay, and unlocks nothing twice", async () => {
+    const store = await loadStore();
+    store.getState().completeQuest("veehandelaar-koe");
+    const pens = store.getState().farm.decor.filter((d) => d.kind === "wei2").length;
+    const munten = store.getState().player.munten;
+
+    const again = store.getState().completeQuest("veehandelaar-koe");
+
+    expect(again.munten).toBe(ECONOMY.QUEST_REPLAY_MUNTEN);
+    expect(again.gift).toBeUndefined();
+    expect(store.getState().farm.decor.filter((d) => d.kind === "wei2")).toHaveLength(pens);
+    expect(store.getState().player.munten).toBe(munten + ECONOMY.QUEST_REPLAY_MUNTEN);
+    // Recorded once, however often she goes back for the conversation.
+    const done = store.getState().player.completedQuests;
+    expect(done.filter((id) => id === "veehandelaar-koe")).toHaveLength(1);
+  });
+
+  it("keeps her crops where they were when the land grows", async () => {
+    const store = await loadStore();
+    const plantable = store.getState().farm.tiles.find((t) => t.kind === "grass")!;
+    store.getState().tillTile(plantable.id);
+    const tilled = store.getState().farm.tiles.filter((t) => t.kind === "field").length;
+
+    store.getState().completeQuest("gemeente-land-1");
+
+    expect(store.getState().farm.tiles.filter((t) => t.kind === "field")).toHaveLength(tilled);
+  });
+
+  it("ignores a quest that does not exist rather than paying for it", async () => {
+    const store = await loadStore();
+    const before = store.getState().player.munten;
+    expect(store.getState().completeQuest("no-such-quest").munten).toBe(0);
+    expect(store.getState().player.munten).toBe(before);
   });
 });

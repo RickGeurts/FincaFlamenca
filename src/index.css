@@ -35,6 +35,11 @@
      reviewed. If it shows up anywhere else, that is a bug. */
   --color-badge: #e11d48;
 
+  /* Indoors. A conversation happens in a room, not on the farm, and the light
+     changing is what tells her she has stepped inside somewhere. */
+  --color-room-top: #e8dcc6;
+  --color-room-low: #d9c39c;
+
   --font-sans: "Nunito", "Segoe UI", system-ui, sans-serif;
 }
 
