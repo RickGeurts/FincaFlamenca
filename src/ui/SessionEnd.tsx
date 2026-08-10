@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { STRINGS } from "../content/strings.es";
 import { WORDS_BY_ID } from "../content";
+import { play } from "../utils/sfx";
+import { useCountUp } from "./useCountUp";
 import type { SessionSummary } from "../state/store";
 
 interface Props {
@@ -28,6 +31,14 @@ export function SessionEnd({ summary, onDone, onAgain }: Props) {
   const moved = summary.boxChanges.slice(0, MAX_CHIPS);
   const extra = summary.boxChanges.length - moved.length;
 
+  // Watching the number climb beats being handed it.
+  const munten = useCountUp(summary.munten);
+  const xp = useCountUp(summary.xp);
+
+  useEffect(() => {
+    play(summary.munten > 0 ? "coin" : "correct");
+  }, [summary.munten]);
+
   return (
     <div className="relative min-h-dvh bg-farm-50">
       <div className="h-[300px] bg-gradient-to-b from-leaf-600 to-leaf-500" />
@@ -45,7 +56,7 @@ export function SessionEnd({ summary, onDone, onAgain }: Props) {
       <div className="absolute inset-x-[18px] top-[262px] flex flex-col gap-3.5 rounded-[26px] border-2 border-farm-200 bg-white p-[18px] shadow-[0_12px_30px_rgba(120,70,20,.14)]">
         <div className="flex items-center justify-between">
           <span className="text-[15px] font-black text-ink-700">{STRINGS.earnedLabel}</span>
-          <span className="text-[26px] font-black text-ink-900">🪙 +{summary.munten}</span>
+          <span className="text-[26px] font-black tabular-nums text-ink-900">🪙 +{munten}</span>
         </div>
         <div className="h-0.5 bg-farm-100" />
         {base > 0 && (
@@ -61,7 +72,7 @@ export function SessionEnd({ summary, onDone, onAgain }: Props) {
             tone="warn"
           />
         )}
-        <Line label={STRINGS.earnedXpLine} value={`+${summary.xp} XP`} tone="leaf" />
+        <Line label={STRINGS.earnedXpLine} value={`+${xp} XP`} tone="leaf" />
       </div>
 
       <div className="px-[18px] pb-40 pt-[190px]">

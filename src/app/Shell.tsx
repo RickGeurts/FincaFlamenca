@@ -21,6 +21,8 @@ import { PlaceRail, type PlaceDef } from "../ui/village/PlaceRail";
 import { QuestScreen } from "../ui/quests/QuestScreen";
 import { QuestPlace } from "../ui/quests/QuestPlace";
 import { LookScreen } from "../ui/avatar/LookScreen";
+import { Celebration } from "../ui/Celebration";
+import { Onboarding } from "../ui/Onboarding";
 
 type View =
   | { name: "village" }
@@ -35,6 +37,8 @@ export function Shell() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [questId, setQuestId] = useState<string | null>(null);
   const [wardrobe, setWardrobe] = useState(false);
+  // A classroom opening is cheered once, not every time the screen redraws.
+  const [cheered, setCheered] = useState(false);
   const hydrated = useGameStore((s) => s.hydrated);
   const player = useGameStore((s) => s.player);
   const words = useGameStore((s) => s.words);
@@ -43,11 +47,21 @@ export function Shell() {
   const setMarketCategory = useGameStore((s) => s.setMarketCategory);
   const finishSession = useGameStore((s) => s.finishSession);
   const reviveWiltedCrops = useGameStore((s) => s.reviveWiltedCrops);
+  const onboarded = useGameStore((s) => s.onboarded);
+  const finishOnboarding = useGameStore((s) => s.finishOnboarding);
 
   const dueCount = useMemo(
     () => dueWords(Object.values(words), Date.now()).length,
     [words],
   );
+
+  if (hydrated && !onboarded) {
+    return (
+      <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-hidden bg-farm-50">
+        <Onboarding onDone={finishOnboarding} />
+      </div>
+    );
+  }
 
   if (!hydrated) {
     return (
@@ -60,6 +74,7 @@ export function Shell() {
   const startLesson = (unitNumber: number) => {
     const unit = getUnit(unitNumber);
     if (!unit) return;
+    setCheered(false);
     setView({
       name: "session",
       kind: "lesson",
@@ -126,8 +141,16 @@ export function Shell() {
 
   if (view.name === "done") {
     const lastUnit = view.summary.kind === "lesson" ? view.summary : null;
+    const opened = view.summary.unlockedUnit;
     return (
       <div className="mx-auto flex min-h-dvh max-w-md flex-col">
+        {opened !== undefined && !cheered && (
+          <Celebration
+            unit={opened}
+            title={getUnit(opened)?.title_es ?? ""}
+            onClose={() => setCheered(true)}
+          />
+        )}
         <SessionEnd
           summary={view.summary}
           onDone={() => {

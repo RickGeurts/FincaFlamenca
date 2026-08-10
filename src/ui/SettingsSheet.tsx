@@ -1,5 +1,6 @@
 import { STRINGS } from "../content/strings.es";
 import { Modal } from "./Modal";
+import { SoundPanel } from "./SoundPanel";
 import { VoicePanel } from "./VoicePanel";
 import { SyncPanel } from "./SyncPanel";
 import { BackupPanel } from "./BackupPanel";
@@ -14,6 +15,7 @@ export function SettingsSheet({ onClose }: { onClose: () => void }) {
     <Modal onClose={onClose}>
       <div className="flex flex-col gap-3">
         <h2 className="text-lg font-black text-ink-900">{STRINGS.settings} ⚙️</h2>
+        <SoundPanel />
         <VoicePanel />
         <SyncPanel />
         <BackupPanel />

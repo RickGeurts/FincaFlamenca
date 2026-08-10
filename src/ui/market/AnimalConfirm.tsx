@@ -6,6 +6,7 @@ import { buildWordChoice, shuffle } from "../../learning/lesson";
 import { randomRng } from "../../utils/rng";
 import { canSpeak, speak } from "../../utils/speak";
 import { Modal } from "../Modal";
+import { play } from "../../utils/sfx";
 import { PropThumb } from "../farm/PropThumb";
 
 /**
@@ -99,7 +100,10 @@ export function AnimalConfirm({
 
         <button
           disabled={!answeredCorrectly}
-          onClick={() => onConfirm(name)}
+          onClick={() => {
+            play("buy");
+            onConfirm(name);
+          }}
           className="h-14 w-full rounded-2xl border-b-[5px] border-leaf-600 bg-leaf-500 font-black text-[17px] text-white disabled:opacity-40 active:translate-y-0.5 active:border-b-0"
         >
           {STRINGS.animalBuy} · {species.cost} 🪙

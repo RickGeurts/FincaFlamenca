@@ -3,6 +3,7 @@ import { STRINGS } from "../content/strings.es";
 import type { Exercise } from "../content/types";
 import type { GradeResult } from "../learning/grader";
 import { exerciseWordIds } from "../learning/lesson";
+import { play } from "../utils/sfx";
 import type { AnswerRecord } from "../state/store";
 import { LessonPath, TYPE_ICON } from "./LessonPath";
 import { CheckFooterProvider, type CheckAction } from "./exercises/CheckButton";
@@ -53,6 +54,7 @@ export function LessonPlayer({ exercises, title, reward, onFinish, onExit }: Pro
 
   const handleResult = (result: GradeResult) => {
     setFeedback(result);
+    play(result.correct ? "correct" : "wrong");
     setAnswers((prev) => [
       ...prev,
       { wordIds: exerciseWordIds(exercise), correct: result.correct },

@@ -172,6 +172,24 @@ button {
   animation: toast-in 0.16s ease-out both;
 }
 
+/* Paper falling, for the one moment worth interrupting her: a new classroom. */
+@keyframes confetti {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(540deg);
+    opacity: 0;
+  }
+}
+.animate-confetti {
+  animation: confetti 2.4s ease-in forwards;
+}
+
 /* Someone who has asked for less movement gets the information without the
    theatre: fades stay, loops and overshoot go. */
 @media (prefers-reduced-motion: reduce) {
@@ -183,7 +201,8 @@ button {
   }
   .animate-sway,
   .animate-ready-bob,
-  .animate-coin-float {
+  .animate-coin-float,
+  .animate-confetti {
     animation: none;
   }
 }

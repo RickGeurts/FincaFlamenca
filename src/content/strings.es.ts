@@ -118,6 +118,41 @@ export const STRINGS = {
   alcaldiaTitle: "La alcaldía",
   alcaldiaSubtitle: "het gemeentehuis",
 
+  // Celebraciones
+  unitOpened: (n: number) => `¡Aula ${n} abierta!`,
+  celebrateOn: "¡Vamos!",
+  soundLabel: "Sonidos",
+  soundOn: "Con sonido 🔔",
+  soundOff: "En silencio 🔕",
+  soundHint: "El juego se puede jugar entero sin sonido.",
+
+  // Bienvenida (first run)
+  welcomeSteps: [
+    {
+      emoji: "🌻",
+      title: "Bienvenida a tu finca",
+      body: "Esta granja es tuya. Todo lo que ves aquí está en español; el neerlandés es lo que vamos a aprender juntas.",
+    },
+    {
+      emoji: "🏫",
+      title: "Las lecciones pagan la finca",
+      body: "En la escuela ganas munten con cada lección y cada repaso. Con esas munten compras semillas, animales y todo lo demás.",
+    },
+    {
+      emoji: "🐄",
+      title: "Toca cualquier cosa",
+      body: "Cada animal, cada planta y cada objeto te dice su palabra en neerlandés, con su artículo y su audio. Es gratis y siempre está.",
+    },
+    {
+      emoji: "💚",
+      title: "Sin prisa y sin castigos",
+      body: "Nada se pierde. Si un cultivo se marchita, repasas unas palabras y revive. Si fallas, te muestro la respuesta y seguimos.",
+    },
+  ],
+  welcomeNext: "Seguir",
+  welcomeStart: "Empezar 🌱",
+  welcomeSkip: "Saltar",
+
   // Mi look — el armario
   myLook: "Mi look",
   myLookNl: "mijn outfit",

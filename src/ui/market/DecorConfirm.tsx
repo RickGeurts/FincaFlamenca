@@ -6,6 +6,7 @@ import { buildWordChoice, shuffle } from "../../learning/lesson";
 import { randomRng } from "../../utils/rng";
 import { canSpeak, speak } from "../../utils/speak";
 import { Modal } from "../Modal";
+import { play } from "../../utils/sfx";
 import { PropThumb } from "../farm/PropThumb";
 
 /** Same micro-lesson as the animals: word, article, audio, one free question. */
@@ -80,7 +81,10 @@ export function DecorConfirm({
 
         <button
           disabled={!answeredCorrectly}
-          onClick={onConfirm}
+          onClick={() => {
+            play("buy");
+            onConfirm();
+          }}
           className="h-14 w-full rounded-2xl border-b-[5px] border-leaf-600 bg-leaf-500 font-black text-[17px] text-white disabled:opacity-40 active:translate-y-0.5 active:border-b-0"
         >
           {STRINGS.decorBuy} · {decor.price} 🪙

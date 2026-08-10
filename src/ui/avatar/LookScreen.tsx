@@ -20,6 +20,7 @@ import {
 } from "../../game/avatar";
 import { canSpeak, speak } from "../../utils/speak";
 import { useGameStore } from "../../state/store";
+import { play } from "../../utils/sfx";
 import { AvatarFigure } from "./AvatarFigure";
 import { ItemSheet } from "./ItemSheet";
 
@@ -79,7 +80,10 @@ export function LookScreen({ onBack }: { onBack: () => void }) {
     if (!current) return;
     wearAvatar({ ...avatar, [which]: { ...current, colorId } });
     const paid = useColor(colorId);
-    if (paid > 0) setReward(paid);
+    if (paid > 0) {
+      play("coin");
+      setReward(paid);
+    }
     const colour = COLORS.find((c) => c.id === colorId);
     if (colour) speak(WORDS_BY_ID.get(colour.word)?.nl ?? colorId);
   };

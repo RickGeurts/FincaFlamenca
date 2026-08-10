@@ -8,6 +8,7 @@ import {
 } from "../../game/avatar";
 import { canSpeak, speak } from "../../utils/speak";
 import { useGameStore } from "../../state/store";
+import { play } from "../../utils/sfx";
 
 /**
  * La prenda: one garment, close up. The word with its article and audio, a
@@ -121,6 +122,7 @@ export function ItemSheet({
             <button
               disabled={!affordable}
               onClick={() => {
+                play("buy");
                 buyWearable(item.id);
                 onClose();
               }}

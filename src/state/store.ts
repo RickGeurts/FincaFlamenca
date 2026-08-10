@@ -69,6 +69,8 @@ export interface SessionSummary extends SessionReward {
    * started after moving both ways.
    */
   boxChanges: BoxChange[];
+  /** A classroom that opened with this session's XP, if one did. */
+  unlockedUnit?: number;
 }
 
 /** What a finished quest handed over, so the screen can celebrate it. */
@@ -104,6 +106,9 @@ interface GameState {
   purchasedCrops: string[]; // crop ids whose first-purchase micro-lesson is done
   purchasedDecor: string[]; // decor kinds whose first-purchase micro-lesson is done
   purchasedAnimals: string[]; // species whose first-purchase micro-lesson is done
+  /** She has seen the welcome. Persisted: it is shown exactly once. */
+  onboarded: boolean;
+  finishOnboarding(): void;
   hydrated: boolean;
   /** Dev only, not persisted: crops grow in 10 seconds. */
   devFast: boolean;
@@ -302,12 +307,17 @@ export const useGameStore = create<GameState>()(
       purchasedCrops: [],
       purchasedDecor: [],
       purchasedAnimals: [],
+      onboarded: false,
       hydrated: false,
       devFast: import.meta.env.DEV,
 
       place: "finca",
       farmTool: "none",
       marketCategory: "seeds",
+
+      finishOnboarding() {
+        setState({ onboarded: true });
+      },
 
       setPlace(place) {
         setState({ place, farmTool: "none" });
@@ -350,16 +360,20 @@ export const useGameStore = create<GameState>()(
         const reward = sessionReward({ kind, correct, total, streakDays: streak.days });
 
         const xp = state.player.xp + reward.xp;
+        const unlockedUnits = unlockedUnitsForXp(xp);
+        // Crossing a gate is worth a moment on the end screen; work it out
+        // here, where both the before and the after are in hand.
+        const opened = unlockedUnits.find((u) => !state.player.unlockedUnits.includes(u));
         const player: Player = {
           ...state.player,
           munten: state.player.munten + reward.munten,
           xp,
           streak,
-          unlockedUnits: unlockedUnitsForXp(xp),
+          unlockedUnits,
         };
 
         setState({ player, words });
-        return { ...reward, correct, total, kind, boxChanges };
+        return { ...reward, correct, total, kind, boxChanges, unlockedUnit: opened };
       },
 
       tillTile(tileId) {
@@ -675,6 +689,7 @@ export const useGameStore = create<GameState>()(
       storage: createJSONStorage(() => idbStorage),
       partialize: (s) => ({
         place: s.place,
+        onboarded: s.onboarded,
         player: s.player,
         words: s.words,
         exposures: s.exposures,

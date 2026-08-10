@@ -7,6 +7,7 @@ import { randomRng } from "../../utils/rng";
 import { canSpeak, speak } from "../../utils/speak";
 import { formatDuration } from "../../utils/time";
 import { useGameStore } from "../../state/store";
+import { play } from "../../utils/sfx";
 import { Modal } from "../Modal";
 import { PropThumb } from "./PropThumb";
 
@@ -80,7 +81,10 @@ export function SeedSheet({ plotId, onPlanted, onClose }: Props) {
       isFirstPurchase={!purchasedCrops.includes(selected.id)}
       onConfirm={() => {
         markCropPurchased(selected.id);
-        if (plantCrop(plotId, selected.id)) onPlanted?.(plotId);
+        if (plantCrop(plotId, selected.id)) {
+          play("plant");
+          onPlanted?.(plotId);
+        }
         onClose();
       }}
       onClose={() => setSelected(null)}

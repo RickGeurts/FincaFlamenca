@@ -12,6 +12,7 @@ import {
 } from "../../quests/dialogue";
 import { canSpeak, speak } from "../../utils/speak";
 import { useGameStore, type QuestOutcome } from "../../state/store";
+import { play } from "../../utils/sfx";
 
 /** Stand-in for the player's own character art, which is M4 work. */
 const PLAYER_FACE = "👩🏽‍🌾";
@@ -54,6 +55,7 @@ export function QuestScreen({ quest, onLeave }: Props) {
   // The reward lands the moment the conversation ends, once.
   useEffect(() => {
     if (!state.done || outcome) return;
+    play("celebrate");
     setOutcome(completeQuest(quest.id));
   }, [state.done, outcome, completeQuest, quest.id]);
 

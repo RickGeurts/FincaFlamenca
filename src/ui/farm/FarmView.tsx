@@ -16,6 +16,7 @@ import { randomRng } from "../../utils/rng";
 import { formatDuration } from "../../utils/time";
 import { useGameStore } from "../../state/store";
 import { useNow } from "../useNow";
+import { play } from "../../utils/sfx";
 import { Modal } from "../Modal";
 import type { FloatingCoin } from "./three/FarmScene";
 
@@ -140,6 +141,7 @@ export function FarmView({ onStartRevive, onSettings, onStartQuest }: Props) {
     } else if (state === "ready") {
       const earned = harvestCrop(tile.id);
       if (earned > 0) {
+        play("harvest");
         spawnCoin(tile.id, earned);
         logExposure(def.word);
         maybeChore(def.word);

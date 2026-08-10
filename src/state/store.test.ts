@@ -456,3 +456,18 @@ describe("the wardrobe", () => {
     expect(player.munten).toBe(10);
   });
 });
+
+describe("the welcome", () => {
+  beforeEach(() => mem.clear());
+
+  it("is waiting for somebody who has never played", async () => {
+    const store = await loadStore();
+    expect(store.getState().onboarded).toBe(false);
+  });
+
+  it("is over for good once she has been through it", async () => {
+    const store = await loadStore();
+    store.getState().finishOnboarding();
+    expect(store.getState().onboarded).toBe(true);
+  });
+});
