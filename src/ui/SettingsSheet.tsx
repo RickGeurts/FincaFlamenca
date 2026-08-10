@@ -4,6 +4,7 @@ import { SoundPanel } from "./SoundPanel";
 import { VoicePanel } from "./VoicePanel";
 import { SyncPanel } from "./SyncPanel";
 import { BackupPanel } from "./BackupPanel";
+import { DevPanel } from "./DevPanel";
 
 /**
  * Everything that is a setting rather than something to play with. It moved
@@ -19,6 +20,7 @@ export function SettingsSheet({ onClose }: { onClose: () => void }) {
         <VoicePanel />
         <SyncPanel />
         <BackupPanel />
+        <DevPanel onClose={onClose} />
       </div>
     </Modal>
   );

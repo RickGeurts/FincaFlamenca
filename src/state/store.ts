@@ -46,6 +46,8 @@ import { initProgress, review, type WordProgress } from "../learning/srs";
 import { getQuest } from "../content";
 import { parseUnlock, payoutFor } from "../quests/quests";
 import { dateString } from "../utils/time";
+import { setPreferredVoice } from "../utils/speak";
+import { setMuted } from "../utils/sfx";
 
 export interface AnswerRecord {
   wordIds: string[];
@@ -168,6 +170,10 @@ interface GameState {
   // Dev helpers
   setDevFast(on: boolean): void;
   devAddMunten(amount: number): void;
+  /** Show the welcome again on the next render, keeping everything else. */
+  devReplayOnboarding(): void;
+  /** Wipe the save and every preference, so the next load is a first load. */
+  devReset(): Promise<void>;
 }
 
 /** What a backup file holds. Versioned so a future format can be detected. */
@@ -681,6 +687,26 @@ export const useGameStore = create<GameState>()(
       devAddMunten(amount) {
         const state = getState();
         setState({ player: { ...state.player, munten: state.player.munten + amount } });
+      },
+
+      devReplayOnboarding() {
+        setState({ onboarded: false });
+      },
+
+      async devReset() {
+        // Saving is debounced, so a write queued a moment ago would land on
+        // top of a cleared store and quietly resurrect the farm. Clear, wait
+        // out the debounce, clear again — then reload into a virgin game.
+        await useGameStore.persist.clearStorage();
+        await new Promise((resolve) => setTimeout(resolve, DEBOUNCE_MS + 100));
+        await useGameStore.persist.clearStorage();
+        // The tiny preferences live outside the save; a first-time experience
+        // means the voice and the sound switch start over too.
+        setPreferredVoice(null);
+        setMuted(false);
+        // Reloading is what turns a cleared store into a first run. Guarded so
+        // the wipe itself can be tested without a browser around it.
+        if (typeof location !== "undefined") location.reload();
       },
     }),
     {

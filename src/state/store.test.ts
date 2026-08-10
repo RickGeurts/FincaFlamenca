@@ -471,3 +471,46 @@ describe("the welcome", () => {
     expect(store.getState().onboarded).toBe(true);
   });
 });
+
+describe("starting over (dev tools)", () => {
+  beforeEach(() => mem.clear());
+
+  it("shows the welcome again without touching the farm", async () => {
+    const store = await loadStore();
+    store.getState().finishOnboarding();
+    store.getState().tillTile("t3");
+
+    store.getState().devReplayOnboarding();
+
+    expect(store.getState().onboarded).toBe(false);
+    // ...and everything she built is still there.
+    expect(store.getState().farm.tiles.find((t) => t.id === "t3")?.kind).toBe("field");
+  });
+
+  it("wipes the save so the next load is a first load", async () => {
+    const store = await loadStore();
+    store.setState({ player: { ...store.getState().player, munten: 999 } });
+    store.getState().finishOnboarding();
+    // Let the debounced autosave write it, so there is really something there.
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    expect(mem.get(SAVE_KEY)).toBeDefined();
+
+    await store.getState().devReset();
+
+    expect(mem.get(SAVE_KEY), "the save survived the reset").toBeUndefined();
+    const fresh = await loadStore();
+    expect(fresh.getState().onboarded).toBe(false);
+    expect(fresh.getState().player.munten).not.toBe(999);
+  });
+
+  it("does not let a pending save resurrect the farm", async () => {
+    // The autosave is debounced. A wipe that fires just after a change has to
+    // outlive that timer, or the farm quietly comes back.
+    const store = await loadStore();
+    store.setState({ player: { ...store.getState().player, munten: 4242 } });
+
+    await store.getState().devReset();
+
+    expect(mem.get(SAVE_KEY)).toBeUndefined();
+  });
+});

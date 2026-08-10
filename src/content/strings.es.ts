@@ -345,6 +345,15 @@ export const STRINGS = {
   // Dev tools (dev builds only)
   devFastTimers: "⚡ Cultivos en 10 s",
   devAddMunten: "+100 🪙",
+  devTitle: "Herramientas de prueba",
+  devOnlyHere: "Sólo aparecen mientras desarrollas; no existen en el juego publicado.",
+  devReplayWelcome: "👋 Ver la bienvenida otra vez",
+  devReplayWelcomeHint: "Mantiene la granja y el progreso.",
+  devReset: "🧹 Empezar de cero",
+  devResetHint: "Borra la granja, las palabras, la ropa y los ajustes. No se puede deshacer.",
+  devResetConfirm: "¿Seguro? Se borra todo y el juego arranca como la primera vez.",
+  devResetYes: "Sí, borrar todo",
+  devResetting: "Borrando...",
 
   // Crash recovery
   errorTitle: "Algo salió mal 😿",
