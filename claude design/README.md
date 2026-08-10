@@ -133,6 +133,7 @@ Dutch strings in the mockups (`de tulp`, `het schaap`, `Manchas heeft honger!`, 
 - `README.md` — this file.
 - `DESIGN_SYSTEM.md` — tokens, type scale, component recipes, motion.
 - `SCREENS.md` — screen-by-screen spec with exact values and final copy.
+- `AVATAR_CLOTHING.md` — avatar layer model, art production list, and the full clothing/colour catalog with Dutch vocabulary (turn 2a screens).
 - `1b-el-pueblo-reference.html` — the eight 1b screens, open in a browser.
 - `Finca Flamenca Options.dc.html` — the full options board (1a, 1b, 1c) for context.
 

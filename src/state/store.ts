@@ -6,8 +6,9 @@
 import { create } from "zustand";
 import { persist, createJSONStorage, type StateStorage } from "zustand/middleware";
 import { del, get, set } from "idb-keyval";
-import type { Player } from "../game/types";
-import { DEFAULT_AVATAR } from "../game/types";
+import type { AvatarConfig, Player } from "../game/types";
+import { DEFAULT_AVATAR, DEFAULT_OWNED_ITEMS } from "../game/types";
+import { COLOR_BY_ID, COLOR_REWARD_MUNTEN, getWearable, type ColorId } from "../game/avatar";
 import {
   DEV_FAST_GROW_MS,
   ECONOMY,
@@ -137,6 +138,13 @@ interface GameState {
   /** Remove an object, refunding half its price. Returns munten given back. */
   removeObject(objectId: string): number;
 
+  // Wardrobe. Wearing is free and instant; only buying costs.
+  wearAvatar(avatar: AvatarConfig): void;
+  /** Buy a garment. Returns false only when she cannot afford it. */
+  buyWearable(itemId: string): boolean;
+  /** Dress in a colour. Pays the small first-time reward, or 0 after that. */
+  useColor(colorId: ColorId): number;
+
   /**
    * Finish a conversation and collect what it is worth. Safe to call again on
    * a replay: it pays the small thank-you and unlocks nothing twice.
@@ -213,7 +221,7 @@ export function parseSave(text: string): SaveFile["state"] | null {
   const saved = file.state;
   if (!saved.player || !saved.farm || !Array.isArray(saved.farm.tiles)) return null;
   return {
-    player: saved.player,
+    player: normalizePlayer(saved.player),
     words: saved.words ?? {},
     exposures: saved.exposures ?? {},
     farm: normalizeFarm(saved.farm),
@@ -242,10 +250,31 @@ export const initialPlayer = (): Player => ({
   xp: 0,
   streak: EMPTY_STREAK,
   avatar: DEFAULT_AVATAR,
+  ownedItems: [...DEFAULT_OWNED_ITEMS],
+  usedColors: [],
   unlockedUnits: [1],
   completedQuests: [],
   landLevel: 1,
 });
+
+/**
+ * A player saved before the wardrobe existed has no avatar worth the name and
+ * owns nothing. Filling that in on load means an old save opens dressed
+ * instead of as a naked default object.
+ */
+export function normalizePlayer(saved: Player | undefined): Player {
+  const base = initialPlayer();
+  if (!saved) return base;
+  const wardrobeReady =
+    saved.avatar !== undefined && typeof (saved.avatar as { skin?: number }).skin === "number";
+  return {
+    ...base,
+    ...saved,
+    avatar: wardrobeReady ? saved.avatar : base.avatar,
+    ownedItems: saved.ownedItems ?? base.ownedItems,
+    usedColors: saved.usedColors ?? [],
+  };
+}
 
 /**
  * A save can carry the current version number but an older shape — e.g. one
@@ -427,6 +456,45 @@ export const useGameStore = create<GameState>()(
           },
         });
         return def.produceSellPrice;
+      },
+
+      wearAvatar(avatar) {
+        const state = getState();
+        setState({ player: { ...state.player, avatar } });
+      },
+
+      buyWearable(itemId) {
+        const state = getState();
+        const def = getWearable(itemId);
+        if (state.player.ownedItems.includes(itemId)) return true;
+        if (state.player.munten < def.price) return false;
+        setState({
+          player: {
+            ...state.player,
+            munten: state.player.munten - def.price,
+            ownedItems: [...state.player.ownedItems, itemId],
+          },
+        });
+        // Owning it is meeting the word: it joins the review queue with its
+        // article, the same way tapping something on the farm does.
+        getState().logExposure(def.word);
+        return true;
+      },
+
+      useColor(colorId) {
+        const state = getState();
+        if (state.player.usedColors.includes(colorId)) return 0;
+        const colour = COLOR_BY_ID.get(colorId);
+        if (!colour) return 0;
+        setState({
+          player: {
+            ...state.player,
+            munten: state.player.munten + COLOR_REWARD_MUNTEN,
+            usedColors: [...state.player.usedColors, colorId],
+          },
+        });
+        getState().logExposure(colour.word);
+        return COLOR_REWARD_MUNTEN;
       },
 
       completeQuest(questId) {
@@ -645,6 +713,7 @@ export const useGameStore = create<GameState>()(
           ...current,
           ...saved,
           farm: normalizeFarm(saved.farm),
+          player: normalizePlayer(saved.player),
           // Saves from before the village existed have no place; the farm is
           // the right thing to open on anyway.
           place: saved.place ?? "finca",

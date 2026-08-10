@@ -7,6 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { initialFarm, type FarmState } from "../game/farm";
 import { ECONOMY, getDecorDef, getSpeciesDef } from "../game/economy";
 import { getQuest } from "../content";
+import { COLOR_REWARD_MUNTEN, getWearable } from "../game/avatar";
 import { SAVE_VERSION, exportSave, parseSave } from "./store";
 import { animalKey, decorKey } from "../game/placement";
 
@@ -351,5 +352,107 @@ describe("finishing a quest", () => {
     const before = store.getState().player.munten;
     expect(store.getState().completeQuest("no-such-quest").munten).toBe(0);
     expect(store.getState().player.munten).toBe(before);
+  });
+});
+
+describe("the wardrobe", () => {
+  beforeEach(() => mem.clear());
+
+  it("dresses her in the starter outfit from the first minute", async () => {
+    const store = await loadStore();
+    const player = store.getState().player;
+    expect(player.ownedItems).toContain("hat_vueltiao");
+    expect(player.avatar.top?.itemId).toBeTruthy();
+  });
+
+  it("charges for a garment and puts the word into her review queue", async () => {
+    const store = await loadStore();
+    store.setState({ player: { ...store.getState().player, munten: 200 } });
+
+    expect(store.getState().buyWearable("top_trui")).toBe(true);
+
+    expect(store.getState().player.munten).toBe(200 - getWearable("top_trui").price);
+    expect(store.getState().player.ownedItems).toContain("top_trui");
+    // Owning it counts as meeting it: it is now a word she will be asked.
+    expect(store.getState().words[getWearable("top_trui").word]).toBeDefined();
+  });
+
+  it("refuses what she cannot afford, and charges nothing", async () => {
+    const store = await loadStore();
+    store.setState({ player: { ...store.getState().player, munten: 5 } });
+
+    expect(store.getState().buyWearable("hat_kroon")).toBe(false);
+    expect(store.getState().player.munten).toBe(5);
+    expect(store.getState().player.ownedItems).not.toContain("hat_kroon");
+  });
+
+  it("never charges twice for the same garment", async () => {
+    const store = await loadStore();
+    store.setState({ player: { ...store.getState().player, munten: 300 } });
+    store.getState().buyWearable("top_jas");
+    const after = store.getState().player.munten;
+
+    expect(store.getState().buyWearable("top_jas")).toBe(true);
+    expect(store.getState().player.munten).toBe(after);
+  });
+
+  it("pays the little reward the first time a colour is used, and only then", async () => {
+    const store = await loadStore();
+    const before = store.getState().player.munten;
+
+    expect(store.getState().useColor("rood")).toBe(COLOR_REWARD_MUNTEN);
+    expect(store.getState().player.munten).toBe(before + COLOR_REWARD_MUNTEN);
+    expect(store.getState().useColor("rood")).toBe(0);
+    expect(store.getState().player.munten).toBe(before + COLOR_REWARD_MUNTEN);
+  });
+
+  it("teaches the colour word along with the coin", async () => {
+    const store = await loadStore();
+    store.getState().useColor("groen");
+    expect(store.getState().words.groen).toBeDefined();
+  });
+
+  it("costs nothing to change what she is wearing", async () => {
+    const store = await loadStore();
+    const before = store.getState().player.munten;
+    const avatar = store.getState().player.avatar;
+
+    store.getState().wearAvatar({ ...avatar, hat: undefined });
+
+    expect(store.getState().player.munten).toBe(before);
+    expect(store.getState().player.avatar.hat).toBeUndefined();
+  });
+
+  it("dresses a save that predates the wardrobe", async () => {
+    // A player saved before any of this existed has an avatar of the old
+    // shape and owns nothing. She must still open the game wearing clothes.
+    const old = {
+      state: {
+        player: {
+          munten: 10,
+          xp: 0,
+          streak: { days: 0, lastActive: "" },
+          avatar: { outfit: "overol" },
+          unlockedUnits: [1],
+          completedQuests: [],
+          landLevel: 1,
+        },
+        farm: initialFarm(),
+      },
+      version: SAVE_VERSION,
+    };
+    // Saving is debounced, so a write from an earlier test can still be in
+    // flight and land on top of this one. Let it land, then lay the old save.
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    mem.clear();
+    mem.set(SAVE_KEY, JSON.stringify(old));
+
+    const store = await loadStore();
+    const player = store.getState().player;
+    expect(typeof player.avatar.skin).toBe("number");
+    expect(player.ownedItems.length).toBeGreaterThan(0);
+    expect(player.usedColors).toEqual([]);
+    // ...without losing what she had.
+    expect(player.munten).toBe(10);
   });
 });

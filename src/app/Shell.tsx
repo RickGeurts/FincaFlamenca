@@ -20,6 +20,7 @@ import { SettingsSheet } from "../ui/SettingsSheet";
 import { PlaceRail, type PlaceDef } from "../ui/village/PlaceRail";
 import { QuestScreen } from "../ui/quests/QuestScreen";
 import { QuestPlace } from "../ui/quests/QuestPlace";
+import { LookScreen } from "../ui/avatar/LookScreen";
 
 type View =
   | { name: "village" }
@@ -33,6 +34,7 @@ export function Shell() {
   const [view, setView] = useState<View>({ name: "village" });
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [questId, setQuestId] = useState<string | null>(null);
+  const [wardrobe, setWardrobe] = useState(false);
   const hydrated = useGameStore((s) => s.hydrated);
   const player = useGameStore((s) => s.player);
   const words = useGameStore((s) => s.words);
@@ -216,8 +218,11 @@ export function Shell() {
           breeder={place === "criadero"}
           onBack={() => setPlace("finca")}
           onStartQuest={startQuest}
+          onOpenWardrobe={() => setWardrobe(true)}
         />
       )}
+
+      {wardrobe && <LookScreen onBack={() => setWardrobe(false)} />}
 
       {place === "alcaldia" && (
         <QuestPlace onBack={() => setPlace("finca")} onStartQuest={startQuest} />

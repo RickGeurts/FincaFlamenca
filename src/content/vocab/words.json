@@ -597,49 +597,63 @@
       "article": "de",
       "es": "el color",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "Welke kleur vind jij mooi?",
+      "example_es": "¿Qué color te gusta?"
     },
     {
       "id": "rood",
       "nl": "rood",
       "es": "rojo",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De tulp is rood.",
+      "example_es": "El tulipán es rojo."
     },
     {
       "id": "blauw",
       "nl": "blauw",
       "es": "azul",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De lucht is blauw.",
+      "example_es": "El cielo es azul."
     },
     {
       "id": "geel",
       "nl": "geel",
       "es": "amarillo",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De banaan is geel.",
+      "example_es": "El banano es amarillo."
     },
     {
       "id": "groen",
       "nl": "groen",
       "es": "verde",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "Het gras is groen.",
+      "example_es": "El pasto es verde."
     },
     {
       "id": "wit",
       "nl": "wit",
       "es": "blanco",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De melk is wit.",
+      "example_es": "La leche es blanca."
     },
     {
       "id": "zwart",
       "nl": "zwart",
       "es": "negro",
       "category": "colours",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De kip is zwart en wit.",
+      "example_es": "La gallina es negra y blanca."
     },
     {
       "id": "jas",
@@ -647,7 +661,9 @@
       "article": "de",
       "es": "el abrigo",
       "category": "clothes",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De jas is warm.",
+      "example_es": "La chaqueta es abrigada."
     },
     {
       "id": "broek",
@@ -655,7 +671,9 @@
       "article": "de",
       "es": "el pantalón",
       "category": "clothes",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De broek is blauw.",
+      "example_es": "El pantalón es azul."
     },
     {
       "id": "trui",
@@ -663,7 +681,9 @@
       "article": "de",
       "es": "el suéter",
       "category": "clothes",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "Ik draag een groene trui.",
+      "example_es": "Llevo un suéter verde."
     },
     {
       "id": "jurk",
@@ -671,7 +691,9 @@
       "article": "de",
       "es": "el vestido",
       "category": "clothes",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "De jurk is mooi.",
+      "example_es": "El vestido es bonito."
     },
     {
       "id": "schoenen",
@@ -679,14 +701,18 @@
       "article": "de",
       "es": "los zapatos",
       "category": "clothes",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "Mijn schoenen zijn vuil.",
+      "example_es": "Mis zapatos están sucios."
     },
     {
       "id": "dragen",
       "nl": "dragen",
       "es": "llevar puesto",
       "category": "clothes",
-      "unit": 6
+      "unit": 6,
+      "example_nl": "Wat ga je vandaag dragen?",
+      "example_es": "¿Qué te vas a poner hoy?"
     },
     {
       "id": "familie",
@@ -803,7 +829,9 @@
       "article": "de",
       "es": "la lluvia",
       "category": "weather",
-      "unit": 8
+      "unit": 8,
+      "example_nl": "Na de regen komt de zon.",
+      "example_es": "Después de la lluvia sale el sol."
     },
     {
       "id": "wind",
@@ -880,7 +908,9 @@
       "article": "de",
       "es": "el invierno",
       "category": "weather",
-      "unit": 8
+      "unit": 8,
+      "example_nl": "In de winter is het koud.",
+      "example_es": "En invierno hace frío."
     },
     {
       "id": "weg",
@@ -968,7 +998,9 @@
       "article": "het",
       "es": "la fiesta",
       "category": "party",
-      "unit": 10
+      "unit": 10,
+      "example_nl": "Op de boerderij is een feest.",
+      "example_es": "En la granja hay una fiesta."
     },
     {
       "id": "vieren",
@@ -1292,6 +1324,352 @@
       "unit": 4,
       "example_nl": "De arepakraam staat op de markt.",
       "example_es": "El puesto de arepas está en el mercado."
+    },
+    {
+      "id": "kort-haar",
+      "nl": "korte haar",
+      "article": "het",
+      "es": "el pelo corto",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Ik vind het korte haar mooi.",
+      "example_es": "Me gusta el pelo corto."
+    },
+    {
+      "id": "staart",
+      "nl": "staart",
+      "article": "de",
+      "es": "la cola",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Mijn haar zit in een staart.",
+      "example_es": "Mi pelo está en una cola."
+    },
+    {
+      "id": "krullen",
+      "nl": "krullen",
+      "article": "de",
+      "es": "los rizos",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Ik heb mooie krullen.",
+      "example_es": "Tengo rizos bonitos."
+    },
+    {
+      "id": "vlecht",
+      "nl": "vlecht",
+      "article": "de",
+      "es": "la trenza",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Zij draagt een vlecht.",
+      "example_es": "Ella lleva una trenza."
+    },
+    {
+      "id": "knot",
+      "nl": "knot",
+      "article": "de",
+      "es": "el moño",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Een knot is handig op de boerderij.",
+      "example_es": "Un moño es práctico en la granja."
+    },
+    {
+      "id": "hemd",
+      "nl": "hemd",
+      "article": "het",
+      "es": "la blusa",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Het hemd is wit.",
+      "example_es": "La blusa es blanca."
+    },
+    {
+      "id": "regenjas",
+      "nl": "regenjas",
+      "article": "de",
+      "es": "el impermeable",
+      "category": "clothing",
+      "unit": 7,
+      "example_nl": "Het regent: ik draag mijn regenjas.",
+      "example_es": "Llueve: llevo mi impermeable."
+    },
+    {
+      "id": "rok",
+      "nl": "rok",
+      "article": "de",
+      "es": "la falda",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De rok is rood.",
+      "example_es": "La falda es roja."
+    },
+    {
+      "id": "korte-broek",
+      "nl": "korte broek",
+      "article": "de",
+      "es": "el short",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "In de zomer draag ik een korte broek.",
+      "example_es": "En verano llevo un short."
+    },
+    {
+      "id": "overall",
+      "nl": "overall",
+      "article": "de",
+      "es": "el peto",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De boerin draagt een overall.",
+      "example_es": "La granjera lleva un peto."
+    },
+    {
+      "id": "hoed",
+      "nl": "hoed",
+      "article": "de",
+      "es": "el sombrero",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De hoed komt uit Colombia.",
+      "example_es": "El sombrero viene de Colombia."
+    },
+    {
+      "id": "pet",
+      "nl": "pet",
+      "article": "de",
+      "es": "la gorra",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Hij draagt een blauwe pet.",
+      "example_es": "Él lleva una gorra azul."
+    },
+    {
+      "id": "strohoed",
+      "nl": "strohoed",
+      "article": "de",
+      "es": "el sombrero de paja",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Met de zon draag ik een strohoed.",
+      "example_es": "Con el sol llevo un sombrero de paja."
+    },
+    {
+      "id": "muts",
+      "nl": "muts",
+      "article": "de",
+      "es": "el gorro",
+      "category": "clothing",
+      "unit": 7,
+      "example_nl": "In de winter draag ik een muts.",
+      "example_es": "En invierno llevo un gorro."
+    },
+    {
+      "id": "bloem",
+      "nl": "bloem",
+      "article": "de",
+      "es": "la flor",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Ik draag een bloem in mijn haar.",
+      "example_es": "Llevo una flor en el pelo."
+    },
+    {
+      "id": "kroon",
+      "nl": "kroon",
+      "article": "de",
+      "es": "la corona",
+      "category": "clothing",
+      "unit": 8,
+      "example_nl": "Op het feest draagt zij een kroon.",
+      "example_es": "En la fiesta ella lleva una corona."
+    },
+    {
+      "id": "laars",
+      "nl": "laars",
+      "article": "de",
+      "es": "la bota",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De laars staat in de modder.",
+      "example_es": "La bota está en el barro."
+    },
+    {
+      "id": "schoen",
+      "nl": "schoen",
+      "article": "de",
+      "es": "el zapato",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Mijn schoen is zwart.",
+      "example_es": "Mi zapato es negro."
+    },
+    {
+      "id": "sandaal",
+      "nl": "sandaal",
+      "article": "de",
+      "es": "la sandalia",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De sandaal is bruin.",
+      "example_es": "La sandalia es café."
+    },
+    {
+      "id": "klomp",
+      "nl": "klomp",
+      "article": "de",
+      "es": "el zueco",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De klomp is van hout.",
+      "example_es": "El zueco es de madera."
+    },
+    {
+      "id": "sjaal",
+      "nl": "sjaal",
+      "article": "de",
+      "es": "la bufanda",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Het is koud: neem je sjaal mee.",
+      "example_es": "Hace frío: llévate la bufanda."
+    },
+    {
+      "id": "bril",
+      "nl": "bril",
+      "article": "de",
+      "es": "las gafas",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Zonder bril zie ik niets.",
+      "example_es": "Sin gafas no veo nada."
+    },
+    {
+      "id": "zonnebril",
+      "nl": "zonnebril",
+      "article": "de",
+      "es": "las gafas de sol",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "In de zon draag ik een zonnebril.",
+      "example_es": "Con sol llevo gafas de sol."
+    },
+    {
+      "id": "ketting",
+      "nl": "ketting",
+      "article": "de",
+      "es": "el collar",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De ketting is een cadeau.",
+      "example_es": "El collar es un regalo."
+    },
+    {
+      "id": "handschoen",
+      "nl": "handschoen",
+      "article": "de",
+      "es": "el guante",
+      "category": "clothing",
+      "unit": 7,
+      "example_nl": "Ik werk met handschoenen.",
+      "example_es": "Trabajo con guantes."
+    },
+    {
+      "id": "rugzak",
+      "nl": "rugzak",
+      "article": "de",
+      "es": "la mochila",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "Mijn rugzak is groen.",
+      "example_es": "Mi mochila es verde."
+    },
+    {
+      "id": "tas",
+      "nl": "tas",
+      "article": "de",
+      "es": "el bolso",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De tas komt uit Colombia.",
+      "example_es": "El bolso viene de Colombia."
+    },
+    {
+      "id": "paraplu",
+      "nl": "paraplu",
+      "article": "de",
+      "es": "el paraguas",
+      "category": "clothing",
+      "unit": 7,
+      "example_nl": "Het regent: waar is mijn paraplu?",
+      "example_es": "Llueve: ¿dónde está mi paraguas?"
+    },
+    {
+      "id": "mand",
+      "nl": "mand",
+      "article": "de",
+      "es": "la cesta",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De mand is vol appels.",
+      "example_es": "La cesta está llena de manzanas."
+    },
+    {
+      "id": "oranje",
+      "nl": "oranje",
+      "es": "naranja",
+      "category": "colors",
+      "unit": 7,
+      "example_nl": "De wortel is oranje.",
+      "example_es": "La zanahoria es naranja."
+    },
+    {
+      "id": "bruin",
+      "nl": "bruin",
+      "es": "café",
+      "category": "colors",
+      "unit": 7,
+      "example_nl": "De koe is bruin en wit.",
+      "example_es": "La vaca es café y blanca."
+    },
+    {
+      "id": "roze",
+      "nl": "roze",
+      "es": "rosado",
+      "category": "colors",
+      "unit": 7,
+      "example_nl": "Het varken is roze.",
+      "example_es": "El cerdo es rosado."
+    },
+    {
+      "id": "grijs",
+      "nl": "grijs",
+      "es": "gris",
+      "category": "colors",
+      "unit": 8,
+      "example_nl": "De lucht is grijs vandaag.",
+      "example_es": "El cielo está gris hoy."
+    },
+    {
+      "id": "boerin",
+      "nl": "boerin",
+      "article": "de",
+      "es": "la granjera",
+      "category": "clothing",
+      "unit": 6,
+      "example_nl": "De boerin werkt in de tuin.",
+      "example_es": "La granjera trabaja en el jardín."
+    },
+    {
+      "id": "zondag",
+      "nl": "zondag",
+      "article": "de",
+      "es": "el domingo",
+      "category": "clothing",
+      "unit": 7,
+      "example_nl": "Op zondag draag ik mijn jurk.",
+      "example_es": "El domingo llevo mi vestido."
     }
   ]
 }

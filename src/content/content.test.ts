@@ -6,6 +6,7 @@ import { UNITS, VOCAB, WORDS_BY_ID } from "./index";
 import { STRINGS } from "./strings.es";
 import { gradeExercise } from "../learning/lesson";
 import { ANIMAL_SPECIES, CROPS, DECOR, DECOR_CATEGORIES, decorByCategory } from "../game/economy";
+import { COLORS, OUTFITS, WEARABLES } from "../game/avatar";
 
 describe("content integrity", () => {
   it("every unit word exists in the vocab", () => {
@@ -86,6 +87,11 @@ describe("content integrity", () => {
       taught.add(species.produceWord);
     }
     for (const item of DECOR) taught.add(item.word);
+    // ...and so does the wardrobe: a garment, a colour and an outfit each
+    // carry a word she meets by wearing it.
+    for (const item of WEARABLES) taught.add(item.word);
+    for (const colour of COLORS) taught.add(colour.word);
+    for (const outfit of OUTFITS) taught.add(outfit.word);
 
     const unreachable = VOCAB.filter((w) => !taught.has(w.id)).map((w) => w.id);
     expect(unreachable, "unreachable vocabulary").toEqual([]);
@@ -136,7 +142,9 @@ describe("content integrity", () => {
   it("writes example sentences as sentences", () => {
     for (const word of VOCAB) {
       if (!word.example_nl) continue;
-      expect(word.example_nl.endsWith("."), `${word.id}: "${word.example_nl}"`).toBe(true);
+      // A full stop, or a question or exclamation mark — an example may ask
+      // something ("Welke kleur vind jij mooi?") as long as it is a sentence.
+      expect(/[.!?]$/.test(word.example_nl), `${word.id}: "${word.example_nl}"`).toBe(true);
       // The word itself has to actually appear in its own example.
       expect(
         word.example_nl.toLowerCase().includes(word.nl.toLowerCase()),

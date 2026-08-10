@@ -8,10 +8,10 @@ correctie ernaast, dan verwerk ik ze in de bronbestanden.
 
 ## 1. Lidwoorden — begin hier
 
-De/het is de kern van A1 en het makkelijkst mis te hebben. 97 zelfstandige
-naamwoorden: 75× **de**, 22× **het**.
+De/het is de kern van A1 en het makkelijkst mis te hebben. 128 zelfstandige
+naamwoorden: 104× **de**, 24× **het**.
 
-### De 22 het-woorden (het hoogste risico)
+### De 24 het-woorden (het hoogste risico)
 
 | ✓ | Nederlands | Spaans | Unit |
 | - | ---------- | ------ | ---- |
@@ -37,8 +37,10 @@ naamwoorden: 75× **de**, 22× **het**.
 | ☐ | **het pad** | el camino | 9 |
 | ☐ | **het hek** | la cerca | 3 |
 | ☐ | **het vat** | el barril | 3 |
+| ☐ | **het korte haar** | el pelo corto | 6 |
+| ☐ | **het hemd** | la blusa | 6 |
 
-### De 75 de-woorden
+### De 104 de-woorden
 
 | ✓ | Nederlands | Spaans | Unit |
 | - | ---------- | ------ | ---- |
@@ -117,6 +119,35 @@ naamwoorden: 75× **de**, 22× **het**.
 | ☐ | de wei | el prado | 3 |
 | ☐ | de plantenbak | la jardinera | 4 |
 | ☐ | de arepakraam | el puesto de arepas | 4 |
+| ☐ | de staart | la cola | 6 |
+| ☐ | de krullen | los rizos | 6 |
+| ☐ | de vlecht | la trenza | 6 |
+| ☐ | de knot | el moño | 6 |
+| ☐ | de regenjas | el impermeable | 7 |
+| ☐ | de rok | la falda | 6 |
+| ☐ | de korte broek | el short | 6 |
+| ☐ | de overall | el peto | 6 |
+| ☐ | de hoed | el sombrero | 6 |
+| ☐ | de pet | la gorra | 6 |
+| ☐ | de strohoed | el sombrero de paja | 6 |
+| ☐ | de muts | el gorro | 7 |
+| ☐ | de bloem | la flor | 6 |
+| ☐ | de kroon | la corona | 8 |
+| ☐ | de laars | la bota | 6 |
+| ☐ | de schoen | el zapato | 6 |
+| ☐ | de sandaal | la sandalia | 6 |
+| ☐ | de klomp | el zueco | 6 |
+| ☐ | de sjaal | la bufanda | 6 |
+| ☐ | de bril | las gafas | 6 |
+| ☐ | de zonnebril | las gafas de sol | 6 |
+| ☐ | de ketting | el collar | 6 |
+| ☐ | de handschoen | el guante | 7 |
+| ☐ | de rugzak | la mochila | 6 |
+| ☐ | de tas | el bolso | 6 |
+| ☐ | de paraplu | el paraguas | 7 |
+| ☐ | de mand | la cesta | 6 |
+| ☐ | de boerin | la granjera | 6 |
+| ☐ | de zondag | el domingo | 7 |
 
 ## 2. Overige woorden
 
@@ -186,6 +217,10 @@ Werkwoorden, bijvoeglijke naamwoorden, getallen en uitdrukkingen.
 | ☐ | gezellig | acogedor | 10 |
 | ☐ | blij | contento | 10 |
 | ☐ | proost | salud (brindis) | 10 |
+| ☐ | oranje | naranja | 7 |
+| ☐ | bruin | café | 7 |
+| ☐ | roze | rosado | 7 |
+| ☐ | grijs | gris | 8 |
 
 ## 3. Zinnen per unit
 
@@ -553,7 +588,7 @@ worden gehoord én gelezen zonder dat er een les aan te pas komt.
 
 ## Status
 
-159 woorden · 10 units · 129 oefeningen · 10 gesprekken
+194 woorden · 10 units · 129 oefeningen · 10 gesprekken
 
 Nog niet nagekeken (21):
 

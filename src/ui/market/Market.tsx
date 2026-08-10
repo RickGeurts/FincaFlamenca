@@ -22,7 +22,7 @@ import { PurchaseConfirm } from "../farm/SeedSheet";
 import { AnimalConfirm } from "./AnimalConfirm";
 import { DecorConfirm } from "./DecorConfirm";
 
-type Category = "seeds" | "animals" | DecorCategory;
+type Category = "seeds" | "animals" | "ropa" | DecorCategory;
 
 const CATEGORY_ICON: Record<Category, string> = {
   seeds: "🌱",
@@ -32,9 +32,12 @@ const CATEGORY_ICON: Record<Category, string> = {
   farm: "🚜",
   home: "🏠",
   pasture: "🐑",
+  ropa: "👗",
 };
 
-const CATEGORIES: Category[] = ["seeds", "animals", ...DECOR_CATEGORIES];
+// «Ropa» is not a shelf but a door: it opens the wardrobe, where trying
+// things on is free and only buying costs.
+const CATEGORIES: Category[] = ["seeds", "animals", ...DECOR_CATEGORIES, "ropa"];
 
 /** One line in the shop, whatever kind of thing it is. */
 interface Row {
@@ -63,10 +66,12 @@ export function Market({
   breeder,
   onBack,
   onStartQuest,
+  onOpenWardrobe,
 }: {
   breeder: boolean;
   onBack: () => void;
   onStartQuest: (questId: string) => void;
+  onOpenWardrobe: () => void;
 }) {
   const munten = useGameStore((s) => s.player.munten);
   const unlockedUnits = useGameStore((s) => s.player.unlockedUnits);
@@ -119,7 +124,8 @@ export function Market({
         onPick: () => setPicked({ kind: "animal", def: species }),
       });
     }
-  } else {
+  } else if (category !== "ropa") {
+    // «Ropa» never renders a list: tapping it walks straight into the wardrobe.
     for (const item of decorByCategory(category)) {
       const word = WORDS_BY_ID.get(item.word);
       const meta =
@@ -215,7 +221,7 @@ export function Market({
             return (
               <button
                 key={id}
-                onClick={() => setCategory(id)}
+                onClick={() => (id === "ropa" ? onOpenWardrobe() : setCategory(id))}
                 aria-pressed={active}
                 className={`flex flex-col items-center gap-1 rounded-2xl py-2.5 ${
                   active ? "bg-white shadow-[0_6px_16px_rgba(120,70,20,.08)]" : ""
