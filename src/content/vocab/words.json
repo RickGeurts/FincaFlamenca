@@ -1282,6 +1282,16 @@
       "unit": 4,
       "example_nl": "In de plantenbak groeien bloemen.",
       "example_es": "En la jardinera crecen flores."
+    },
+    {
+      "id": "arepakraam",
+      "nl": "arepakraam",
+      "article": "de",
+      "es": "el puesto de arepas",
+      "category": "buildings",
+      "unit": 4,
+      "example_nl": "De arepakraam staat op de markt.",
+      "example_es": "El puesto de arepas está en el mercado."
     }
   ]
 }

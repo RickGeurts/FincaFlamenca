@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 import { openQuests, parseUnlock, payoutFor, questsAt, isAvailable } from "./quests";
-import { QUESTS, getQuest } from "../content";
-import { ECONOMY } from "../game/economy";
+import { QUESTS, UNITS, getQuest } from "../content";
+import { DECOR, DECOR_CATEGORIES, ECONOMY, decorByCategory } from "../game/economy";
 
 const gemeente = getQuest("gemeente-land-1")!;
 const buurvrouw = getQuest("buurvrouw-welkom")!;
@@ -36,6 +36,67 @@ describe("which quests are open", () => {
     const places = new Set(["finca", "mercado", "criadero", "alcaldia"]);
     for (const quest of QUESTS) {
       expect(places.has(quest.location), `${quest.id} is at "${quest.location}"`).toBe(true);
+    }
+  });
+});
+
+describe("the arc across the course", () => {
+  it("gives every unit somebody to talk to", () => {
+    // A unit with no conversation is a unit whose words never leave the
+    // classroom. This is the check that the arc stays complete as units grow.
+    const spoken = new Set(QUESTS.map((q) => q.requires.unit));
+    for (const unit of UNITS) {
+      expect(spoken.has(unit.unit), `unit ${unit.unit} (${unit.title_es}) has no quest`).toBe(true);
+    }
+  });
+
+  it("never asks for words a unit has not taught yet", () => {
+    // Each quest sits on its own unit, so anything she is asked to write is
+    // built from vocabulary she has already met.
+    for (const quest of QUESTS) {
+      expect(quest.requires.unit, `${quest.id}`).toBeGreaterThanOrEqual(1);
+      expect(quest.requires.unit, `${quest.id}`).toBeLessThanOrEqual(UNITS.length);
+    }
+  });
+
+  it("spreads the conversations around the village", () => {
+    const byPlace = new Map<string, number>();
+    for (const quest of QUESTS) {
+      byPlace.set(quest.location, (byPlace.get(quest.location) ?? 0) + 1);
+    }
+    // Every place worth travelling to has a reason to be visited.
+    for (const place of ["finca", "mercado", "criadero", "alcaldia"]) {
+      expect(byPlace.get(place) ?? 0, `nothing ever happens at the ${place}`).toBeGreaterThan(0);
+    }
+  });
+
+  it("has a quest waiting on the very first day", () => {
+    expect(openQuests(QUESTS, [1], []).length).toBeGreaterThan(0);
+  });
+});
+
+describe("things you can only be given", () => {
+  it("keeps a quest reward off the shop shelves", () => {
+    // The arepakraam is the price of a conversation. If it turns up in the
+    // shop, that conversation is worth nothing.
+    const questOnly = DECOR.filter((d) => d.questOnly);
+    expect(questOnly.length).toBeGreaterThan(0);
+    for (const item of questOnly) {
+      const onSale = DECOR_CATEGORIES.some((c) =>
+        decorByCategory(c).some((d) => d.id === item.id),
+      );
+      expect(onSale, `${item.id} is for sale after all`).toBe(false);
+    }
+  });
+
+  it("hands out every quest-only decoration through some quest", () => {
+    const given = new Set(
+      QUESTS.map((q) => parseUnlock(q.reward.unlock))
+        .filter((u) => u?.kind === "decor")
+        .map((u) => (u as { decorKind: string }).decorKind),
+    );
+    for (const item of DECOR.filter((d) => d.questOnly)) {
+      expect(given.has(item.id), `${item.id} can never be obtained`).toBe(true);
     }
   });
 });

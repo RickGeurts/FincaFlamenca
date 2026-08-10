@@ -13,8 +13,15 @@ import unit08 from "./course/a1-unit-08.json";
 import unit09 from "./course/a1-unit-09.json";
 import unit10 from "./course/a1-unit-10.json";
 import questBuurvrouw from "./dialogues/quest-buurvrouw.json";
+import questMarktPrijs from "./dialogues/quest-markt-prijs.json";
 import questVeehandelaar from "./dialogues/quest-veehandelaar.json";
+import questArepakraam from "./dialogues/quest-arepakraam.json";
 import questGemeente from "./dialogues/quest-gemeente.json";
+import questSchoenen from "./dialogues/quest-schoenen.json";
+import questTimmerman from "./dialogues/quest-timmerman.json";
+import questWeer from "./dialogues/quest-weer.json";
+import questDeWeg from "./dialogues/quest-de-weg.json";
+import questFeest from "./dialogues/quest-feest.json";
 
 export const VOCAB: Word[] = vocabJson.words as Word[];
 
@@ -25,9 +32,10 @@ export const UNITS: LessonUnit[] = [
   (u) => u as unknown as LessonUnit,
 );
 
-/** Story quests, in the order she will meet them. */
+/** Story quests, in the order she will meet them — one per course unit. */
 export const QUESTS: DialogueQuest[] = [
-  questBuurvrouw, questVeehandelaar, questGemeente,
+  questBuurvrouw, questMarktPrijs, questVeehandelaar, questArepakraam, questGemeente,
+  questSchoenen, questTimmerman, questWeer, questDeWeg, questFeest,
 ].map((q) => q as unknown as DialogueQuest);
 
 export const WORDS_BY_ID: ReadonlyMap<string, Word> = new Map(

@@ -1,0 +1,51 @@
+{
+  "id": "alcaldia-de-weg",
+  "title_es": "¿Dónde está el mercado?",
+  "title_nl": "De weg vragen",
+  "summary_es": "Pregunta el camino y entiende la respuesta",
+  "location": "alcaldia",
+  "npc_emoji": "🧑‍💼",
+  "requires": { "unit": 9 },
+  "reward": { "munten": 140 },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Goedemiddag! Kan ik u helpen?",
+      "npc_es_hint": "¡Buenas tardes! ¿Le puedo ayudar?",
+      "choices": [
+        { "nl": "Ja, waar is de markt, alstublieft?", "goto": "uitleg", "quality": "best" },
+        { "nl": "De markt. Waar?", "goto": "uitleg", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "uitleg",
+      "npc_nl": "De markt is dichtbij. U gaat rechtdoor en dan links.",
+      "npc_es_hint": "El mercado está cerca. Va recto y luego a la izquierda.",
+      "choices": [
+        {
+          "nl": "Rechtdoor en dan links. Dank u wel.",
+          "goto": "dorp",
+          "quality": "best"
+        },
+        { "nl": "Links?", "goto": "dorp", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "dorp",
+      "npc_nl": "Ja. De markt is naast het gemeentehuis, in het dorp.",
+      "npc_es_hint": "Sí. El mercado está al lado del ayuntamiento, en el pueblo.",
+      "ask_es": "Pregunta si está lejos.",
+      "answer_nl": "Is het ver?",
+      "accept": ["is het ver", "is het ver van hier", "is de markt ver"],
+      "hint_nl": ["Is", "het", "ver"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Nee, het is dichtbij. Vijf minuten. Tot ziens!",
+      "npc_es_hint": "No, está cerca. Cinco minutos. ¡Hasta luego!",
+      "end": true
+    }
+  ]
+}

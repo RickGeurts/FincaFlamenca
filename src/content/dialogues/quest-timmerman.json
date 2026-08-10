@@ -1,0 +1,51 @@
+{
+  "id": "finca-schuur",
+  "title_es": "Una casa más grande",
+  "title_nl": "De timmerman komt",
+  "summary_es": "Pide un granero para tu finca",
+  "location": "finca",
+  "npc_emoji": "👷",
+  "requires": { "unit": 7 },
+  "reward": { "munten": 180, "unlock": "decor:schuur" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Goedemiddag! Ik ben de timmerman. Uw huis is klein, hè?",
+      "npc_es_hint": "¡Buenas tardes! Soy el carpintero. Su casa es pequeña, ¿verdad?",
+      "choices": [
+        {
+          "nl": "Ja, het huis is klein. Ik wil een schuur.",
+          "goto": "waar",
+          "quality": "best"
+        },
+        { "nl": "Ja, klein.", "goto": "waar", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "waar",
+      "npc_nl": "Een schuur, goed. Waar wilt u die? Naast het huis of in de tuin?",
+      "npc_es_hint": "Un granero, bien. ¿Dónde lo quiere? ¿Al lado de la casa o en el jardín?",
+      "choices": [
+        { "nl": "In de tuin, naast het huis.", "goto": "bouwen", "quality": "best" },
+        { "nl": "In de tuin.", "goto": "bouwen", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "bouwen",
+      "npc_nl": "Prima. Zegt u nog even wat u wilt?",
+      "npc_es_hint": "Perfecto. ¿Me dice otra vez qué quiere?",
+      "ask_es": "Di que quieres un granero grande.",
+      "answer_nl": "Ik wil een grote schuur.",
+      "accept": ["ik wil een grote schuur", "een grote schuur", "ik wil een schuur"],
+      "hint_nl": ["Ik", "wil", "een", "grote", "schuur"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Komt in orde! De schuur staat er. Tot ziens!",
+      "npc_es_hint": "¡Hecho! El granero ya está. ¡Hasta luego!",
+      "end": true
+    }
+  ]
+}

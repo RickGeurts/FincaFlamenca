@@ -1,0 +1,47 @@
+{
+  "id": "finca-weer",
+  "title_es": "¿Va a llover?",
+  "title_nl": "Het weer van morgen",
+  "summary_es": "Habla del tiempo con Anke y gana una regadera",
+  "location": "finca",
+  "npc_emoji": "👩‍🌾",
+  "requires": { "unit": 8 },
+  "reward": { "munten": 120, "unlock": "decor:gieter" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Hoi! Wat een mooi weer vandaag, hè?",
+      "npc_es_hint": "¡Hola! Qué buen tiempo hace hoy, ¿verdad?",
+      "choices": [
+        { "nl": "Ja, de zon schijnt. Het is warm.", "goto": "regen", "quality": "best" },
+        { "nl": "Ja, mooi.", "goto": "regen", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "regen",
+      "npc_nl": "Maar morgen gaat het regenen. Geef je de planten dan water?",
+      "npc_es_hint": "Pero mañana va a llover. ¿Riegas las plantas entonces?",
+      "choices": [
+        { "nl": "Nee, morgen niet. Het regent dan.", "goto": "gieter", "quality": "best" },
+        { "nl": "Ja, elke dag.", "goto": "gieter", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "gieter",
+      "npc_nl": "Slim! Hier, neem mijn gieter. Voor de dagen met zon.",
+      "npc_es_hint": "¡Lista! Toma, coge mi regadera. Para los días de sol.",
+      "ask_es": "Dale las gracias a Anke.",
+      "answer_nl": "Dank je wel!",
+      "accept": ["dank je wel", "dank je", "bedankt", "dankjewel", "merci"],
+      "hint_nl": ["Dank", "je", "wel"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Graag gedaan! Tot morgen, in de regen.",
+      "npc_es_hint": "¡De nada! Hasta mañana, bajo la lluvia.",
+      "end": true
+    }
+  ]
+}

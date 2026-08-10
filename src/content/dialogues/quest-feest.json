@@ -1,0 +1,51 @@
+{
+  "id": "finca-feest",
+  "title_es": "La fiesta de la finca",
+  "title_nl": "Het boerderijfeest",
+  "summary_es": "Todo el pueblo viene a tu finca",
+  "location": "finca",
+  "npc_emoji": "👩‍🌾",
+  "requires": { "unit": 10 },
+  "reward": { "munten": 250, "unlock": "decor:tafel" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Hoi! Jouw boerderij is klaar. Wij vieren feest!",
+      "npc_es_hint": "¡Hola! Tu granja está lista. ¡Vamos a hacer una fiesta!",
+      "choices": [
+        { "nl": "Wat leuk! Wie komt er?", "goto": "gasten", "quality": "best" },
+        { "nl": "Een feest? Goed.", "goto": "gasten", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "gasten",
+      "npc_nl": "Het hele dorp komt. Met muziek en lekker eten.",
+      "npc_es_hint": "Viene todo el pueblo. Con música y comida rica.",
+      "choices": [
+        {
+          "nl": "Ik maak arepas. Die zijn heel lekker!",
+          "goto": "dansen",
+          "quality": "best"
+        },
+        { "nl": "Ik breng koffie.", "goto": "dansen", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "dansen",
+      "npc_nl": "Gezellig! Wij dansen samen. Ben je blij?",
+      "npc_es_hint": "¡Qué chévere! Bailamos juntas. ¿Estás contenta?",
+      "ask_es": "Di que estás muy contenta.",
+      "answer_nl": "Ja, ik ben heel blij!",
+      "accept": ["ja ik ben heel blij", "ik ben heel blij", "ik ben blij", "ja ik ben blij"],
+      "hint_nl": ["Ik", "ben", "heel", "blij"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Proost! Op jouw boerderij en op jouw Nederlands!",
+      "npc_es_hint": "¡Salud! ¡Por tu granja y por tu neerlandés!",
+      "end": true
+    }
+  ]
+}

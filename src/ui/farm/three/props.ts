@@ -142,6 +142,11 @@ export const DECOR_PROP: Record<string, readonly DecorPart[]> = {
 
   // Buildings and big pieces
   kraam: [{ node: PROP.stand, height: 0.9, footprint: 1.3 }],
+  // The same market stall with maize on the counter, so it reads as hers.
+  arepakraam: [
+    { node: PROP.stand, height: 0.9, footprint: 1.3 },
+    { node: CROP_PROP.mais, height: 0.34, footprint: 0.28, x: 0.28, z: 0.24 },
+  ],
   tractor: [{ node: PROP.tractor, height: 0.9, footprint: 1.2 }],
   // Stands a head above the 2.01 farmhouse, the way a mill should.
   molen: [{ node: PROP.windmill, height: 2.45, footprint: 1.1 }],

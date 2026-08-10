@@ -1,0 +1,47 @@
+{
+  "id": "markt-schoenen",
+  "title_es": "Zapatos para la finca",
+  "title_nl": "Schoenen kopen",
+  "summary_es": "Elige un color y dilo en neerlandés",
+  "location": "mercado",
+  "npc_emoji": "🧑‍🔧",
+  "requires": { "unit": 6 },
+  "reward": { "munten": 130 },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Goedemiddag! Zoekt u schoenen voor op de boerderij?",
+      "npc_es_hint": "¡Buenas tardes! ¿Busca zapatos para la granja?",
+      "choices": [
+        { "nl": "Ja, graag. Ik werk in de tuin.", "goto": "kleur", "quality": "best" },
+        { "nl": "Ja.", "goto": "kleur", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "kleur",
+      "npc_nl": "Ik heb groene en zwarte schoenen. Welke kleur wilt u?",
+      "npc_es_hint": "Tengo zapatos verdes y negros. ¿Qué color quiere?",
+      "choices": [
+        { "nl": "De groene schoenen, alstublieft.", "goto": "passen", "quality": "best" },
+        { "nl": "De zwarte.", "goto": "passen", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "passen",
+      "npc_nl": "Goede keuze. En, wat vindt u ervan?",
+      "npc_es_hint": "Buena elección. Y bien, ¿qué le parecen?",
+      "ask_es": "Di que los zapatos son bonitos.",
+      "answer_nl": "De schoenen zijn mooi.",
+      "accept": ["de schoenen zijn mooi", "ze zijn mooi", "mooi", "de schoenen zijn heel mooi"],
+      "hint_nl": ["De", "schoenen", "zijn", "mooi"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Dank u wel! Veel plezier op de boerderij.",
+      "npc_es_hint": "¡Muchas gracias! Que los disfrute en la granja.",
+      "end": true
+    }
+  ]
+}

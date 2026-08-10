@@ -1,0 +1,55 @@
+{
+  "id": "markt-prijs",
+  "title_es": "El precio justo",
+  "title_nl": "Hoeveel kost dat?",
+  "summary_es": "Pregunta precios y paga en neerlandés",
+  "location": "mercado",
+  "npc_emoji": "🧺",
+  "requires": { "unit": 2 },
+  "reward": { "munten": 120, "unlock": "decor:plantenbak" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Goedemorgen! Verse wortels van de boerderij.",
+      "npc_es_hint": "¡Buenos días! Zanahorias frescas de la granja.",
+      "choices": [
+        {
+          "nl": "Goedemorgen! Hoeveel kosten de wortels?",
+          "goto": "prijs",
+          "quality": "best"
+        },
+        { "nl": "Hoeveel?", "goto": "prijs", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "prijs",
+      "npc_nl": "Vijf euro voor tien wortels. Dat is goedkoop!",
+      "npc_es_hint": "Cinco euros por diez zanahorias. ¡Eso es barato!",
+      "choices": [
+        {
+          "nl": "Ja, dat is goedkoop. Ik neem tien wortels.",
+          "goto": "betalen",
+          "quality": "best"
+        },
+        { "nl": "Vijf euro? Dat is duur.", "goto": "betalen", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "betalen",
+      "npc_nl": "Tien wortels, vijf euro. Wilt u betalen?",
+      "npc_es_hint": "Diez zanahorias, cinco euros. ¿Quiere pagar?",
+      "ask_es": "Dile que aquí tiene el dinero.",
+      "answer_nl": "Hier is het geld.",
+      "accept": ["hier is het geld", "hier is mijn geld", "alstublieft", "hier"],
+      "hint_nl": ["Hier", "is", "het", "geld"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Dank u wel! Tot ziens en veel plezier met de wortels.",
+      "npc_es_hint": "¡Muchas gracias! Hasta luego y que disfrute las zanahorias.",
+      "end": true
+    }
+  ]
+}

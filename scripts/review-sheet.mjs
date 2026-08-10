@@ -18,6 +18,10 @@ const read = (file) => JSON.parse(readFileSync(file, "utf8"));
 const vocab = read(join(content, "vocab/words.json"));
 const unitFiles = readdirSync(join(content, "course")).filter((f) => f.endsWith(".json")).sort();
 const units = unitFiles.map((f) => read(join(content, "course", f)));
+const questFiles = readdirSync(join(content, "dialogues")).filter((f) => f.endsWith(".json")).sort();
+const quests = questFiles
+  .map((f) => ({ file: f, ...read(join(content, "dialogues", f)) }))
+  .sort((a, b) => a.requires.unit - b.requires.unit);
 
 const byId = new Map(vocab.words.map((w) => [w.id, w]));
 const withArticle = (w) => (w.article ? `${w.article} ${w.nl}` : w.nl);
@@ -117,7 +121,38 @@ for (const unit of units) {
 
 // ---------------------------------------------------------------------------
 
-line("## 4. Woordkaarten op de boerderij");
+line("## 4. Gesprekken — hier zit de u/je-vorm");
+line();
+line("Elk gesprek staat in één register: **u** bij de ambtenaar, de veehandelaar,");
+line("de markt en de winkel; **je** bij Anke de buurvrouw. Eén verschuiving");
+line("binnen een gesprek valt meteen op, dus dit is de belangrijkste kolom.");
+line();
+
+for (const quest of quests) {
+  const informal = quest.nodes.some((n) => / je | jij | jouw |^Je |^Jij /i.test(` ${n.npc_nl} `));
+  const formal = quest.nodes.some((n) => / u | uw |^U /i.test(` ${n.npc_nl} `));
+  const register = formal && informal ? "**gemengd — nakijken!**" : formal ? "u" : informal ? "je" : "—";
+
+  line(`### ${quest.title_nl} — unit ${quest.requires.unit} (${quest.title_es})`);
+  line();
+  line(`Plek: ${quest.location} · register: ${register} · nagekeken: ${quest.reviewed ? "**ja**" : "**nog niet**"}`);
+  line();
+  line("| ✓ | Wie | Nederlands | Spaans |");
+  line("| - | --- | ---------- | ------ |");
+  for (const node of quest.nodes) {
+    line(`| ☐ | NPC | ${node.npc_nl} | ${node.npc_es_hint} |`);
+    for (const choice of node.choices ?? []) {
+      line(`| ☐ | zij | ${choice.nl} | _(keuze)_ |`);
+    }
+    if (node.answer_nl) {
+      const also = (node.accept ?? []).join(" · ") || "—";
+      line(`| ☐ | zij | **${node.answer_nl}** | ${node.ask_es} — ook goed: ${also} |`);
+    }
+  }
+  line();
+}
+
+line("## 5. Woordkaarten op de boerderij");
 line();
 line("Deze woorden verschijnen als je een object op de boerderij aantikt, dus ze");
 line("worden gehoord én gelezen zonder dat er een les aan te pas komt.");
@@ -132,10 +167,14 @@ line();
 const pending = [
   ...(vocab.reviewed ? [] : ["vocab/words.json"]),
   ...units.filter((u) => !u.reviewed).map((u) => `course/a1-unit-${String(u.unit).padStart(2, "0")}.json`),
+  ...quests.filter((q) => !q.reviewed).map((q) => `dialogues/${q.file}`),
 ];
 line("## Status");
 line();
-line(`${vocab.words.length} woorden · ${units.length} units · ${units.reduce((n, u) => n + u.exercises.length, 0)} oefeningen`);
+line(
+  `${vocab.words.length} woorden · ${units.length} units · ` +
+    `${units.reduce((n, u) => n + u.exercises.length, 0)} oefeningen · ${quests.length} gesprekken`,
+);
 line();
 if (pending.length === 0) {
   line("Alles is nagekeken. 🎉");
@@ -153,5 +192,6 @@ writeFileSync(target, out.join("\n"));
 console.log(`wrote ${target}`);
 console.log(
   `${vocab.words.length} woorden, ${units.length} units, ` +
-    `${units.reduce((n, u) => n + u.exercises.length, 0)} oefeningen, ${pending.length} bestanden open`,
+    `${units.reduce((n, u) => n + u.exercises.length, 0)} oefeningen, ` +
+    `${quests.length} gesprekken, ${pending.length} bestanden open`,
 );

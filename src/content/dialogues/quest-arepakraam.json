@@ -1,0 +1,51 @@
+{
+  "id": "markt-arepakraam",
+  "title_es": "El puesto de arepas",
+  "title_nl": "De arepakraam",
+  "summary_es": "Explica qué es una arepa y gánate tu puesto",
+  "location": "mercado",
+  "npc_emoji": "🧑‍🍳",
+  "requires": { "unit": 4 },
+  "reward": { "munten": 200, "unlock": "decor:arepakraam" },
+  "reviewed": false,
+  "nodes": [
+    {
+      "id": "start",
+      "npc_nl": "Dag! U verkoopt maïs, hè? Wat maakt u daarmee?",
+      "npc_es_hint": "¡Hola! Usted vende maíz, ¿verdad? ¿Qué hace con él?",
+      "choices": [
+        {
+          "nl": "Ik maak arepas. Dat is brood van maïs.",
+          "goto": "proeven",
+          "quality": "best"
+        },
+        { "nl": "Ik eet de maïs.", "goto": "proeven", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "proeven",
+      "npc_nl": "Arepas? Dat ken ik niet. Mag ik proeven?",
+      "npc_es_hint": "¿Arepas? No las conozco. ¿Puedo probar?",
+      "choices": [
+        { "nl": "Ja, natuurlijk. Alstublieft!", "goto": "lekker", "quality": "best" },
+        { "nl": "Ja, hier.", "goto": "lekker", "quality": "ok" }
+      ]
+    },
+    {
+      "id": "lekker",
+      "npc_nl": "Mmm! Met kaas is dat heel lekker. Wilt u een kraam op de markt?",
+      "npc_es_hint": "¡Mmm! Con queso está riquísimo. ¿Quiere un puesto en el mercado?",
+      "ask_es": "Dile que sí, con muchas ganas.",
+      "answer_nl": "Ja, heel graag!",
+      "accept": ["ja heel graag", "ja graag", "graag", "heel graag"],
+      "hint_nl": ["Ja", "heel", "graag"],
+      "goto": "einde"
+    },
+    {
+      "id": "einde",
+      "npc_nl": "Afgesproken! Hier is uw arepakraam. Smakelijk!",
+      "npc_es_hint": "¡Trato hecho! Aquí tiene su puesto de arepas. ¡Buen provecho!",
+      "end": true
+    }
+  ]
+}

@@ -171,6 +171,12 @@ export interface DecorDef {
   size?: number;
   /** A pen: animals live loose inside it instead of standing on the grid. */
   pen?: boolean;
+  /**
+   * Earned in a conversation, never sold. Keeping it off the shelves is what
+   * makes it worth the conversation — a building you could simply buy is not
+   * a reward for talking to anyone.
+   */
+  questOnly?: boolean;
 }
 
 /** Footprint of a decoration, in cells. */
@@ -228,10 +234,21 @@ export const DECOR: readonly DecorDef[] = [
   { id: "schuur", word: "schuur", emoji: "🏚️", price: 170, category: "home" },
   // A proper farmhouse: two cells across, so it reads as a building.
   { id: "huis", word: "huis", emoji: "🏠", price: 200, category: "home", size: 2 },
+  // A piece of home, earned by explaining arepas to a Flemish market master.
+  // Not for sale: the price is the conversation.
+  {
+    id: "arepakraam",
+    word: "arepakraam",
+    emoji: "🫓",
+    price: 200,
+    category: "home",
+    questOnly: true,
+  },
 ];
 
+/** What the shop actually has on its shelves. */
 export function decorByCategory(category: DecorCategory): DecorDef[] {
-  return DECOR.filter((d) => d.category === category);
+  return DECOR.filter((d) => d.category === category && !d.questOnly);
 }
 
 export const DECOR_BY_ID: ReadonlyMap<string, DecorDef> = new Map(DECOR.map((d) => [d.id, d]));
