@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.local
+
+# Local tooling, not part of the game
+.venv/
+.idea/
+.claude/
+.env
+.env.*

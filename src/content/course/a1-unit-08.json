@@ -1,0 +1,118 @@
+{
+  "unit": 8,
+  "title_es": "El tiempo y las estaciones",
+  "title_nl": "Het weer en de seizoenen",
+  "reviewed": false,
+  "words": [
+    "weer",
+    "zon",
+    "regen",
+    "wind",
+    "sneeuw",
+    "warm",
+    "koud",
+    "regenen",
+    "seizoen",
+    "lente",
+    "zomer",
+    "herfst",
+    "winter"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "de zon",
+      "answer_es": "el sol",
+      "distractors_es": ["la lluvia", "el viento", "la nieve"],
+      "word": "zon"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "koud",
+      "answer_es": "frío",
+      "distractors_es": ["caluroso", "grande", "contento"],
+      "word": "koud"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de winter",
+      "answer_es": "el invierno",
+      "distractors_es": ["el verano", "el otoño", "la primavera"],
+      "word": "winter"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "het seizoen",
+      "answer_es": "la estación",
+      "distractors_es": ["el tiempo (clima)", "el viento", "el camino"],
+      "word": "seizoen"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de regen", "es": "la lluvia", "word": "regen" },
+        { "nl": "de wind", "es": "el viento", "word": "wind" },
+        { "nl": "de sneeuw", "es": "la nieve", "word": "sneeuw" },
+        { "nl": "het weer", "es": "el tiempo (clima)", "word": "weer" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de lente", "es": "la primavera", "word": "lente" },
+        { "nl": "de zomer", "es": "el verano", "word": "zomer" },
+        { "nl": "de herfst", "es": "el otoño", "word": "herfst" },
+        { "nl": "warm", "es": "caluroso", "word": "warm" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Hoy hace calor.",
+      "answer_nl": "Vandaag is het warm.",
+      "accept": ["vandaag is het warm", "het is vandaag warm", "het is warm vandaag"],
+      "word": "warm"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Está lloviendo.",
+      "answer_nl": "Het regent.",
+      "accept": ["het regent"],
+      "word": "regenen"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "En invierno hace frío.",
+      "answer_nl": "In de winter is het koud.",
+      "accept": ["in de winter is het koud"],
+      "word": "koud"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "De zon schijnt.",
+      "answer_nl": "De zon schijnt",
+      "accept": ["de zon schijnt"],
+      "word": "zon"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Het waait hard.",
+      "answer_nl": "Het waait hard",
+      "accept": ["het waait hard"],
+      "word": "wind"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "En primavera crecen los tulipanes.",
+      "tiles_nl": ["In", "de", "lente", "groeien", "de", "tulpen", "winter"],
+      "answer_nl": "In de lente groeien de tulpen",
+      "word": "lente"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "¿Qué tiempo hace hoy?",
+      "tiles_nl": ["Wat", "voor", "weer", "is", "het", "vandaag", "seizoen"],
+      "answer_nl": "Wat voor weer is het vandaag",
+      "word": "weer"
+    }
+  ]
+}

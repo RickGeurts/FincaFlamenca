@@ -1,0 +1,117 @@
+{
+  "unit": 5,
+  "title_es": "Hablar formal: el ayuntamiento",
+  "title_nl": "Formeel spreken: het gemeentehuis",
+  "reviewed": false,
+  "words": [
+    "u",
+    "alstublieft",
+    "meneer",
+    "mevrouw",
+    "helpen",
+    "formulier",
+    "gemeentehuis",
+    "adres",
+    "wonen",
+    "vraag",
+    "goedemiddag",
+    "dank-je-wel"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "het gemeentehuis",
+      "answer_es": "el ayuntamiento",
+      "distractors_es": ["el formulario", "la dirección", "la pregunta"],
+      "word": "gemeentehuis"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "het formulier",
+      "answer_es": "el formulario",
+      "distractors_es": ["la pregunta", "el señor", "la dirección"],
+      "word": "formulier"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "mevrouw",
+      "answer_es": "la señora",
+      "distractors_es": ["el señor", "la vecina", "usted"],
+      "word": "mevrouw"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "helpen",
+      "answer_es": "ayudar",
+      "distractors_es": ["vivir", "pagar", "comer"],
+      "word": "helpen"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "u", "es": "usted", "word": "u" },
+        { "nl": "alstublieft", "es": "por favor (formal)", "word": "alstublieft" },
+        { "nl": "meneer", "es": "el señor", "word": "meneer" },
+        { "nl": "de vraag", "es": "la pregunta", "word": "vraag" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "het adres", "es": "la dirección", "word": "adres" },
+        { "nl": "wonen", "es": "vivir", "word": "wonen" },
+        { "nl": "goedemiddag", "es": "buenas tardes", "word": "goedemiddag" },
+        { "nl": "dank u wel", "es": "gracias (formal)", "word": "dank-je-wel" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "¿En qué puedo ayudarle?",
+      "answer_nl": "Waarmee kan ik u helpen?",
+      "accept": ["waarmee kan ik u helpen", "hoe kan ik u helpen", "wat kan ik voor u doen"],
+      "word": "helpen"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Vivo en Gante.",
+      "answer_nl": "Ik woon in Gent.",
+      "accept": ["ik woon in gent"],
+      "word": "wonen"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Gracias, señora.",
+      "answer_nl": "Dank u wel, mevrouw.",
+      "accept": ["dank u wel mevrouw", "dank u mevrouw", "bedankt mevrouw"],
+      "word": "mevrouw"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Goedemiddag, meneer.",
+      "answer_nl": "Goedemiddag, meneer",
+      "accept": ["goedemiddag meneer"],
+      "word": "meneer"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Wat is uw adres?",
+      "answer_nl": "Wat is uw adres",
+      "accept": ["wat is uw adres"],
+      "word": "adres"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "¿Puede ayudarme, por favor?",
+      "tiles_nl": ["Kunt", "u", "mij", "helpen", "alstublieft", "je", "wonen"],
+      "answer_nl": "Kunt u mij helpen alstublieft",
+      "word": "alstublieft"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Tengo una pregunta.",
+      "tiles_nl": ["Ik", "heb", "een", "vraag", "geen", "formulier"],
+      "answer_nl": "Ik heb een vraag",
+      "word": "vraag"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "unit": 7,
+  "title_es": "Familia y hogar",
+  "title_nl": "Familie en wonen",
+  "reviewed": false,
+  "words": [
+    "familie",
+    "moeder",
+    "vader",
+    "zus",
+    "broer",
+    "kind",
+    "huis",
+    "kamer",
+    "keuken",
+    "tuin",
+    "wonen",
+    "samen",
+    "groot",
+    "klein"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "de moeder",
+      "answer_es": "la madre",
+      "distractors_es": ["el padre", "la hermana", "la familia"],
+      "word": "moeder"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de broer",
+      "answer_es": "el hermano",
+      "distractors_es": ["el niño", "el padre", "la hermana"],
+      "word": "broer"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de keuken",
+      "answer_es": "la cocina",
+      "distractors_es": ["la habitación", "el jardín", "la casa"],
+      "word": "keuken"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "klein",
+      "answer_es": "pequeño",
+      "distractors_es": ["grande", "juntos", "contento"],
+      "word": "klein"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de vader", "es": "el padre", "word": "vader" },
+        { "nl": "de zus", "es": "la hermana", "word": "zus" },
+        { "nl": "het kind", "es": "el niño", "word": "kind" },
+        { "nl": "de familie", "es": "la familia", "word": "familie" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "het huis", "es": "la casa", "word": "huis" },
+        { "nl": "de kamer", "es": "la habitación", "word": "kamer" },
+        { "nl": "de tuin", "es": "el jardín", "word": "tuin" },
+        { "nl": "groot", "es": "grande", "word": "groot" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Vivimos juntos en la granja.",
+      "answer_nl": "Wij wonen samen op de boerderij.",
+      "accept": ["wij wonen samen op de boerderij", "we wonen samen op de boerderij"],
+      "word": "samen"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Mi madre tiene un jardín pequeño.",
+      "answer_nl": "Mijn moeder heeft een kleine tuin.",
+      "accept": ["mijn moeder heeft een kleine tuin"],
+      "word": "tuin"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "La casa es grande.",
+      "answer_nl": "Het huis is groot.",
+      "accept": ["het huis is groot"],
+      "word": "groot"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Mijn broer woont in Gent.",
+      "answer_nl": "Mijn broer woont in Gent",
+      "accept": ["mijn broer woont in gent"],
+      "word": "broer"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "De keuken is klein.",
+      "answer_nl": "De keuken is klein",
+      "accept": ["de keuken is klein"],
+      "word": "keuken"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Mi familia es grande.",
+      "tiles_nl": ["Mijn", "familie", "is", "groot", "klein", "huis"],
+      "answer_nl": "Mijn familie is groot",
+      "word": "familie"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "El niño juega en el jardín.",
+      "tiles_nl": ["Het", "kind", "speelt", "in", "de", "tuin", "keuken"],
+      "answer_nl": "Het kind speelt in de tuin",
+      "word": "kind"
+    }
+  ]
+}

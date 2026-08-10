@@ -1,0 +1,120 @@
+{
+  "unit": 10,
+  "title_es": "Repaso y fiesta",
+  "title_nl": "Herhaling en feest",
+  "reviewed": false,
+  "words": [
+    "feest",
+    "vieren",
+    "muziek",
+    "dansen",
+    "gezellig",
+    "blij",
+    "proost",
+    "samen",
+    "buurvrouw",
+    "boerderij",
+    "lekker",
+    "dank-je-wel"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "het feest",
+      "answer_es": "la fiesta",
+      "distractors_es": ["la música", "la granja", "el pueblo"],
+      "word": "feest"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "gezellig",
+      "answer_es": "acogedor",
+      "distractors_es": ["contento", "frío", "grande"],
+      "word": "gezellig"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "dansen",
+      "answer_es": "bailar",
+      "distractors_es": ["celebrar", "cantar", "ir"],
+      "word": "dansen"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "blij",
+      "answer_es": "contento",
+      "distractors_es": ["acogedor", "pequeño", "rico"],
+      "word": "blij"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de muziek", "es": "la música", "word": "muziek" },
+        { "nl": "vieren", "es": "celebrar", "word": "vieren" },
+        { "nl": "proost", "es": "salud (brindis)", "word": "proost" },
+        { "nl": "samen", "es": "juntos", "word": "samen" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de buurvrouw", "es": "la vecina", "word": "buurvrouw" },
+        { "nl": "de boerderij", "es": "la granja", "word": "boerderij" },
+        { "nl": "lekker", "es": "rico", "word": "lekker" },
+        { "nl": "dank je wel", "es": "gracias", "word": "dank-je-wel" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Celebramos una fiesta en la granja.",
+      "answer_nl": "Wij vieren een feest op de boerderij.",
+      "accept": [
+        "wij vieren een feest op de boerderij",
+        "we vieren een feest op de boerderij"
+      ],
+      "word": "vieren"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Estoy muy contenta.",
+      "answer_nl": "Ik ben heel blij.",
+      "accept": ["ik ben heel blij", "ik ben erg blij"],
+      "word": "blij"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "¡Qué acogedor!",
+      "answer_nl": "Wat gezellig!",
+      "accept": ["wat gezellig"],
+      "word": "gezellig"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "De muziek is mooi.",
+      "answer_nl": "De muziek is mooi",
+      "accept": ["de muziek is mooi"],
+      "word": "muziek"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Proost!",
+      "answer_nl": "Proost",
+      "accept": ["proost"],
+      "word": "proost"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Bailamos juntos.",
+      "tiles_nl": ["Wij", "dansen", "samen", "vieren", "blij"],
+      "answer_nl": "Wij dansen samen",
+      "word": "dansen"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "La vecina viene a la fiesta.",
+      "tiles_nl": ["De", "buurvrouw", "komt", "naar", "het", "feest", "boerderij"],
+      "answer_nl": "De buurvrouw komt naar het feest",
+      "word": "feest"
+    }
+  ]
+}

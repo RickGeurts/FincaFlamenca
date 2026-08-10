@@ -1,0 +1,120 @@
+{
+  "unit": 4,
+  "title_es": "Comer y beber",
+  "title_nl": "Eten en drinken",
+  "reviewed": false,
+  "words": [
+    "brood",
+    "kaas",
+    "appel",
+    "soep",
+    "water",
+    "melk",
+    "koffie",
+    "lekker",
+    "dorst",
+    "honger",
+    "ontbijt",
+    "eten-ww",
+    "drinken",
+    "tomaat",
+    "wortel"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "het brood",
+      "answer_es": "el pan",
+      "distractors_es": ["el queso", "la sopa", "la manzana"],
+      "word": "brood"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de kaas",
+      "answer_es": "el queso",
+      "distractors_es": ["el pan", "la leche", "el café"],
+      "word": "kaas"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de dorst",
+      "answer_es": "la sed",
+      "distractors_es": ["el hambre", "el desayuno", "la sopa"],
+      "word": "dorst"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "lekker",
+      "answer_es": "rico",
+      "distractors_es": ["caro", "barato", "bien"],
+      "word": "lekker"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de appel", "es": "la manzana", "word": "appel" },
+        { "nl": "de soep", "es": "la sopa", "word": "soep" },
+        { "nl": "het water", "es": "el agua", "word": "water" },
+        { "nl": "de koffie", "es": "el café", "word": "koffie" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "het ontbijt", "es": "el desayuno", "word": "ontbijt" },
+        { "nl": "de melk", "es": "la leche", "word": "melk" },
+        { "nl": "de tomaat", "es": "el tomate", "word": "tomaat" },
+        { "nl": "de wortel", "es": "la zanahoria", "word": "wortel" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Tengo hambre.",
+      "answer_nl": "Ik heb honger.",
+      "accept": ["ik heb honger"],
+      "word": "honger"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Bebo café.",
+      "answer_nl": "Ik drink koffie.",
+      "accept": ["ik drink koffie"],
+      "word": "koffie"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "El pan está rico.",
+      "answer_nl": "Het brood is lekker.",
+      "accept": ["het brood is lekker", "het brood smaakt lekker"],
+      "word": "lekker"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Ik heb dorst.",
+      "answer_nl": "Ik heb dorst",
+      "accept": ["ik heb dorst"],
+      "word": "dorst"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Het ontbijt is klaar.",
+      "answer_nl": "Het ontbijt is klaar",
+      "accept": ["het ontbijt is klaar"],
+      "word": "ontbijt"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Como pan con queso.",
+      "tiles_nl": ["Ik", "eet", "brood", "met", "kaas", "drink", "soep"],
+      "answer_nl": "Ik eet brood met kaas",
+      "word": "kaas"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "La sopa de tomate está rica.",
+      "tiles_nl": ["De", "tomatensoep", "is", "lekker", "duur", "het"],
+      "answer_nl": "De tomatensoep is lekker",
+      "word": "soep"
+    }
+  ]
+}

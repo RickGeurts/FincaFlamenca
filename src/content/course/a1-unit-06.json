@@ -1,0 +1,118 @@
+{
+  "unit": 6,
+  "title_es": "Ropa y colores",
+  "title_nl": "Kleding en kleuren",
+  "reviewed": false,
+  "words": [
+    "kleur",
+    "rood",
+    "blauw",
+    "geel",
+    "groen",
+    "wit",
+    "zwart",
+    "jas",
+    "broek",
+    "trui",
+    "jurk",
+    "schoenen",
+    "dragen"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "rood",
+      "answer_es": "rojo",
+      "distractors_es": ["azul", "verde", "negro"],
+      "word": "rood"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de jas",
+      "answer_es": "el abrigo",
+      "distractors_es": ["el pantalón", "el vestido", "los zapatos"],
+      "word": "jas"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de schoenen",
+      "answer_es": "los zapatos",
+      "distractors_es": ["el suéter", "el color", "la falda"],
+      "word": "schoenen"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "dragen",
+      "answer_es": "llevar puesto",
+      "distractors_es": ["comprar", "lavar", "bailar"],
+      "word": "dragen"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "blauw", "es": "azul", "word": "blauw" },
+        { "nl": "geel", "es": "amarillo", "word": "geel" },
+        { "nl": "groen", "es": "verde", "word": "groen" },
+        { "nl": "zwart", "es": "negro", "word": "zwart" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de broek", "es": "el pantalón", "word": "broek" },
+        { "nl": "de trui", "es": "el suéter", "word": "trui" },
+        { "nl": "de jurk", "es": "el vestido", "word": "jurk" },
+        { "nl": "de kleur", "es": "el color", "word": "kleur" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "El vestido es rojo.",
+      "answer_nl": "De jurk is rood.",
+      "accept": ["de jurk is rood"],
+      "word": "rood"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Llevo un abrigo azul.",
+      "answer_nl": "Ik draag een blauwe jas.",
+      "accept": ["ik draag een blauwe jas", "ik heb een blauwe jas aan"],
+      "word": "dragen"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "¿De qué color es el suéter?",
+      "answer_nl": "Welke kleur heeft de trui?",
+      "accept": ["welke kleur heeft de trui", "welke kleur is de trui"],
+      "word": "kleur"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "De schoenen zijn wit.",
+      "answer_nl": "De schoenen zijn wit",
+      "accept": ["de schoenen zijn wit"],
+      "word": "wit"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Ik draag een groene trui.",
+      "answer_nl": "Ik draag een groene trui",
+      "accept": ["ik draag een groene trui"],
+      "word": "trui"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "El pantalón es negro.",
+      "tiles_nl": ["De", "broek", "is", "zwart", "wit", "jas"],
+      "answer_nl": "De broek is zwart",
+      "word": "broek"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Me gusta el color amarillo.",
+      "tiles_nl": ["Ik", "vind", "geel", "mooi", "rood", "kleur"],
+      "answer_nl": "Ik vind geel mooi",
+      "word": "geel"
+    }
+  ]
+}

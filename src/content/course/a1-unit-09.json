@@ -1,0 +1,118 @@
+{
+  "unit": 9,
+  "title_es": "Preguntar el camino",
+  "title_nl": "De weg vragen",
+  "reviewed": false,
+  "words": [
+    "weg",
+    "straat",
+    "dorp",
+    "links",
+    "rechts",
+    "rechtdoor",
+    "waar",
+    "ver",
+    "dichtbij",
+    "gaan",
+    "naast",
+    "markt",
+    "gemeentehuis"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "links",
+      "answer_es": "a la izquierda",
+      "distractors_es": ["a la derecha", "todo recto", "lejos"],
+      "word": "links"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "rechtdoor",
+      "answer_es": "todo recto",
+      "distractors_es": ["a la izquierda", "cerca", "al lado de"],
+      "word": "rechtdoor"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "het dorp",
+      "answer_es": "el pueblo",
+      "distractors_es": ["la calle", "el camino", "el mercado"],
+      "word": "dorp"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "dichtbij",
+      "answer_es": "cerca",
+      "distractors_es": ["lejos", "juntos", "grande"],
+      "word": "dichtbij"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "rechts", "es": "a la derecha", "word": "rechts" },
+        { "nl": "de straat", "es": "la calle", "word": "straat" },
+        { "nl": "de weg", "es": "el camino", "word": "weg" },
+        { "nl": "ver", "es": "lejos", "word": "ver" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "waar", "es": "dónde", "word": "waar" },
+        { "nl": "gaan", "es": "ir", "word": "gaan" },
+        { "nl": "naast", "es": "al lado de", "word": "naast" },
+        { "nl": "de markt", "es": "el mercado", "word": "markt" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "¿Dónde está el ayuntamiento?",
+      "answer_nl": "Waar is het gemeentehuis?",
+      "accept": ["waar is het gemeentehuis"],
+      "word": "waar"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Vaya todo recto.",
+      "answer_nl": "Ga rechtdoor.",
+      "accept": ["ga rechtdoor", "u gaat rechtdoor"],
+      "word": "rechtdoor"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "El mercado está cerca.",
+      "answer_nl": "De markt is dichtbij.",
+      "accept": ["de markt is dichtbij"],
+      "word": "dichtbij"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Ga naar links.",
+      "answer_nl": "Ga naar links",
+      "accept": ["ga naar links"],
+      "word": "links"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Het dorp is niet ver.",
+      "answer_nl": "Het dorp is niet ver",
+      "accept": ["het dorp is niet ver"],
+      "word": "ver"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "La escuela está al lado de la iglesia.",
+      "tiles_nl": ["De", "school", "is", "naast", "de", "kerk", "ver"],
+      "answer_nl": "De school is naast de kerk",
+      "word": "naast"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Voy al mercado.",
+      "tiles_nl": ["Ik", "ga", "naar", "de", "markt", "straat", "het"],
+      "answer_nl": "Ik ga naar de markt",
+      "word": "gaan"
+    }
+  ]
+}

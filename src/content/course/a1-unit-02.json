@@ -1,0 +1,124 @@
+{
+  "unit": 2,
+  "title_es": "Números y precios",
+  "title_nl": "Getallen en prijzen",
+  "reviewed": false,
+  "words": [
+    "een",
+    "twee",
+    "drie",
+    "vier",
+    "vijf",
+    "zes",
+    "zeven",
+    "acht",
+    "negen",
+    "tien",
+    "euro",
+    "geld",
+    "prijs",
+    "markt",
+    "hoeveel",
+    "kosten",
+    "duur",
+    "goedkoop",
+    "betalen"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "drie",
+      "answer_es": "tres",
+      "distractors_es": ["dos", "cuatro", "diez"],
+      "word": "drie"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "zeven",
+      "answer_es": "siete",
+      "distractors_es": ["seis", "ocho", "nueve"],
+      "word": "zeven"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de markt",
+      "answer_es": "el mercado",
+      "distractors_es": ["el dinero", "el precio", "el euro"],
+      "word": "markt"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "goedkoop",
+      "answer_es": "barato",
+      "distractors_es": ["caro", "rico", "bien"],
+      "word": "goedkoop"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "één", "es": "uno", "word": "een" },
+        { "nl": "twee", "es": "dos", "word": "twee" },
+        { "nl": "vier", "es": "cuatro", "word": "vier" },
+        { "nl": "vijf", "es": "cinco", "word": "vijf" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "zes", "es": "seis", "word": "zes" },
+        { "nl": "acht", "es": "ocho", "word": "acht" },
+        { "nl": "negen", "es": "nueve", "word": "negen" },
+        { "nl": "tien", "es": "diez", "word": "tien" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "¿Cuánto cuesta?",
+      "answer_nl": "Hoeveel kost het?",
+      "accept": ["hoeveel kost het", "hoeveel kost dit", "hoeveel is het", "wat kost het"],
+      "word": "hoeveel"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Cuesta cinco euros.",
+      "answer_nl": "Het kost vijf euro.",
+      "accept": ["het kost vijf euro", "dat kost vijf euro", "vijf euro"],
+      "word": "euro"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Es muy caro.",
+      "answer_nl": "Het is heel duur.",
+      "accept": ["het is heel duur", "het is erg duur", "dat is heel duur", "het is duur"],
+      "word": "duur"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Tien euro.",
+      "answer_nl": "Tien euro",
+      "accept": ["tien euro"],
+      "word": "tien"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Ik wil graag betalen.",
+      "answer_nl": "Ik wil graag betalen",
+      "accept": ["ik wil graag betalen", "ik wil betalen"],
+      "word": "betalen"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "El pan cuesta dos euros.",
+      "tiles_nl": ["Het", "brood", "kost", "twee", "euro", "duur", "geld"],
+      "answer_nl": "Het brood kost twee euro",
+      "word": "kosten"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "No tengo dinero.",
+      "tiles_nl": ["Ik", "heb", "geen", "geld", "niet", "euro"],
+      "answer_nl": "Ik heb geen geld",
+      "word": "geld"
+    }
+  ]
+}

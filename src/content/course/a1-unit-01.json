@@ -1,0 +1,122 @@
+{
+  "unit": 1,
+  "title_es": "Saludos",
+  "title_nl": "Begroetingen",
+  "reviewed": false,
+  "words": [
+    "hallo",
+    "goedemorgen",
+    "goedemiddag",
+    "goedenavond",
+    "dag",
+    "tot-ziens",
+    "ja",
+    "nee",
+    "dank-je-wel",
+    "alsjeblieft",
+    "ik-ben",
+    "ik-heet",
+    "naam",
+    "buurvrouw",
+    "hoe",
+    "goed"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "hallo",
+      "answer_es": "hola",
+      "distractors_es": ["adiós", "gracias", "por favor"],
+      "word": "hallo"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "goedemorgen",
+      "answer_es": "buenos días",
+      "distractors_es": ["buenas tardes", "buenas noches", "hasta luego"],
+      "word": "goedemorgen"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "tot ziens",
+      "answer_es": "hasta luego",
+      "distractors_es": ["hola", "buenos días", "bien"],
+      "word": "tot-ziens"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de buurvrouw",
+      "answer_es": "la vecina",
+      "distractors_es": ["el nombre", "la mañana", "la tarde"],
+      "word": "buurvrouw"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "hallo", "es": "hola", "word": "hallo" },
+        { "nl": "ja", "es": "sí", "word": "ja" },
+        { "nl": "nee", "es": "no", "word": "nee" },
+        { "nl": "dag", "es": "adiós", "word": "dag" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "goedemorgen", "es": "buenos días", "word": "goedemorgen" },
+        { "nl": "goedenavond", "es": "buenas noches", "word": "goedenavond" },
+        { "nl": "dank je wel", "es": "gracias", "word": "dank-je-wel" },
+        { "nl": "alsjeblieft", "es": "por favor", "word": "alsjeblieft" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Me llamo Ana.",
+      "answer_nl": "Ik heet Ana.",
+      "accept": ["ik heet ana", "ik ben ana", "mijn naam is ana"],
+      "word": "ik-heet"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "Sí, gracias.",
+      "answer_nl": "Ja, dank je wel.",
+      "accept": [
+        "ja dank je wel",
+        "ja dankjewel",
+        "ja bedankt",
+        "ja dank u wel",
+        "ja dank u",
+        "ja dank je",
+        "ja merci"
+      ],
+      "word": "dank-je-wel"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Goedemorgen!",
+      "answer_nl": "Goedemorgen",
+      "accept": ["goedemorgen"],
+      "word": "goedemorgen"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Tot ziens!",
+      "answer_nl": "Tot ziens",
+      "accept": ["tot ziens"],
+      "word": "tot-ziens"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "¿Cómo te llamas?",
+      "tiles_nl": ["Hoe", "heet", "je", "ik", "naam", "goed"],
+      "answer_nl": "Hoe heet je",
+      "word": "hoe"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Yo soy la vecina.",
+      "tiles_nl": ["Ik", "ben", "de", "buurvrouw", "het", "heet"],
+      "answer_nl": "Ik ben de buurvrouw",
+      "word": "buurvrouw"
+    }
+  ]
+}

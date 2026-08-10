@@ -1,0 +1,119 @@
+{
+  "unit": 3,
+  "title_es": "Los animales de la granja",
+  "title_nl": "De boerderijdieren",
+  "reviewed": false,
+  "words": [
+    "koe",
+    "kip",
+    "paard",
+    "schaap",
+    "varken",
+    "dier",
+    "stal",
+    "gras",
+    "honger",
+    "eten-ww",
+    "drinken",
+    "melk",
+    "ei",
+    "boerderij"
+  ],
+  "exercises": [
+    {
+      "type": "choice",
+      "prompt_nl": "de koe",
+      "answer_es": "la vaca",
+      "distractors_es": ["el caballo", "la gallina", "el cerdo"],
+      "word": "koe"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "het paard",
+      "answer_es": "el caballo",
+      "distractors_es": ["la oveja", "la vaca", "el animal"],
+      "word": "paard"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "het schaap",
+      "answer_es": "la oveja",
+      "distractors_es": ["el cerdo", "la gallina", "el establo"],
+      "word": "schaap"
+    },
+    {
+      "type": "choice",
+      "prompt_nl": "de stal",
+      "answer_es": "el establo",
+      "distractors_es": ["la granja", "la hierba", "el animal"],
+      "word": "stal"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "de kip", "es": "la gallina", "word": "kip" },
+        { "nl": "het varken", "es": "el cerdo", "word": "varken" },
+        { "nl": "het ei", "es": "el huevo", "word": "ei" },
+        { "nl": "de melk", "es": "la leche", "word": "melk" }
+      ]
+    },
+    {
+      "type": "match",
+      "pairs": [
+        { "nl": "het gras", "es": "la hierba", "word": "gras" },
+        { "nl": "de honger", "es": "el hambre", "word": "honger" },
+        { "nl": "het dier", "es": "el animal", "word": "dier" },
+        { "nl": "de boerderij", "es": "la granja", "word": "boerderij" }
+      ]
+    },
+    {
+      "type": "translate",
+      "prompt_es": "La vaca come hierba.",
+      "answer_nl": "De koe eet gras.",
+      "accept": ["de koe eet gras"],
+      "word": "eten-ww"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "El caballo bebe agua.",
+      "answer_nl": "Het paard drinkt water.",
+      "accept": ["het paard drinkt water"],
+      "word": "drinken"
+    },
+    {
+      "type": "translate",
+      "prompt_es": "La gallina tiene hambre.",
+      "answer_nl": "De kip heeft honger.",
+      "accept": ["de kip heeft honger"],
+      "word": "honger"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "Het schaap staat in de stal.",
+      "answer_nl": "Het schaap staat in de stal",
+      "accept": ["het schaap staat in de stal"],
+      "word": "stal"
+    },
+    {
+      "type": "listen",
+      "audio_nl": "De koe geeft melk.",
+      "answer_nl": "De koe geeft melk",
+      "accept": ["de koe geeft melk"],
+      "word": "melk"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "El cerdo come mucho.",
+      "tiles_nl": ["Het", "varken", "eet", "veel", "drinkt", "de"],
+      "answer_nl": "Het varken eet veel",
+      "word": "varken"
+    },
+    {
+      "type": "assemble",
+      "prompt_es": "Los animales están en la granja.",
+      "tiles_nl": ["De", "dieren", "zijn", "op", "de", "boerderij", "in", "stal"],
+      "answer_nl": "De dieren zijn op de boerderij",
+      "word": "dier"
+    }
+  ]
+}
