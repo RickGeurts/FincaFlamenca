@@ -7,7 +7,7 @@
   "npc_emoji": "👷",
   "requires": { "unit": 7 },
   "reward": { "munten": 180, "unlock": "decor:schuur" },
-  "reviewed": false,
+  "reviewed": true,
   "nodes": [
     {
       "id": "start",

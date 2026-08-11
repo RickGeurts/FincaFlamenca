@@ -7,7 +7,7 @@
   "npc_emoji": "🧺",
   "requires": { "unit": 2 },
   "reward": { "munten": 120, "unlock": "decor:plantenbak" },
-  "reviewed": false,
+  "reviewed": true,
   "nodes": [
     {
       "id": "start",

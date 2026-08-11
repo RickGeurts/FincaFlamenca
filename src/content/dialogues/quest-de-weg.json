@@ -7,7 +7,7 @@
   "npc_emoji": "🧑‍💼",
   "requires": { "unit": 9 },
   "reward": { "munten": 140 },
-  "reviewed": false,
+  "reviewed": true,
   "nodes": [
     {
       "id": "start",

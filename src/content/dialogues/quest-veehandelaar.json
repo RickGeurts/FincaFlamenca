@@ -7,7 +7,7 @@
   "npc_emoji": "🧑‍🌾",
   "requires": { "unit": 3 },
   "reward": { "munten": 150, "unlock": "decor:wei2" },
-  "reviewed": false,
+  "reviewed": true,
   "nodes": [
     {
       "id": "start",

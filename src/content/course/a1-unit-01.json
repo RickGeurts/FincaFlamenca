@@ -2,7 +2,7 @@
   "unit": 1,
   "title_es": "Saludos",
   "title_nl": "Begroetingen",
-  "reviewed": false,
+  "reviewed": true,
   "words": [
     "hallo",
     "goedemorgen",

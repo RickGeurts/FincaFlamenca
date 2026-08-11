@@ -7,7 +7,7 @@
   "npc_emoji": "👩‍🌾",
   "requires": { "unit": 10 },
   "reward": { "munten": 250, "unlock": "decor:tafel" },
-  "reviewed": false,
+  "reviewed": true,
   "nodes": [
     {
       "id": "start",

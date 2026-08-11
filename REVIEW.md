@@ -229,7 +229,7 @@ op het formele register.
 
 ### Unit 1 — Begroetingen (Saludos)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -242,7 +242,7 @@ Nagekeken: **nog niet**
 
 ### Unit 2 — Getallen en prijzen (Números y precios)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -256,7 +256,7 @@ Nagekeken: **nog niet**
 
 ### Unit 3 — De boerderijdieren (Los animales de la granja)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -270,7 +270,7 @@ Nagekeken: **nog niet**
 
 ### Unit 4 — Eten en drinken (Comer y beber)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -284,7 +284,7 @@ Nagekeken: **nog niet**
 
 ### Unit 5 — Formeel spreken: het gemeentehuis (Hablar formal: el ayuntamiento)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -298,7 +298,7 @@ Nagekeken: **nog niet**
 
 ### Unit 6 — Kleding en kleuren (Ropa y colores)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -312,7 +312,7 @@ Nagekeken: **nog niet**
 
 ### Unit 7 — Familie en wonen (Familia y hogar)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -326,7 +326,7 @@ Nagekeken: **nog niet**
 
 ### Unit 8 — Het weer en de seizoenen (El tiempo y las estaciones)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -340,7 +340,7 @@ Nagekeken: **nog niet**
 
 ### Unit 9 — De weg vragen (Preguntar el camino)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -354,7 +354,7 @@ Nagekeken: **nog niet**
 
 ### Unit 10 — Herhaling en feest (Repaso y fiesta)
 
-Nagekeken: **nog niet**
+Nagekeken: **ja**
 
 | ✓ | Nederlands | Spaans | Let op |
 | - | ---------- | ------ | ------ |
@@ -375,7 +375,7 @@ dus dit is de belangrijkste kolom.
 
 ### De buurvrouw — unit 1 (Conoce a tu vecina)
 
-Plek: finca · register: je · nagekeken: **nog niet**
+Plek: finca · register: je · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -394,7 +394,7 @@ Plek: finca · register: je · nagekeken: **nog niet**
 
 ### Hoeveel kost dat? — unit 2 (El precio justo)
 
-Plek: mercado · register: u · nagekeken: **nog niet**
+Plek: mercado · register: u · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -410,7 +410,7 @@ Plek: mercado · register: u · nagekeken: **nog niet**
 
 ### Bij de veehandelaar — unit 3 (Tu primera vaca)
 
-Plek: criadero · register: je · nagekeken: **nog niet**
+Plek: criadero · register: je · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -426,7 +426,7 @@ Plek: criadero · register: je · nagekeken: **nog niet**
 
 ### De arepakraam — unit 4 (El puesto de arepas)
 
-Plek: mercado · register: u · nagekeken: **nog niet**
+Plek: mercado · register: u · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -442,7 +442,7 @@ Plek: mercado · register: u · nagekeken: **nog niet**
 
 ### Op het gemeentehuis — unit 5 (Comprar terreno en el ayuntamiento)
 
-Plek: alcaldia · register: u · nagekeken: **nog niet**
+Plek: alcaldia · register: u · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -461,7 +461,7 @@ Plek: alcaldia · register: u · nagekeken: **nog niet**
 
 ### Schoenen kopen — unit 6 (Zapatos para la finca)
 
-Plek: mercado · register: u · nagekeken: **nog niet**
+Plek: mercado · register: u · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -477,7 +477,7 @@ Plek: mercado · register: u · nagekeken: **nog niet**
 
 ### De timmerman komt — unit 7 (Una casa más grande)
 
-Plek: finca · register: u · nagekeken: **nog niet**
+Plek: finca · register: u · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -493,7 +493,7 @@ Plek: finca · register: u · nagekeken: **nog niet**
 
 ### Het weer van morgen — unit 8 (¿Va a llover?)
 
-Plek: finca · register: je · nagekeken: **nog niet**
+Plek: finca · register: je · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -509,7 +509,7 @@ Plek: finca · register: je · nagekeken: **nog niet**
 
 ### De weg vragen — unit 9 (¿Dónde está el mercado?)
 
-Plek: alcaldia · register: u · nagekeken: **nog niet**
+Plek: alcaldia · register: u · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -525,7 +525,7 @@ Plek: alcaldia · register: u · nagekeken: **nog niet**
 
 ### Het boerderijfeest — unit 10 (La fiesta de la finca)
 
-Plek: finca · register: je · nagekeken: **nog niet**
+Plek: finca · register: je · nagekeken: **ja**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
@@ -591,28 +591,4 @@ worden gehoord én gelezen zonder dat er een les aan te pas komt.
 
 194 woorden · 10 units · 129 oefeningen · 10 gesprekken
 
-Nog niet nagekeken (21):
-
-- `src/content/vocab/words.json`
-- `src/content/course/a1-unit-01.json`
-- `src/content/course/a1-unit-02.json`
-- `src/content/course/a1-unit-03.json`
-- `src/content/course/a1-unit-04.json`
-- `src/content/course/a1-unit-05.json`
-- `src/content/course/a1-unit-06.json`
-- `src/content/course/a1-unit-07.json`
-- `src/content/course/a1-unit-08.json`
-- `src/content/course/a1-unit-09.json`
-- `src/content/course/a1-unit-10.json`
-- `src/content/dialogues/quest-buurvrouw.json`
-- `src/content/dialogues/quest-markt-prijs.json`
-- `src/content/dialogues/quest-veehandelaar.json`
-- `src/content/dialogues/quest-arepakraam.json`
-- `src/content/dialogues/quest-gemeente.json`
-- `src/content/dialogues/quest-schoenen.json`
-- `src/content/dialogues/quest-timmerman.json`
-- `src/content/dialogues/quest-weer.json`
-- `src/content/dialogues/quest-de-weg.json`
-- `src/content/dialogues/quest-feest.json`
-
-Zet `"reviewed": true` bovenin een bestand zodra het klopt.
+Alles is nagekeken. 🎉
