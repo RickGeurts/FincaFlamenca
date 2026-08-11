@@ -42,7 +42,15 @@
       "npc_es_hint": "¡Qué gusto conocerte! Me voy a casa.",
       "ask_es": "Despídete de Anke.",
       "answer_nl": "Tot ziens!",
-      "accept": ["tot ziens", "dag Anke", "doei", "dag"],
+      "accept": [
+        "tot ziens",
+        "tot ziens Anke",
+        "dag Anke",
+        "doei",
+        "dag",
+        "daag",
+        "tot morgen"
+      ],
       "hint_nl": ["Tot", "ziens"],
       "goto": "einde"
     },

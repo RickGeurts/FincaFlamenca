@@ -34,11 +34,11 @@ naamwoorden: 104× **de**, 24× **het**.
 | ☐ | **het dorp** | el pueblo | 9 |
 | ☐ | **het feest** | la fiesta | 10 |
 | ☐ | **het huis** | la casa | 7 |
-| ☐ | **het pad** | el camino | 9 |
+| ☐ | **het pad** | el sendero | 9 |
 | ☐ | **het hek** | la cerca | 3 |
 | ☐ | **het vat** | el barril | 3 |
 | ☐ | **het korte haar** | el pelo corto | 6 |
-| ☐ | **het hemd** | la blusa | 6 |
+| ☐ | **het hemd** | la camisa | 6 |
 
 ### De 104 de-woorden
 
@@ -368,9 +368,10 @@ Nagekeken: **nog niet**
 
 ## 4. Gesprekken — hier zit de u/je-vorm
 
-Elk gesprek staat in één register: **u** bij de ambtenaar, de veehandelaar,
-de markt en de winkel; **je** bij Anke de buurvrouw. Eén verschuiving
-binnen een gesprek valt meteen op, dus dit is de belangrijkste kolom.
+Elk gesprek staat in één register: **u** bij de ambtenaar, de markt en de
+winkel; **je** bij Anke de buurvrouw en bij de veehandelaar, die zij als
+dorpsgenoot tutoyeert. Eén verschuiving binnen een gesprek valt meteen op,
+dus dit is de belangrijkste kolom.
 
 ### De buurvrouw — unit 1 (Conoce a tu vecina)
 
@@ -388,7 +389,7 @@ Plek: finca · register: je · nagekeken: **nog niet**
 | ☐ | zij | Ja, ik heb een kip. | _(keuze)_ |
 | ☐ | zij | Nee, nog niet. | _(keuze)_ |
 | ☐ | NPC | Leuk je te ontmoeten! Ik ga naar huis. | ¡Qué gusto conocerte! Me voy a casa. |
-| ☐ | zij | **Tot ziens!** | Despídete de Anke. — ook goed: tot ziens · dag Anke · doei · dag |
+| ☐ | zij | **Tot ziens!** | Despídete de Anke. — ook goed: tot ziens · tot ziens Anke · dag Anke · doei · dag · daag · tot morgen |
 | ☐ | NPC | Tot ziens! Tot morgen. | ¡Hasta luego! Hasta mañana. |
 
 ### Hoeveel kost dat? — unit 2 (El precio justo)
@@ -404,24 +405,24 @@ Plek: mercado · register: u · nagekeken: **nog niet**
 | ☐ | zij | Ja, dat is goedkoop. Ik neem tien wortels. | _(keuze)_ |
 | ☐ | zij | Vijf euro? Dat is duur. | _(keuze)_ |
 | ☐ | NPC | Tien wortels, vijf euro. Wilt u betalen? | Diez zanahorias, cinco euros. ¿Quiere pagar? |
-| ☐ | zij | **Hier is het geld.** | Dile que aquí tiene el dinero. — ook goed: hier is het geld · hier is mijn geld · alstublieft · hier |
+| ☐ | zij | **Hier is het geld.** | Dile que aquí tiene el dinero. — ook goed: hier is het geld · hier is het geld alstublieft · alstublieft hier is het geld · hier is mijn geld · hier is uw geld · alstublieft · hier |
 | ☐ | NPC | Dank u wel! Tot ziens en veel plezier met de wortels. | ¡Muchas gracias! Hasta luego y que disfrute las zanahorias. |
 
 ### Bij de veehandelaar — unit 3 (Tu primera vaca)
 
-Plek: criadero · register: u · nagekeken: **nog niet**
+Plek: criadero · register: je · nagekeken: **nog niet**
 
 | ✓ | Wie | Nederlands | Spaans |
 | - | --- | ---------- | ------ |
-| ☐ | NPC | Goedemiddag! Waarmee kan ik u helpen? | ¡Buenas tardes! ¿En qué puedo ayudarle? |
+| ☐ | NPC | Goedemiddag! Waarmee kan ik je helpen? | ¡Buenas tardes! ¿En qué puedo ayudarte? |
 | ☐ | zij | Goedemiddag. Ik wil graag een koe kopen. | _(keuze)_ |
 | ☐ | zij | Ik wil een koe. | _(keuze)_ |
-| ☐ | NPC | Een koe, heel goed. Weet u wat een koe eet? | Una vaca, muy bien. ¿Sabe qué come una vaca? |
+| ☐ | NPC | Een koe, heel goed. Weet je wat een koe eet? | Una vaca, muy bien. ¿Sabes qué come una vaca? |
 | ☐ | zij | Een koe eet gras. | _(keuze)_ |
 | ☐ | zij | Een koe eet hooi. | _(keuze)_ |
-| ☐ | NPC | Juist. Een koe heeft ook een wei nodig. Ik geef u een kleine wei cadeau. | Exacto. Una vaca también necesita un prado. Le regalo un prado pequeño. |
-| ☐ | zij | **Dank u wel!** | Dale las gracias de forma formal. — ook goed: dank u · dank u wel · hartelijk dank · dankuwel |
-| ☐ | NPC | Graag gedaan! Tot ziens en veel succes met uw koe. | ¡De nada! Hasta luego y mucha suerte con su vaca. |
+| ☐ | NPC | Juist. Een koe heeft ook een wei nodig. Ik geef je een kleine wei cadeau. | Exacto. Una vaca también necesita un prado. Te regalo un prado pequeño. |
+| ☐ | zij | **Dank je wel!** | Dale las gracias. — ook goed: dank je wel · dank je · dankjewel · bedankt · heel erg bedankt · merci · dank u wel · dank u · dankuwel · hartelijk dank |
+| ☐ | NPC | Graag gedaan! Tot ziens en veel succes met je koe. | ¡De nada! Hasta luego y mucha suerte con tu vaca. |
 
 ### De arepakraam — unit 4 (El puesto de arepas)
 
@@ -436,7 +437,7 @@ Plek: mercado · register: u · nagekeken: **nog niet**
 | ☐ | zij | Ja, natuurlijk. Alstublieft! | _(keuze)_ |
 | ☐ | zij | Ja, hier. | _(keuze)_ |
 | ☐ | NPC | Mmm! Met kaas is dat heel lekker. Wilt u een kraam op de markt? | ¡Mmm! Con queso está riquísimo. ¿Quiere un puesto en el mercado? |
-| ☐ | zij | **Ja, heel graag!** | Dile que sí, con muchas ganas. — ook goed: ja heel graag · ja graag · graag · heel graag |
+| ☐ | zij | **Ja, heel graag!** | Dile que sí, con muchas ganas. — ook goed: ja heel graag · ja heel graag alstublieft · heel graag alstublieft · ja graag · ja natuurlijk · ja dat wil ik graag · graag · heel graag |
 | ☐ | NPC | Afgesproken! Hier is uw arepakraam. Smakelijk! | ¡Trato hecho! Aquí tiene su puesto de arepas. ¡Buen provecho! |
 
 ### Op het gemeentehuis — unit 5 (Comprar terreno en el ayuntamiento)
@@ -455,7 +456,7 @@ Plek: alcaldia · register: u · nagekeken: **nog niet**
 | ☐ | zij | Ja, graag. Dat is perfect. | _(keuze)_ |
 | ☐ | zij | Ja, dat is goed. | _(keuze)_ |
 | ☐ | NPC | Nog één ding. Vraagt u het netjes? | Una cosa más. ¿Lo pide con cortesía? |
-| ☐ | zij | **Mag ik het land alstublieft?** | Pide el terreno de forma formal. — ook goed: mag ik het land alstublieft · mag ik het land · ik wil graag land kopen alstublieft · mag ik alstublieft het land |
+| ☐ | zij | **Mag ik het land alstublieft?** | Pide el terreno de forma formal. — ook goed: mag ik het land alstublieft · mag ik het land alstublieft meneer · mag ik het land kopen alstublieft · mag ik alstublieft het land kopen · mag ik het land · ik wil graag land kopen alstublieft · ik wil graag het land alstublieft · mag ik alstublieft het land |
 | ☐ | NPC | Uitstekend! Het land is van u. Hier is ook een subsidie. | ¡Excelente! El terreno es suyo. Aquí tiene también una subvención. |
 
 ### Schoenen kopen — unit 6 (Zapatos para la finca)
@@ -471,7 +472,7 @@ Plek: mercado · register: u · nagekeken: **nog niet**
 | ☐ | zij | De groene schoenen, alstublieft. | _(keuze)_ |
 | ☐ | zij | De zwarte. | _(keuze)_ |
 | ☐ | NPC | Goede keuze. En, wat vindt u ervan? | Buena elección. Y bien, ¿qué le parecen? |
-| ☐ | zij | **De schoenen zijn mooi.** | Di que los zapatos son bonitos. — ook goed: de schoenen zijn mooi · ze zijn mooi · mooi · de schoenen zijn heel mooi |
+| ☐ | zij | **De schoenen zijn mooi.** | Di que los zapatos son bonitos. — ook goed: de schoenen zijn mooi · de schoenen zijn heel mooi · de schoenen zijn erg mooi · ik vind de schoenen mooi · ik vind ze mooi · ze zijn mooi · ze zijn heel mooi · ze zijn erg mooi · mooi |
 | ☐ | NPC | Dank u wel! Veel plezier op de boerderij. | ¡Muchas gracias! Que los disfrute en la granja. |
 
 ### De timmerman komt — unit 7 (Una casa más grande)
@@ -487,7 +488,7 @@ Plek: finca · register: u · nagekeken: **nog niet**
 | ☐ | zij | In de tuin, naast het huis. | _(keuze)_ |
 | ☐ | zij | In de tuin. | _(keuze)_ |
 | ☐ | NPC | Prima. Zegt u nog even wat u wilt? | Perfecto. ¿Me dice otra vez qué quiere? |
-| ☐ | zij | **Ik wil een grote schuur.** | Di que quieres un granero grande. — ook goed: ik wil een grote schuur · een grote schuur · ik wil een schuur |
+| ☐ | zij | **Ik wil graag een grote schuur.** | Di que quieres un granero grande. — ook goed: ik wil graag een grote schuur · ik wil graag een grote schuur alstublieft · ik wil graag een schuur · ik wil een grote schuur · een grote schuur · een grote schuur alstublieft · ik wil een schuur |
 | ☐ | NPC | Komt in orde! De schuur staat er. Tot ziens! | ¡Hecho! El granero ya está. ¡Hasta luego! |
 
 ### Het weer van morgen — unit 8 (¿Va a llover?)
@@ -503,7 +504,7 @@ Plek: finca · register: je · nagekeken: **nog niet**
 | ☐ | zij | Nee, morgen niet. Het regent dan. | _(keuze)_ |
 | ☐ | zij | Ja, elke dag. | _(keuze)_ |
 | ☐ | NPC | Slim! Hier, neem mijn gieter. Voor de dagen met zon. | ¡Lista! Toma, coge mi regadera. Para los días de sol. |
-| ☐ | zij | **Dank je wel!** | Dale las gracias a Anke. — ook goed: dank je wel · dank je · bedankt · dankjewel · merci |
+| ☐ | zij | **Dank je wel!** | Dale las gracias a Anke. — ook goed: dank je wel · dank je wel Anke · dank je · dank je Anke · bedankt · bedankt Anke · heel erg bedankt · dankjewel · merci · merci Anke |
 | ☐ | NPC | Graag gedaan! Tot morgen, in de regen. | ¡De nada! Hasta mañana, bajo la lluvia. |
 
 ### De weg vragen — unit 9 (¿Dónde está el mercado?)
@@ -519,7 +520,7 @@ Plek: alcaldia · register: u · nagekeken: **nog niet**
 | ☐ | zij | Rechtdoor en dan links. Dank u wel. | _(keuze)_ |
 | ☐ | zij | Links? | _(keuze)_ |
 | ☐ | NPC | Ja. De markt is naast het gemeentehuis, in het dorp. | Sí. El mercado está al lado del ayuntamiento, en el pueblo. |
-| ☐ | zij | **Is het ver?** | Pregunta si está lejos. — ook goed: is het ver · is het ver van hier · is de markt ver |
+| ☐ | zij | **Is het ver?** | Pregunta si está lejos. — ook goed: is het ver · is het ver weg · is het nog ver · is het ver van hier · is het ver hier vandaan · is de markt ver |
 | ☐ | NPC | Nee, het is dichtbij. Vijf minuten. Tot ziens! | No, está cerca. Cinco minutos. ¡Hasta luego! |
 
 ### Het boerderijfeest — unit 10 (La fiesta de la finca)
@@ -535,7 +536,7 @@ Plek: finca · register: je · nagekeken: **nog niet**
 | ☐ | zij | Ik maak arepas. Die zijn heel lekker! | _(keuze)_ |
 | ☐ | zij | Ik breng koffie. | _(keuze)_ |
 | ☐ | NPC | Gezellig! Wij dansen samen. Ben je blij? | ¡Qué chévere! Bailamos juntas. ¿Estás contenta? |
-| ☐ | zij | **Ja, ik ben heel blij!** | Di que estás muy contenta. — ook goed: ja ik ben heel blij · ik ben heel blij · ik ben blij · ja ik ben blij |
+| ☐ | zij | **Ja, ik ben heel blij!** | Di que estás muy contenta. — ook goed: ja ik ben heel blij · ik ben heel blij · ja ik ben erg blij · ik ben erg blij · ik ben heel erg blij · ja heel blij · ik ben blij · ja ik ben blij |
 | ☐ | NPC | Proost! Op jouw boerderij en op jouw Nederlands! | ¡Salud! ¡Por tu granja y por tu neerlandés! |
 
 ## 5. Woordkaarten op de boerderij
@@ -569,7 +570,7 @@ worden gehoord én gelezen zonder dat er een les aan te pas komt.
 | ☐ | de bloemen | las flores |
 | ☐ | de boomgaard | el huerto |
 | ☐ | de steen | la piedra |
-| ☐ | het pad | el camino |
+| ☐ | het pad | el sendero |
 | ☐ | het hek | la cerca |
 | ☐ | de pompoen | la calabaza |
 | ☐ | het vat | el barril |

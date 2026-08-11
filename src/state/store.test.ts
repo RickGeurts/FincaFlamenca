@@ -9,6 +9,7 @@ import { ECONOMY, getDecorDef, getSpeciesDef } from "../game/economy";
 import { getQuest } from "../content";
 import { COLOR_REWARD_MUNTEN, getWearable } from "../game/avatar";
 import { SAVE_VERSION, exportSave, parseSave } from "./store";
+import { getSyncEmail } from "./sync";
 import { animalKey, decorKey } from "../game/placement";
 
 const { mem } = vi.hoisted(() => ({ mem: new Map<string, string>() }));
@@ -512,5 +513,27 @@ describe("starting over (dev tools)", () => {
     await store.getState().devReset();
 
     expect(mem.get(SAVE_KEY)).toBeUndefined();
+  });
+
+  it("unpairs, so the blank farm cannot overwrite the backup", async () => {
+    // A reset that leaves the pairing code behind is dangerous, not just
+    // untidy: the fresh save is newer than the one on the server, so the first
+    // change afterwards would push the emptiness over her real farm.
+    // These tests run without a browser, so localStorage has to be stood up.
+    const prefs = new Map<string, string>();
+    vi.stubGlobal("localStorage", {
+      getItem: (k: string) => prefs.get(k) ?? null,
+      setItem: (k: string, v: string) => void prefs.set(k, v),
+      removeItem: (k: string) => void prefs.delete(k),
+    });
+    prefs.set("finca-flamenca-sync-code", "ABCDEFGHJKLM");
+    prefs.set("finca-flamenca-sync-email", "ana@example.com");
+    const store = await loadStore();
+
+    await store.getState().devReset();
+
+    expect(prefs.get("finca-flamenca-sync-code")).toBeUndefined();
+    expect(getSyncEmail()).toBe("");
+    vi.unstubAllGlobals();
   });
 });

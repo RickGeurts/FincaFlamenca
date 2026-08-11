@@ -2,7 +2,7 @@
   "id": "veehandelaar-koe",
   "title_es": "Tu primera vaca",
   "title_nl": "Bij de veehandelaar",
-  "summary_es": "Habla de usted y llévate un prado",
+  "summary_es": "Compra tu primera vaca y llévate un prado",
   "location": "criadero",
   "npc_emoji": "🧑‍🌾",
   "requires": { "unit": 3 },
@@ -11,8 +11,8 @@
   "nodes": [
     {
       "id": "start",
-      "npc_nl": "Goedemiddag! Waarmee kan ik u helpen?",
-      "npc_es_hint": "¡Buenas tardes! ¿En qué puedo ayudarle?",
+      "npc_nl": "Goedemiddag! Waarmee kan ik je helpen?",
+      "npc_es_hint": "¡Buenas tardes! ¿En qué puedo ayudarte?",
       "choices": [
         {
           "nl": "Goedemiddag. Ik wil graag een koe kopen.",
@@ -24,8 +24,8 @@
     },
     {
       "id": "eten",
-      "npc_nl": "Een koe, heel goed. Weet u wat een koe eet?",
-      "npc_es_hint": "Una vaca, muy bien. ¿Sabe qué come una vaca?",
+      "npc_nl": "Een koe, heel goed. Weet je wat een koe eet?",
+      "npc_es_hint": "Una vaca, muy bien. ¿Sabes qué come una vaca?",
       "choices": [
         { "nl": "Een koe eet gras.", "goto": "wei", "quality": "best" },
         { "nl": "Een koe eet hooi.", "goto": "wei", "quality": "ok" }
@@ -33,18 +33,29 @@
     },
     {
       "id": "wei",
-      "npc_nl": "Juist. Een koe heeft ook een wei nodig. Ik geef u een kleine wei cadeau.",
-      "npc_es_hint": "Exacto. Una vaca también necesita un prado. Le regalo un prado pequeño.",
-      "ask_es": "Dale las gracias de forma formal.",
-      "answer_nl": "Dank u wel!",
-      "accept": ["dank u", "dank u wel", "hartelijk dank", "dankuwel"],
-      "hint_nl": ["Dank", "u", "wel"],
+      "npc_nl": "Juist. Een koe heeft ook een wei nodig. Ik geef je een kleine wei cadeau.",
+      "npc_es_hint": "Exacto. Una vaca también necesita un prado. Te regalo un prado pequeño.",
+      "ask_es": "Dale las gracias.",
+      "answer_nl": "Dank je wel!",
+      "accept": [
+        "dank je wel",
+        "dank je",
+        "dankjewel",
+        "bedankt",
+        "heel erg bedankt",
+        "merci",
+        "dank u wel",
+        "dank u",
+        "dankuwel",
+        "hartelijk dank"
+      ],
+      "hint_nl": ["Dank", "je", "wel"],
       "goto": "einde"
     },
     {
       "id": "einde",
-      "npc_nl": "Graag gedaan! Tot ziens en veel succes met uw koe.",
-      "npc_es_hint": "¡De nada! Hasta luego y mucha suerte con su vaca.",
+      "npc_nl": "Graag gedaan! Tot ziens en veel succes met je koe.",
+      "npc_es_hint": "¡De nada! Hasta luego y mucha suerte con tu vaca.",
       "end": true
     }
   ]

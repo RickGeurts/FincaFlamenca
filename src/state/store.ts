@@ -704,6 +704,14 @@ export const useGameStore = create<GameState>()(
         // means the voice and the sound switch start over too.
         setPreferredVoice(null);
         setMuted(false);
+        // The pairing code lives outside the save as well, and leaving it
+        // behind is worse than untidy: the blank farm is newer than the one on
+        // the server, so the next change would push the emptiness over her
+        // backup. A first run is an unpaired run. Imported here rather than at
+        // the top because sync.ts already imports this module.
+        const { stopSync, setSyncEmail } = await import("./sync");
+        stopSync();
+        setSyncEmail("");
         // Reloading is what turns a cleared store into a first run. Guarded so
         // the wipe itself can be tested without a browser around it.
         if (typeof location !== "undefined") location.reload();

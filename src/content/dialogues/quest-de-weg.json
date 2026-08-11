@@ -37,7 +37,14 @@
       "npc_es_hint": "Sí. El mercado está al lado del ayuntamiento, en el pueblo.",
       "ask_es": "Pregunta si está lejos.",
       "answer_nl": "Is het ver?",
-      "accept": ["is het ver", "is het ver van hier", "is de markt ver"],
+      "accept": [
+        "is het ver",
+        "is het ver weg",
+        "is het nog ver",
+        "is het ver van hier",
+        "is het ver hier vandaan",
+        "is de markt ver"
+      ],
       "hint_nl": ["Is", "het", "ver"],
       "goto": "einde"
     },

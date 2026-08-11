@@ -37,7 +37,16 @@
       "npc_es_hint": "¡Mmm! Con queso está riquísimo. ¿Quiere un puesto en el mercado?",
       "ask_es": "Dile que sí, con muchas ganas.",
       "answer_nl": "Ja, heel graag!",
-      "accept": ["ja heel graag", "ja graag", "graag", "heel graag"],
+      "accept": [
+        "ja heel graag",
+        "ja heel graag alstublieft",
+        "heel graag alstublieft",
+        "ja graag",
+        "ja natuurlijk",
+        "ja dat wil ik graag",
+        "graag",
+        "heel graag"
+      ],
       "hint_nl": ["Ja", "heel", "graag"],
       "goto": "einde"
     },

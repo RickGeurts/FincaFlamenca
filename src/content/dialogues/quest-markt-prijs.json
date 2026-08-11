@@ -41,7 +41,15 @@
       "npc_es_hint": "Diez zanahorias, cinco euros. ¿Quiere pagar?",
       "ask_es": "Dile que aquí tiene el dinero.",
       "answer_nl": "Hier is het geld.",
-      "accept": ["hier is het geld", "hier is mijn geld", "alstublieft", "hier"],
+      "accept": [
+        "hier is het geld",
+        "hier is het geld alstublieft",
+        "alstublieft hier is het geld",
+        "hier is mijn geld",
+        "hier is uw geld",
+        "alstublieft",
+        "hier"
+      ],
       "hint_nl": ["Hier", "is", "het", "geld"],
       "goto": "einde"
     },

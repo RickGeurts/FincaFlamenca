@@ -1159,11 +1159,11 @@
       "id": "pad",
       "nl": "pad",
       "article": "het",
-      "es": "el camino",
+      "es": "el sendero",
       "category": "decor",
       "unit": 9,
       "example_nl": "Het pad gaat naar het huis.",
-      "example_es": "El camino va hacia la casa."
+      "example_es": "El sendero va hacia la casa."
     },
     {
       "id": "hek",
@@ -1379,11 +1379,11 @@
       "id": "hemd",
       "nl": "hemd",
       "article": "het",
-      "es": "la blusa",
+      "es": "la camisa",
       "category": "clothing",
       "unit": 6,
       "example_nl": "Het hemd is wit.",
-      "example_es": "La blusa es blanca."
+      "example_es": "La camisa es blanca."
     },
     {
       "id": "regenjas",

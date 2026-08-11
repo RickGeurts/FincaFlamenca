@@ -265,8 +265,15 @@ JSON files and clearly flag them for human review before they are considered
 done (e.g., a `"reviewed": false` field per file, surfaced in a dev checklist).
 Dutch correctness — especially de/het articles, word order, and formal *u* vs
 informal *je* register — must be verified by a human before content ships to
-the player. Dialogue quests use formal *u* with officials (gemeente, shops) and
-informal *je* with the buurvrouw, matching real usage.
+the player. Dialogue quests use formal *u* with officials and shopkeepers she
+does not know (gemeente, markt, arepakraam, kledingwinkel, timmerman) and
+informal *je* with the people she knows as neighbours — Anke the buurvrouw, and
+the veehandelaar, a fellow villager she is on first-name terms with. Each quest
+stays in **one** register the whole way through; a shift mid-conversation is the
+easiest mistake to make and the easiest for her to pick up wrongly. *u* is
+introduced in unit 5, so before then an NPC may *speak* it (she only has to
+understand, and the Spanish hint is one tap away) but she is never asked to
+*type* it — a quest gated below unit 5 must not require producing *u*.
 
 ## Nice-to-haves (only after M4, never blocking)
 

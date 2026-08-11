@@ -36,9 +36,17 @@
       "npc_nl": "Prima. Zegt u nog even wat u wilt?",
       "npc_es_hint": "Perfecto. ¿Me dice otra vez qué quiere?",
       "ask_es": "Di que quieres un granero grande.",
-      "answer_nl": "Ik wil een grote schuur.",
-      "accept": ["ik wil een grote schuur", "een grote schuur", "ik wil een schuur"],
-      "hint_nl": ["Ik", "wil", "een", "grote", "schuur"],
+      "answer_nl": "Ik wil graag een grote schuur.",
+      "accept": [
+        "ik wil graag een grote schuur",
+        "ik wil graag een grote schuur alstublieft",
+        "ik wil graag een schuur",
+        "ik wil een grote schuur",
+        "een grote schuur",
+        "een grote schuur alstublieft",
+        "ik wil een schuur"
+      ],
+      "hint_nl": ["Ik", "wil", "graag", "een", "grote", "schuur"],
       "goto": "einde"
     },
     {

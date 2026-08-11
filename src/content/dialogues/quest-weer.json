@@ -33,7 +33,18 @@
       "npc_es_hint": "¡Lista! Toma, coge mi regadera. Para los días de sol.",
       "ask_es": "Dale las gracias a Anke.",
       "answer_nl": "Dank je wel!",
-      "accept": ["dank je wel", "dank je", "bedankt", "dankjewel", "merci"],
+      "accept": [
+        "dank je wel",
+        "dank je wel Anke",
+        "dank je",
+        "dank je Anke",
+        "bedankt",
+        "bedankt Anke",
+        "heel erg bedankt",
+        "dankjewel",
+        "merci",
+        "merci Anke"
+      ],
       "hint_nl": ["Dank", "je", "wel"],
       "goto": "einde"
     },

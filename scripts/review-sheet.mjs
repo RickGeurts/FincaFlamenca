@@ -123,9 +123,10 @@ for (const unit of units) {
 
 line("## 4. Gesprekken — hier zit de u/je-vorm");
 line();
-line("Elk gesprek staat in één register: **u** bij de ambtenaar, de veehandelaar,");
-line("de markt en de winkel; **je** bij Anke de buurvrouw. Eén verschuiving");
-line("binnen een gesprek valt meteen op, dus dit is de belangrijkste kolom.");
+line("Elk gesprek staat in één register: **u** bij de ambtenaar, de markt en de");
+line("winkel; **je** bij Anke de buurvrouw en bij de veehandelaar, die zij als");
+line("dorpsgenoot tutoyeert. Eén verschuiving binnen een gesprek valt meteen op,");
+line("dus dit is de belangrijkste kolom.");
 line();
 
 for (const quest of quests) {

@@ -37,7 +37,16 @@
       "npc_es_hint": "¡Qué chévere! Bailamos juntas. ¿Estás contenta?",
       "ask_es": "Di que estás muy contenta.",
       "answer_nl": "Ja, ik ben heel blij!",
-      "accept": ["ja ik ben heel blij", "ik ben heel blij", "ik ben blij", "ja ik ben blij"],
+      "accept": [
+        "ja ik ben heel blij",
+        "ik ben heel blij",
+        "ja ik ben erg blij",
+        "ik ben erg blij",
+        "ik ben heel erg blij",
+        "ja heel blij",
+        "ik ben blij",
+        "ja ik ben blij"
+      ],
       "hint_nl": ["Ik", "ben", "heel", "blij"],
       "goto": "einde"
     },

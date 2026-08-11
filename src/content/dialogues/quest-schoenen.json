@@ -33,7 +33,17 @@
       "npc_es_hint": "Buena elección. Y bien, ¿qué le parecen?",
       "ask_es": "Di que los zapatos son bonitos.",
       "answer_nl": "De schoenen zijn mooi.",
-      "accept": ["de schoenen zijn mooi", "ze zijn mooi", "mooi", "de schoenen zijn heel mooi"],
+      "accept": [
+        "de schoenen zijn mooi",
+        "de schoenen zijn heel mooi",
+        "de schoenen zijn erg mooi",
+        "ik vind de schoenen mooi",
+        "ik vind ze mooi",
+        "ze zijn mooi",
+        "ze zijn heel mooi",
+        "ze zijn erg mooi",
+        "mooi"
+      ],
       "hint_nl": ["De", "schoenen", "zijn", "mooi"],
       "goto": "einde"
     },

@@ -44,8 +44,12 @@
       "answer_nl": "Mag ik het land alstublieft?",
       "accept": [
         "mag ik het land alstublieft",
+        "mag ik het land alstublieft meneer",
+        "mag ik het land kopen alstublieft",
+        "mag ik alstublieft het land kopen",
         "mag ik het land",
         "ik wil graag land kopen alstublieft",
+        "ik wil graag het land alstublieft",
         "mag ik alstublieft het land"
       ],
       "hint_nl": ["Mag", "ik", "alstublieft"],
