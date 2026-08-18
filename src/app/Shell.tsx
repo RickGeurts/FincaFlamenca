@@ -24,6 +24,7 @@ import { QuestPlace } from "../ui/quests/QuestPlace";
 import { LookScreen } from "../ui/avatar/LookScreen";
 import { Celebration } from "../ui/Celebration";
 import { Onboarding } from "../ui/Onboarding";
+import { Stage } from "./Stage";
 
 type View =
   | { name: "village" }
@@ -58,17 +59,19 @@ export function Shell() {
 
   if (hydrated && !onboarded) {
     return (
-      <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-hidden bg-farm-50">
+      <Stage>
         <Onboarding onDone={finishOnboarding} />
-      </div>
+      </Stage>
     );
   }
 
   if (!hydrated) {
     return (
-      <div className="flex min-h-dvh items-center justify-center font-black text-farm-700">
-        {STRINGS.loading}
-      </div>
+      <Stage>
+        <div className="flex h-full items-center justify-center font-black text-farm-700">
+          {STRINGS.loading}
+        </div>
+      </Stage>
     );
   }
 
@@ -120,7 +123,7 @@ export function Shell() {
 
   if (view.name === "session") {
     return (
-      <div className="mx-auto flex min-h-dvh max-w-md flex-col">
+      <Stage>
         <LessonPlayer
           exercises={view.exercises}
           title={
@@ -140,7 +143,7 @@ export function Shell() {
           onFinish={onSessionFinish}
           onExit={() => setView({ name: "village" })}
         />
-      </div>
+      </Stage>
     );
   }
 
@@ -148,7 +151,7 @@ export function Shell() {
     const lastUnit = view.summary.kind === "lesson" ? view.summary : null;
     const opened = view.summary.unlockedUnit;
     return (
-      <div className="mx-auto flex min-h-dvh max-w-md flex-col">
+      <Stage>
         {opened !== undefined && !cheered && (
           <Celebration
             unit={opened}
@@ -173,7 +176,7 @@ export function Shell() {
                 }
           }
         />
-      </div>
+      </Stage>
     );
   }
 
@@ -210,14 +213,14 @@ export function Shell() {
   const quest = questId === null ? undefined : getQuest(questId);
   if (quest) {
     return (
-      <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-hidden bg-farm-50">
+      <Stage>
         <QuestScreen quest={quest} onLeave={() => setQuestId(null)} />
-      </div>
+      </Stage>
     );
   }
 
   return (
-    <div className="relative mx-auto min-h-dvh w-full max-w-md overflow-hidden bg-farm-50">
+    <Stage>
       {place === "finca" && (
         <>
           <FarmView
@@ -257,6 +260,6 @@ export function Shell() {
       )}
 
       {settingsOpen && <SettingsSheet onClose={() => setSettingsOpen(false)} />}
-    </div>
+    </Stage>
   );
 }

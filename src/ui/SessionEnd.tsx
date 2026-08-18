@@ -40,7 +40,7 @@ export function SessionEnd({ summary, onDone, onAgain }: Props) {
   }, [summary.munten]);
 
   return (
-    <div className="relative min-h-dvh bg-farm-50">
+    <div className="absolute inset-0 overflow-y-auto bg-farm-50">
       <div className="h-[300px] bg-gradient-to-b from-leaf-600 to-leaf-500" />
 
       <div className="absolute inset-x-0 top-14 flex flex-col items-center gap-2.5 px-6 text-center">
@@ -109,7 +109,7 @@ export function SessionEnd({ summary, onDone, onAgain }: Props) {
         )}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 mx-auto flex max-w-md flex-col gap-2.5 bg-gradient-to-t from-farm-50 via-farm-50 to-transparent px-[18px] pb-[calc(24px+env(safe-area-inset-bottom))] pt-6">
+      <div className="fixed inset-x-0 bottom-0 flex flex-col gap-2.5 bg-gradient-to-t from-farm-50 via-farm-50 to-transparent px-[18px] pb-[calc(24px+env(safe-area-inset-bottom))] pt-6">
         <button
           onClick={onDone}
           className="h-[60px] w-full rounded-[18px] border-b-[5px] border-leaf-600 bg-leaf-500 font-black text-[17px] text-white active:translate-y-0.5 active:border-b-0"

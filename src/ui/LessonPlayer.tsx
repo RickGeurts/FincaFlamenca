@@ -78,7 +78,7 @@ export function LessonPlayer({ exercises, title, reward, onFinish, onExit }: Pro
 
   return (
     <CheckFooterProvider value={footer}>
-      <div className="flex min-h-dvh flex-col bg-farm-50 p-[18px]">
+      <div className="flex h-full flex-col bg-farm-50 p-[18px]">
         <header className="flex items-center justify-between gap-2 pb-3">
           <button
             onClick={onExit}

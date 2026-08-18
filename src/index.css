@@ -206,3 +206,67 @@ button {
     animation: none;
   }
 }
+
+/* --- The stage ------------------------------------------------------- */
+
+/* The game is drawn for a phone, and that is the shape it keeps. On a desktop
+   it becomes a card standing on a warm backdrop rather than a ribbon stretched
+   down a 1080px window: the same layout, comfortably sized, with the farm
+   scene no longer cropped by an absurdly tall canvas. */
+.stage-backdrop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background-color: var(--color-farm-100);
+}
+
+.stage-card {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--color-farm-50);
+}
+
+/* Wide enough for a mouse and a real window. Everything inside still lays out
+   against a phone-sized column, so no screen has to be redrawn. */
+@media (min-width: 768px) {
+  .stage-backdrop {
+    /* Sky at the top, field at the bottom — the farm, out of focus. */
+    background-image: radial-gradient(
+        120% 80% at 50% 0%,
+        var(--color-farm-100) 0%,
+        var(--color-farm-200) 55%,
+        #e7d3a8 100%
+      );
+    padding: 24px;
+  }
+
+  .stage-card {
+    width: 520px;
+    height: min(860px, 100dvh - 48px);
+    border-radius: 28px;
+    box-shadow:
+      0 30px 60px -12px rgba(90, 50, 10, 0.3),
+      0 0 0 1px rgba(90, 50, 10, 0.06);
+    /* A transform makes this the containing block for the fixed-position
+       overlays inside it, so sheets and dialogs land on the card instead of
+       on the far corners of the monitor. On a phone the card is the whole
+       screen, so this changes nothing there. */
+    transform: translateZ(0);
+  }
+}
+
+/* A short window (a laptop in landscape, a phone turned sideways) gets the
+   full height back rather than a letterboxed card floating in padding. */
+@media (min-width: 768px) and (max-height: 700px) {
+  .stage-backdrop {
+    padding: 0;
+  }
+  .stage-card {
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

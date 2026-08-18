@@ -44,7 +44,7 @@ export function ItemSheet({
       onClick={onClose}
     >
       <div
-        className="animate-fade-up flex w-full max-w-md flex-col gap-3.5 rounded-t-[30px] bg-farm-50 p-[22px] pb-8 shadow-[0_-12px_40px_rgba(0,0,0,.3)]"
+        className="animate-fade-up flex max-h-full w-full flex-col gap-3.5 overflow-y-auto rounded-t-[30px] bg-farm-50 p-[22px] pb-8 shadow-[0_-12px_40px_rgba(0,0,0,.3)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-3">
