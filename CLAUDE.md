@@ -209,8 +209,11 @@ gemeente quest used to expand; that quest now pays coins instead.)
 - Seeds: 5–30 munten; grow times 30 min – 8 h; sell for ~2× seed cost.
   Crop roster mixes both worlds: wortel, tulp, aardappel, tomaat + koffie,
   maïs, banaan (koffie is a prestige crop: expensive seed, long timer, big payout)
-- Animals: 100 (kip) – 600 (koe); produce sellable goods on feed cycles.
-  On purchase the player names the animal (optional, defaults to species name)
+- Animals: 60 (kip) – 600 (koe); produce sellable goods on feed cycles.
+  On purchase the player names the animal (optional, defaults to species name).
+  The farm starts with no animals, so the kip is deliberately within one
+  lesson of the starting purse: the chore review questions cannot fire until
+  she owns something to feed.
 - Buildings/land: quest-gated, 300–1000 munten; includes the arepakraam
   (unlocked via a market quest, passively sells arepas made from maïs)
 - Avatar & decor items: 20–200 munten (pure cosmetic sink; include a few

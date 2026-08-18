@@ -8,7 +8,6 @@ const HOUR_MS = 3_600_000;
 
 export const ECONOMY = {
   START_MUNTEN: 50,
-  START_PLOTS: 6,
 
   // Earning
   LESSON_MUNTEN: 15,
@@ -98,11 +97,15 @@ export interface AnimalSpeciesDef {
 }
 
 export const ANIMAL_SPECIES: readonly AnimalSpeciesDef[] = [
+  // The hen is the way into the animal chores, and is priced to be exactly
+  // that: she starts with 50 and a lesson pays 15, so it is one session away
+  // rather than three. The feeding questions are half the review loop and
+  // cannot ask her anything until there is something to feed.
   {
     id: "kip",
     word: "kip",
     emoji: "🐔",
-    cost: 100,
+    cost: 60,
     produceWord: "ei",
     produceEmoji: "🥚",
     produceMs: 2 * HOUR_MS,

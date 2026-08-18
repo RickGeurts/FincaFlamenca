@@ -45,7 +45,7 @@ import {
   type FarmState,
 } from "./farm";
 import { plant } from "./crops";
-import { ANIMAL_SPECIES, DECOR, penCapacity } from "./economy";
+import { ANIMAL_SPECIES, DECOR, ECONOMY, penCapacity } from "./economy";
 
 describe("grid geometry", () => {
   it("centres the grid on the origin", () => {
@@ -443,11 +443,23 @@ describe("buying animals", () => {
     expect(animal.lastFedAt).toBe(0);
   });
 
-  it("prices every species inside the design's 100-600 range", () => {
+  it("prices every species inside the design's 60-600 range", () => {
+    // The floor came down from 100 when the farm stopped handing her a free
+    // hen: the animal chores are unreachable until she owns an animal, so the
+    // first one has to sit within a lesson or two of her starting purse.
     for (const species of ANIMAL_SPECIES) {
-      expect(species.cost, species.id).toBeGreaterThanOrEqual(100);
+      expect(species.cost, species.id).toBeGreaterThanOrEqual(60);
       expect(species.cost, species.id).toBeLessThanOrEqual(600);
     }
+  });
+
+  it("keeps the first animal within reach of one lesson", () => {
+    // The chore questions are half the review loop and stay dormant until she
+    // owns something to feed, so the cheapest animal must not be a grind.
+    const cheapest = Math.min(...ANIMAL_SPECIES.map((s) => s.cost));
+    expect(cheapest).toBeLessThanOrEqual(
+      ECONOMY.START_MUNTEN + ECONOMY.LESSON_MUNTEN + ECONOMY.LESSON_PERFECT_BONUS,
+    );
   });
 });
 
