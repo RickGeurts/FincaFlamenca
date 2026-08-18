@@ -1,13 +1,25 @@
-import type { Exercise } from "../content/types";
+import type { Exercise, PickAsk } from "../content/types";
 
 /** One icon per kind of exercise, so a glance at the path tells her what is coming. */
-export const TYPE_ICON: Record<Exercise["type"], string> = {
+const TYPE_ICON: Record<Exclude<Exercise["type"], "pick">, string> = {
   choice: "❓",
   translate: "✍️",
   listen: "🎧",
   assemble: "🧩",
   match: "🔗",
 };
+
+/** A `pick` is a different exercise depending on what it asks. */
+const ASK_ICON: Record<PickAsk, string> = {
+  meaning: "❓",
+  recall: "💭",
+  article: "🏷️",
+  listen: "🎧",
+};
+
+export function iconFor(exercise: Exercise): string {
+  return exercise.type === "pick" ? ASK_ICON[exercise.ask] : TYPE_ICON[exercise.type];
+}
 
 /**
  * El sendero: the session as a path with visible stops. A card that simply
@@ -42,7 +54,7 @@ export function LessonPath({
               className="animate-pop-in relative flex h-[52px] w-[52px] items-center justify-center rounded-full border-4 border-warn-bg bg-farm-600 text-[22px]"
               aria-current="step"
             >
-              {TYPE_ICON[exercise.type]}
+              {iconFor(exercise)}
             </span>
           );
         }
@@ -51,7 +63,7 @@ export function LessonPath({
             key={i}
             className="relative flex h-10 w-10 items-center justify-center rounded-full bg-farm-100 text-[17px] opacity-70 grayscale"
           >
-            {TYPE_ICON[exercise.type]}
+            {iconFor(exercise)}
           </span>
         );
       })}

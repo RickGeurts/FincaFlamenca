@@ -224,6 +224,14 @@ export const STRINGS = {
   choicePrompt: "¿Qué significa?",
   assemblePrompt: "Forma la frase en neerlandés",
   matchPrompt: "Une las parejas",
+  // The daily review asks the same words from different sides; each side gets
+  // its own question, so she can tell at a glance what is being asked of her.
+  pickPrompt: {
+    meaning: "¿Qué significa?",
+    recall: "¿Cómo se dice en neerlandés?",
+    article: "¿de o het?",
+    listen: "Escucha. ¿Qué significa?",
+  },
   typePlaceholder: "Escribe en neerlandés...",
   correctFeedback: "¡Muy bien!",
   typoFeedback: "¡Cuidado con la ortografía!",
@@ -349,6 +357,8 @@ export const STRINGS = {
   devOnlyHere: "Sólo aparecen mientras desarrollas; no existen en el juego publicado.",
   devReplayWelcome: "👋 Ver la bienvenida otra vez",
   devReplayWelcomeHint: "Mantiene la granja y el progreso.",
+  devFillReview: "🔁 Llenar el repaso del día",
+  devFillReviewHint: "12 palabras listas, en todos los niveles.",
   devReset: "🧹 Empezar de cero",
   devResetHint: "Borra la granja, las palabras, la ropa y los ajustes. No se puede deshacer.",
   devResetConfirm: "¿Seguro? Se borra todo y el juego arranca como la primera vez.",

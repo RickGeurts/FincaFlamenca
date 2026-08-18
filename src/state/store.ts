@@ -42,8 +42,9 @@ import {
   type Tile,
 } from "../game/farm";
 import type { Quarter } from "../game/placement";
-import { initProgress, review, type WordProgress } from "../learning/srs";
-import { getQuest } from "../content";
+import { initProgress, MAX_BOX, review, type WordProgress } from "../learning/srs";
+import { SESSION_MAX } from "../learning/lesson";
+import { getQuest, VOCAB } from "../content";
 import { parseUnlock, payoutFor } from "../quests/quests";
 import { dateString } from "../utils/time";
 import { setPreferredVoice } from "../utils/speak";
@@ -172,6 +173,8 @@ interface GameState {
   devAddMunten(amount: number): void;
   /** Show the welcome again on the next render, keeping everything else. */
   devReplayOnboarding(): void;
+  /** Put a full review queue on the doormat, at mixed levels. */
+  devFillReview(now?: number): void;
   /** Wipe the save and every preference, so the next load is a first load. */
   devReset(): Promise<void>;
 }
@@ -691,6 +694,30 @@ export const useGameStore = create<GameState>()(
 
       devReplayOnboarding() {
         setState({ onboarded: false });
+      },
+
+      /**
+       * Fill the review queue: a session's worth of words, all due now, spread
+       * across the Leitner boxes.
+       *
+       * Dev only, and the levels are the point. How well she knows a word
+       * decides which way round the review asks it — meaning, article,
+       * backwards, by ear — so there is otherwise no way to see three of those
+       * four questions without a fortnight of honest practice.
+       */
+      devFillReview(now = Date.now()) {
+        const state = getState();
+        const words = { ...state.words };
+        for (const word of VOCAB) {
+          if (Object.keys(words).length >= SESSION_MAX) break;
+          words[word.id] ??= initProgress(word.id, now);
+        }
+        let box = 0;
+        for (const id of Object.keys(words)) {
+          words[id] = { ...words[id], box: box as WordProgress["box"], dueAt: now };
+          box = (box + 1) % (MAX_BOX + 1);
+        }
+        setState({ words });
       },
 
       async devReset() {

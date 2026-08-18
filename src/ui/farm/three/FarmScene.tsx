@@ -664,6 +664,13 @@ function useHoldToDrag({
   const detach = useRef<(() => void) | null>(null);
   /** Set while a hold happened, so the release doesn't also count as a tap. */
   const held = useRef(false);
+  /**
+   * When the current press started, for as long as it is still on its way to
+   * becoming a hold. The object reads this to strain upward while she presses,
+   * so the wait has something to show for it; cleared the moment it comes free
+   * or the press is abandoned.
+   */
+  const pullFrom = useRef<number | null>(null);
 
   useEffect(() => () => detach.current?.(), []);
 
@@ -680,9 +687,13 @@ function useHoldToDrag({
     let twistFrom: number | null = null;
     let twist: number | null = null;
 
+    pullFrom.current = performance.now();
+
     const timer = window.setTimeout(() => {
       picked = true;
       held.current = true;
+      // It is off the ground now; the carry animation takes over the lift.
+      pullFrom.current = null;
       setDragging(true);
       // Only now does the camera let go — a hold that never lands leaves
       // panning untouched.
@@ -748,6 +759,8 @@ function useHoldToDrag({
 
     const detachAll = () => {
       window.clearTimeout(timer);
+      // A press that slid away or lifted early: let it sink back down.
+      pullFrom.current = null;
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onExtraDown);
       window.removeEventListener("pointerup", onUp);
@@ -780,7 +793,7 @@ function useHoldToDrag({
     return wasHeld;
   };
 
-  return { onPointerDown, dragging, consumeTapSuppression };
+  return { onPointerDown, dragging, consumeTapSuppression, pullFrom };
 }
 
 /** How high a picked-up object floats, and how much bigger it looks up there. */
@@ -788,6 +801,15 @@ const CARRY_HEIGHT = 0.45;
 const CARRY_GROW = 0.09;
 /** Seconds of squash-and-stretch after an object touches down. */
 const LAND_TIME = 0.42;
+/**
+ * The strain before an object comes loose. While she holds a finger down it
+ * rises a fraction of the way and squats against the ground, so the wait to
+ * pick something up is visibly doing something instead of nothing at all.
+ */
+const PULL_LIFT = 0.24;
+const PULL_SQUASH = 0.07;
+/** How hard it shivers at full strain, just before it lets go. */
+const PULL_SHIVER = 0.007;
 
 /** Frame-rate independent ease toward a target: fast at first, then settling. */
 function approach(current: number, target: number, rate: number, dt: number): number {
@@ -900,7 +922,7 @@ function Movable({
     g.rotation.y = angle.current;
   });
 
-  const { onPointerDown, dragging, consumeTapSuppression } = useHoldToDrag({
+  const { onPointerDown, dragging, consumeTapSuppression, pullFrom } = useHoldToDrag({
     id,
     spec,
     rot: place.rot,
@@ -955,7 +977,7 @@ function Movable({
         <Marker selected dragging size={place.rot % 2 === 1 ? spec.h : spec.w} />
       )}
       {/* Spin sits inside the carry group so the cell outlines never rotate. */}
-      <Carry held={dragging} lag={lag} pulseOnLand={pulseOnLand}>
+      <Carry held={dragging} lag={lag} pullFrom={pullFrom} pulseOnLand={pulseOnLand}>
         <group ref={spinner} rotation={[0, angle.current, 0]}>
           {children}
         </group>
@@ -975,12 +997,15 @@ function Movable({
 function Carry({
   held,
   lag,
+  pullFrom,
   pulseOnLand,
   children,
 }: {
   held: boolean;
   /** Distance still to travel after the parent jumped to a new cell. */
   lag: React.MutableRefObject<{ x: number; z: number }>;
+  /** When the press began, while it is still short of a hold; else null. */
+  pullFrom: React.MutableRefObject<number | null>;
   pulseOnLand: boolean;
   children: React.ReactNode;
 }) {
@@ -1012,8 +1037,15 @@ function Carry({
     }
     if (sinceLanding.current >= 0) sinceLanding.current += dt;
 
+    // How far into the press she is, before it becomes a hold. Eased so the
+    // object answers her finger immediately and then strains more slowly.
+    const pulling = !held && pullFrom.current !== null;
+    const pullRaw = pulling ? Math.min(1, (performance.now() - pullFrom.current!) / HOLD_MS) : 0;
+    const pull = 1 - (1 - pullRaw) * (1 - pullRaw);
+
     const settled =
       !held &&
+      !pulling &&
       lift.current < 0.001 &&
       Math.abs(lag.current.x) < 0.001 &&
       Math.abs(lag.current.z) < 0.001 &&
@@ -1036,13 +1068,18 @@ function Carry({
     }
     atRest.current = false;
 
-    // Off the ground quickly, back down a little quicker.
-    lift.current = approach(lift.current, held ? 1 : 0, held ? 14 : 20, dt);
+    // Off the ground quickly, back down a little quicker. A press that has not
+    // become a hold yet only gets part of the way up, and carries on from there
+    // rather than restarting, so coming loose is one continuous movement.
+    const target = held ? 1 : pulling ? PULL_LIFT * pull : 0;
+    lift.current = approach(lift.current, target, held ? 14 : pulling ? 16 : 20, dt);
     lag.current.x = approach(lag.current.x, 0, 22, dt);
     lag.current.z = approach(lag.current.z, 0, 22, dt);
 
     const hover = held ? Math.sin(clock.elapsedTime * 6) * 0.022 : 0;
-    g.position.set(lag.current.x, CARRY_HEIGHT * lift.current + hover, lag.current.z);
+    // Straining harder the longer she holds, until it gives.
+    const shiver = pulling ? Math.sin(clock.elapsedTime * 40) * PULL_SHIVER * pull : 0;
+    g.position.set(lag.current.x, CARRY_HEIGHT * lift.current + hover + shiver, lag.current.z);
     g.rotation.z = Math.sin(clock.elapsedTime * 4) * 0.05 * lift.current;
 
     // Squash on impact, overshoot into a stretch, then settle.
@@ -1052,8 +1089,11 @@ function Carry({
       const p = t / LAND_TIME;
       squash = Math.sin(p * Math.PI * 2.2) * (1 - p) * 0.2;
     }
+    // The squat while straining reads the same way as the squash on landing —
+    // wider and shorter — so the two share the shaping below.
+    const strain = squash + (pulling ? PULL_SQUASH * pull : 0);
     const grow = 1 + CARRY_GROW * lift.current;
-    g.scale.set(grow * (1 + squash * 0.6), grow * (1 - squash), grow * (1 + squash * 0.6));
+    g.scale.set(grow * (1 + strain * 0.6), grow * (1 - strain), grow * (1 + strain * 0.6));
 
     if (ripple.current && rippleMat.current) {
       const active = rippling.current && t >= 0 && t < LAND_TIME;

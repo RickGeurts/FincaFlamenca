@@ -9,6 +9,7 @@ import {
 } from "../learning/lesson";
 import { dueWords } from "../learning/srs";
 import { randomRng } from "../utils/rng";
+import { canSpeak } from "../utils/speak";
 import { useGameStore, type Place, type SessionSummary } from "../state/store";
 import { ECONOMY, type SessionKind } from "../game/economy";
 import { School } from "../ui/School";
@@ -85,7 +86,11 @@ export function Shell() {
 
   const startReview = () => {
     const due = dueWords(Object.values(words), Date.now());
-    const exercises = buildReviewSession(due, VOCAB, randomRng());
+    // Without a voice there is nothing to listen to, so the review never asks
+    // her to; the other three ways of asking carry it on their own.
+    const exercises = buildReviewSession(due, VOCAB, randomRng(), {
+      canListen: canSpeak(),
+    });
     if (exercises.length === 0) return;
     setView({ name: "session", kind: "review", exercises });
   };

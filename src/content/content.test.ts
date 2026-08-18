@@ -102,6 +102,38 @@ describe("content integrity", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
+  it("calls each category by one name only", () => {
+    // A category is what decides which words are offered as wrong answers.
+    // A second name for one — "colors" written beside "colours" — splits it
+    // in two behind the scenes: the four words left in the small half then
+    // draw the same three distractors as each other, every single time, and
+    // a colour can find itself up against a raincoat. Pinning the list means
+    // a new category has to be meant rather than mistyped.
+    const categories = [...new Set(VOCAB.map((w) => w.category))].sort();
+    expect(categories).toEqual(
+      [
+        "animals",
+        "buildings",
+        "clothing",
+        "colours",
+        "crops",
+        "decor",
+        "directions",
+        "family",
+        "farm",
+        "food",
+        "formal",
+        "greetings",
+        "home",
+        "money",
+        "numbers",
+        "party",
+        "people",
+        "weather",
+      ].sort(),
+    );
+  });
+
   it("every graded exercise accepts its own canonical answer and alternatives", () => {
     for (const unit of UNITS) {
       for (const ex of unit.exercises) {

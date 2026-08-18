@@ -5,13 +5,14 @@ import type { GradeResult } from "../learning/grader";
 import { exerciseWordIds } from "../learning/lesson";
 import { play } from "../utils/sfx";
 import type { AnswerRecord } from "../state/store";
-import { LessonPath, TYPE_ICON } from "./LessonPath";
+import { LessonPath, iconFor } from "./LessonPath";
 import { CheckFooterProvider, type CheckAction } from "./exercises/CheckButton";
 import { ChoiceCard } from "./exercises/ChoiceCard";
 import { TranslateCard } from "./exercises/TranslateCard";
 import { ListenCard } from "./exercises/ListenCard";
 import { AssembleCard } from "./exercises/AssembleCard";
 import { MatchCard } from "./exercises/MatchCard";
+import { PickCard } from "./exercises/PickCard";
 
 export interface LessonResults {
   answers: AnswerRecord[];
@@ -27,13 +28,20 @@ interface Props {
   onExit: () => void;
 }
 
-const PROMPT: Record<Exercise["type"], string> = {
+const PROMPT: Record<Exclude<Exercise["type"], "pick">, string> = {
   choice: STRINGS.choicePrompt,
   translate: STRINGS.translatePrompt,
   listen: STRINGS.listenPrompt,
   assemble: STRINGS.assemblePrompt,
   match: STRINGS.matchPrompt,
 };
+
+/** What the chip above the card asks — a `pick` asks a different thing each time. */
+function promptFor(exercise: Exercise): string {
+  return exercise.type === "pick"
+    ? STRINGS.pickPrompt[exercise.ask]
+    : PROMPT[exercise.type];
+}
 
 export function LessonPlayer({ exercises, title, reward, onFinish, onExit }: Props) {
   const [index, setIndex] = useState(0);
@@ -92,7 +100,7 @@ export function LessonPlayer({ exercises, title, reward, onFinish, onExit }: Pro
 
           <div className="flex min-h-0 flex-1 flex-col gap-4">
             <span className="self-start rounded-full bg-farm-100 px-3.5 py-1.5 text-xs font-black text-ink-500">
-              {TYPE_ICON[exercise.type]} {PROMPT[exercise.type]}
+              {iconFor(exercise)} {promptFor(exercise)}
             </span>
 
             <div className="flex min-h-0 flex-1 flex-col overflow-y-auto rounded-[26px] border-2 border-farm-200 bg-white p-5 shadow-[0_8px_22px_rgba(120,70,20,.08)]">
@@ -175,5 +183,7 @@ function ExerciseCard({
       return <AssembleCard exercise={exercise} locked={locked} onResult={onResult} />;
     case "match":
       return <MatchCard exercise={exercise} locked={locked} onResult={onResult} />;
+    case "pick":
+      return <PickCard exercise={exercise} locked={locked} onResult={onResult} />;
   }
 }

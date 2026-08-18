@@ -2,16 +2,17 @@ import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { STRINGS } from "../../content/strings.es";
 import { QUESTS, VOCAB, unreviewedContent } from "../../content";
 import { openQuests } from "../../quests/quests";
-import type { ChoiceExercise } from "../../content/types";
+import type { PickExercise } from "../../content/types";
 import { getCropDef, getDecorDef, getSpeciesDef } from "../../game/economy";
 import * as crops from "../../game/crops";
 import * as animals from "../../game/animals";
 import type { Tile } from "../../game/farm";
 import {
-  buildWordChoice,
+  buildWordQuestion,
   pickChoreWordId,
   shouldTriggerChoreQuestion,
 } from "../../learning/lesson";
+import { canSpeak } from "../../utils/speak";
 import { randomRng } from "../../utils/rng";
 import { formatDuration } from "../../utils/time";
 import { useGameStore } from "../../state/store";
@@ -39,7 +40,7 @@ type Sheet =
   | { kind: "animalCard"; animalId: string }
   | { kind: "decorCard"; decorKind: string }
   | { kind: "revive" }
-  | { kind: "chore"; exercise: ChoiceExercise };
+  | { kind: "chore"; exercise: PickExercise };
 
 /** How long a tool's instructions stay on screen before getting out of the way. */
 const TOAST_MS = 4000;
@@ -103,7 +104,10 @@ export function FarmView({ onStartRevive, onSettings, onStartQuest }: Props) {
     const rng = randomRng();
     if (!shouldTriggerChoreQuestion(rng)) return;
     const wordId = pickChoreWordId(objectWordId, Object.values(words), Date.now(), rng);
-    const exercise = buildWordChoice(wordId, VOCAB, rng);
+    // How well she knows the word decides which way round it is asked; a word
+    // met for the first time out here is asked the gentlest way there is.
+    const box = words[wordId]?.box ?? 0;
+    const exercise = buildWordQuestion(wordId, box, VOCAB, rng, { canListen: canSpeak() });
     if (exercise) setSheet({ kind: "chore", exercise });
   };
 

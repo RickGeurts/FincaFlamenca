@@ -10,6 +10,7 @@ import { useGameStore } from "../state/store";
  */
 export function DevPanel({ onClose }: { onClose: () => void }) {
   const devReplayOnboarding = useGameStore((s) => s.devReplayOnboarding);
+  const devFillReview = useGameStore((s) => s.devFillReview);
   const devReset = useGameStore((s) => s.devReset);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -30,6 +31,17 @@ export function DevPanel({ onClose }: { onClose: () => void }) {
       >
         <span className="font-black text-ink-900">{STRINGS.devReplayWelcome}</span>
         <span className="text-xs font-bold text-ink-500">{STRINGS.devReplayWelcomeHint}</span>
+      </button>
+
+      <button
+        onClick={() => {
+          devFillReview();
+          onClose();
+        }}
+        className="flex min-h-14 flex-col items-start justify-center rounded-2xl border-2 border-farm-200 bg-white px-4 py-2 text-left"
+      >
+        <span className="font-black text-ink-900">{STRINGS.devFillReview}</span>
+        <span className="text-xs font-bold text-ink-500">{STRINGS.devFillReviewHint}</span>
       </button>
 
       {confirming ? (

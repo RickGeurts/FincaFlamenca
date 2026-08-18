@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { MatchExercise } from "../../content/types";
 import type { GradeResult } from "../../learning/grader";
-import { shuffle } from "../../learning/lesson";
+import { shuffleMatchColumns } from "../../learning/lesson";
 import { randomRng } from "../../utils/rng";
 import { speak } from "../../utils/speak";
 
@@ -12,8 +12,11 @@ interface Props {
 }
 
 export function MatchCard({ exercise, locked, onResult }: Props) {
-  const left = useMemo(() => shuffle(exercise.pairs.map((p) => p.nl), randomRng()), [exercise]);
-  const right = useMemo(() => shuffle(exercise.pairs.map((p) => p.es), randomRng()), [exercise]);
+  // One generator for both columns, so they cannot come out in the same order.
+  const { left, right } = useMemo(
+    () => shuffleMatchColumns(exercise.pairs, randomRng()),
+    [exercise],
+  );
 
   const [selectedNl, setSelectedNl] = useState<string | null>(null);
   const [matched, setMatched] = useState<Set<string>>(new Set()); // nl values

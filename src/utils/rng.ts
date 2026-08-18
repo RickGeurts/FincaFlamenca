@@ -14,6 +14,17 @@ export function mulberry32(seed: number): Rng {
   };
 }
 
+/**
+ * A time-seeded generator for UI code.
+ *
+ * The counter matters: `Date.now()` only moves once a millisecond, so two
+ * generators made in the same render would otherwise be seeded identically and
+ * deal the very same sequence. That is how both columns of a match exercise
+ * ended up in the same order, with every word beside its own translation.
+ */
+let sequence = 0;
+
 export function randomRng(): Rng {
-  return mulberry32(Date.now() & 0xffffffff);
+  sequence = (sequence + 1) | 0;
+  return mulberry32((Date.now() ^ Math.imul(sequence, 0x9e3779b1)) >>> 0);
 }

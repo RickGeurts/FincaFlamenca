@@ -660,7 +660,7 @@
       "nl": "jas",
       "article": "de",
       "es": "el abrigo",
-      "category": "clothes",
+      "category": "clothing",
       "unit": 6,
       "example_nl": "De jas is warm.",
       "example_es": "La chaqueta es abrigada."
@@ -670,7 +670,7 @@
       "nl": "broek",
       "article": "de",
       "es": "el pantalón",
-      "category": "clothes",
+      "category": "clothing",
       "unit": 6,
       "example_nl": "De broek is blauw.",
       "example_es": "El pantalón es azul."
@@ -680,7 +680,7 @@
       "nl": "trui",
       "article": "de",
       "es": "el suéter",
-      "category": "clothes",
+      "category": "clothing",
       "unit": 6,
       "example_nl": "Ik draag een groene trui.",
       "example_es": "Llevo un suéter verde."
@@ -690,7 +690,7 @@
       "nl": "jurk",
       "article": "de",
       "es": "el vestido",
-      "category": "clothes",
+      "category": "clothing",
       "unit": 6,
       "example_nl": "De jurk is mooi.",
       "example_es": "El vestido es bonito."
@@ -700,7 +700,7 @@
       "nl": "schoenen",
       "article": "de",
       "es": "los zapatos",
-      "category": "clothes",
+      "category": "clothing",
       "unit": 6,
       "example_nl": "Mijn schoenen zijn vuil.",
       "example_es": "Mis zapatos están sucios."
@@ -709,7 +709,7 @@
       "id": "dragen",
       "nl": "dragen",
       "es": "llevar puesto",
-      "category": "clothes",
+      "category": "clothing",
       "unit": 6,
       "example_nl": "Wat ga je vandaag dragen?",
       "example_es": "¿Qué te vas a poner hoy?"
@@ -1619,7 +1619,7 @@
       "id": "oranje",
       "nl": "oranje",
       "es": "naranja",
-      "category": "colors",
+      "category": "colours",
       "unit": 7,
       "example_nl": "De wortel is oranje.",
       "example_es": "La zanahoria es naranja."
@@ -1628,7 +1628,7 @@
       "id": "bruin",
       "nl": "bruin",
       "es": "café",
-      "category": "colors",
+      "category": "colours",
       "unit": 7,
       "example_nl": "De koe is bruin en wit.",
       "example_es": "La vaca es café y blanca."
@@ -1637,7 +1637,7 @@
       "id": "roze",
       "nl": "roze",
       "es": "rosado",
-      "category": "colors",
+      "category": "colours",
       "unit": 7,
       "example_nl": "Het varken is roze.",
       "example_es": "El cerdo es rosado."
@@ -1646,7 +1646,7 @@
       "id": "grijs",
       "nl": "grijs",
       "es": "gris",
-      "category": "colors",
+      "category": "colours",
       "unit": 8,
       "example_nl": "De lucht is grijs vandaag.",
       "example_es": "El cielo está gris hoy."
