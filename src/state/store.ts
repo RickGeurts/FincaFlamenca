@@ -195,7 +195,7 @@ export interface SaveFile {
   };
 }
 
-export const SAVE_VERSION = 5;
+export const SAVE_VERSION = 6;
 
 /**
  * Everything worth keeping, as a plain object. IndexedDB is wiped whenever the
@@ -750,7 +750,7 @@ export const useGameStore = create<GameState>()(
     }),
     {
       name: "finca-flamenca-save",
-      version: 5,
+      version: 6,
       storage: createJSONStorage(() => idbStorage),
       partialize: (s) => ({
         place: s.place,
@@ -782,6 +782,20 @@ export const useGameStore = create<GameState>()(
           // v3 had no placements: seed the default layout, keeping tiles/animals.
           const farm = state.farm as FarmState | undefined;
           state = { ...state, farm: withPlacements(farm ?? initialFarm()) };
+        }
+        if (version < 6) {
+          // The farm used to arrive furnished — a house, a mill, a stand, two
+          // trees, a well and a cart, all standing there before she had done
+          // anything. It is hers to build now, so a save from before that has
+          // the furniture taken back out. withPlacements drops the cells they
+          // were holding on the next load.
+          //
+          // Everything goes, not just what the game issued: a save cannot tell
+          // a bought tree from a given one, and a farm that is nearly empty is
+          // not what was asked for. It all costs coins she has already earned,
+          // and it is all still in the shop.
+          const farm = state.farm as FarmState | undefined;
+          if (farm) state = { ...state, farm: { ...farm, decor: [] } };
         }
         return state;
       },

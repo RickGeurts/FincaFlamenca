@@ -90,18 +90,22 @@ describe("loading a save", () => {
     expect(loaded.animals[0].name).toBe("Manchas");
   });
 
-  it("migrates a v3 save and places its decor", async () => {
-    // The starting farm is bare, so give the save something to place.
+  it("takes the furniture back out of a v3 save, and still places the animals", async () => {
     const farm = { ...addDecor(initialFarm(), "huis") } as Partial<FarmState>;
     delete farm.placements;
     writeSave(farm, 3);
 
     const loaded = (await loadStore()).getState().farm;
-    expect(loaded.decor.length).toBeGreaterThan(0);
-    expect(loaded.placements[decorKey(loaded.decor[0].id)]).toBeDefined();
+    // The farm used to come furnished; it is hers to build now, so an old
+    // save arrives on bare ground however it was decorated.
+    expect(loaded.decor).toEqual([]);
+    expect(loaded.placements[decorKey("d1")]).toBeUndefined();
+    expect(loaded.placements[animalKey(loaded.animals[0].id)]).toBeDefined();
   });
 
-  it("carries a pre-shop save's arranged decor onto owned instances", async () => {
+  it("takes the furniture back out of a pre-shop save too", async () => {
+    // A save this old kept one fixed piece per name rather than owned
+    // instances. However it was stored, none of it is standing there now.
     const base = initialFarm();
     const legacy = { ...base } as Partial<FarmState>;
     delete legacy.decor;
@@ -112,9 +116,8 @@ describe("loading a save", () => {
     writeSave(legacy, 4);
 
     const loaded = (await loadStore()).getState().farm;
-    const house = loaded.decor.find((d) => d.kind === "huis");
-    expect(house).toBeDefined();
-    expect(loaded.placements[decorKey(house!.id)]).toMatchObject({ col: 2, row: 3, rot: 2 });
+    expect(loaded.decor).toEqual([]);
+    expect(Object.keys(loaded.placements).some((k) => k.startsWith("decor:"))).toBe(false);
   });
 
   it("starts a fresh farm when the save is unusable", async () => {
