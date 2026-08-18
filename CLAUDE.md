@@ -191,7 +191,11 @@ replayed for small rewards; first completion pays the big reward + unlock.
 
 ## Game economy (all constants in `game/economy.ts` — never hardcode elsewhere)
 
-Starting balance: 50 munten, 6 plots, 1 chicken.
+Starting balance: 50 munten and a bare 7x8 island — no plots, no buildings,
+no animals. Every cell is hers to plough from the first morning, and anything
+standing on the farm is something she chose and paid for. (This replaced an
+earlier start of 6 plots and a free chicken, and a centred 5x6 meadow that the
+gemeente quest used to expand; that quest now pays coins instead.)
 
 **Earning**
 - Lesson session (8–12 exercises): 15 munten, +5 perfect bonus

@@ -4,7 +4,7 @@
 // still hand the UI a farm it can render.
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { addDecor, initialFarm, type FarmState } from "../game/farm";
+import { addAnimal, addDecor, initialFarm, type FarmState } from "../game/farm";
 import { ECONOMY, getDecorDef, getSpeciesDef } from "../game/economy";
 import { getQuest } from "../content";
 import { COLOR_REWARD_MUNTEN, getWearable } from "../game/avatar";
@@ -60,9 +60,12 @@ describe("loading a save", () => {
   beforeEach(() => mem.clear());
 
   it("fills in placements for a save stamped current but written without them", async () => {
-    const farm = { ...initialFarm() } as Partial<FarmState>;
+    // Stamped current on purpose: an older stamp would have its decor and
+    // animals taken back by the migrations, and there would be nothing left
+    // for the backfill to find.
+    const farm = { ...addAnimal(addDecor(initialFarm(), "huis"), "kip") } as Partial<FarmState>;
     delete farm.placements;
-    writeSave(farm, 5);
+    writeSave(farm, SAVE_VERSION);
 
     const store = await loadStore();
     const loaded = store.getState().farm;
@@ -74,33 +77,38 @@ describe("loading a save", () => {
     expect(loaded.placements[animalKey(loaded.animals[0].id)]).toBeDefined();
   });
 
-  it("keeps the tiles and animals of that save", async () => {
-    const base = initialFarm();
+  it("keeps the ground of an old save, but not what was standing on it", async () => {
+    const stocked = addAnimal(initialFarm(), "kip");
     const farm = {
-      ...base,
-      tiles: base.tiles.map((t, i) => (i === 0 ? { ...t, kind: "field" as const } : t)),
-      animals: [{ ...base.animals[0], name: "Manchas" }],
+      ...stocked,
+      tiles: stocked.tiles.map((t, i) => (i === 0 ? { ...t, kind: "field" as const } : t)),
+      animals: [{ ...stocked.animals[0], name: "Manchas" }],
     } as Partial<FarmState>;
     delete farm.placements;
     writeSave(farm, 4);
 
     const loaded = (await loadStore()).getState().farm;
 
+    // What she ploughed is work she did, so it survives.
     expect(loaded.tiles[0].kind).toBe("field");
-    expect(loaded.animals[0].name).toBe("Manchas");
+    // Manchas does not: the island starts empty now, and a save cannot tell
+    // a hen she was given from one she bought.
+    expect(loaded.animals).toEqual([]);
   });
 
-  it("takes the furniture back out of a v3 save, and still places the animals", async () => {
-    const farm = { ...addDecor(initialFarm(), "huis") } as Partial<FarmState>;
+  it("takes the furniture and the animals back out of a v3 save", async () => {
+    const farm = {
+      ...addAnimal(addDecor(initialFarm(), "huis"), "kip"),
+    } as Partial<FarmState>;
     delete farm.placements;
     writeSave(farm, 3);
 
     const loaded = (await loadStore()).getState().farm;
-    // The farm used to come furnished; it is hers to build now, so an old
-    // save arrives on bare ground however it was decorated.
+    // The farm used to come furnished and with a hen; it is hers to build
+    // now, so an old save arrives on bare ground however it was arranged.
     expect(loaded.decor).toEqual([]);
-    expect(loaded.placements[decorKey("d1")]).toBeUndefined();
-    expect(loaded.placements[animalKey(loaded.animals[0].id)]).toBeDefined();
+    expect(loaded.animals).toEqual([]);
+    expect(loaded.placements).toEqual({});
   });
 
   it("takes the furniture back out of a pre-shop save too", async () => {
@@ -181,8 +189,9 @@ describe("backing up and restoring", () => {
   it("round-trips a farm through a file and back", async () => {
     const store = await loadStore();
     store.setState({ player: { ...store.getState().player, munten: 777, xp: 120 } });
-    // t1 is under the farmhouse; t3 is open ground.
+    // Every tile is open ground now, and the hen has to be bought first.
     store.getState().tillTile("t3");
+    store.setState({ farm: addAnimal(store.getState().farm, "kip") });
     store.getState().renameAnimal(store.getState().farm.animals[0].id, "Manchas");
 
     const file = JSON.stringify(exportSave(store.getState()));

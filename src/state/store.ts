@@ -195,7 +195,7 @@ export interface SaveFile {
   };
 }
 
-export const SAVE_VERSION = 6;
+export const SAVE_VERSION = 7;
 
 /**
  * Everything worth keeping, as a plain object. IndexedDB is wiped whenever the
@@ -750,7 +750,7 @@ export const useGameStore = create<GameState>()(
     }),
     {
       name: "finca-flamenca-save",
-      version: 6,
+      version: 7,
       storage: createJSONStorage(() => idbStorage),
       partialize: (s) => ({
         place: s.place,
@@ -796,6 +796,15 @@ export const useGameStore = create<GameState>()(
           // and it is all still in the shop.
           const farm = state.farm as FarmState | undefined;
           if (farm) state = { ...state, farm: { ...farm, decor: [] } };
+        }
+        if (version < 7) {
+          // ...and the hen the farm used to come with goes the same way. An
+          // empty island means empty: whatever is standing here, she put it
+          // there. Animals she bought go too, for the same reason the decor
+          // did — a save cannot tell them apart, and the coins came from
+          // lessons she can do again.
+          const farm = state.farm as FarmState | undefined;
+          if (farm) state = { ...state, farm: { ...farm, animals: [] } };
         }
         return state;
       },

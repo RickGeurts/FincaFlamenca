@@ -57,40 +57,22 @@ export interface FarmState {
   placements: Placements;
 }
 
-/**
- * The farm she wakes up to: bare grass. Nothing is placed for her, because
- * where the house and the fields go is hers to decide — and a farm she built
- * herself out of words she earned is the whole point. Every one of these is
- * still in the shop when she wants it.
- */
-const STARTER_DECOR: { kind: string; col: number; row: number }[] = [];
-
 /** Decor ids are `d1`, `d2`, ... — sequential so saves stay diffable. */
 export function nextDecorId(farm: FarmState): string {
   const used = farm.decor.map((d) => Number(d.id.slice(1))).filter((n) => Number.isFinite(n));
   return `d${Math.max(0, ...used) + 1}`;
 }
 
-/** Starting farm: an empty island (she tills it herself) and 1 chicken. */
+/**
+ * The farm she wakes up to: an empty island and nothing else.
+ *
+ * No house, no mill, no hen — not one thing placed for her. Everything that
+ * ends up here she chooses and pays for with words she has earned, which is
+ * the whole point of the game. It also means the animal chores stay quiet
+ * until she buys her first animal; the crops carry the review questions in
+ * the meantime.
+ */
 export function initialFarm(): FarmState {
-  const animals = [createAnimal("a1", "kip")];
-  const decor = STARTER_DECOR.map((d, i) => ({ id: `d${i + 1}`, kind: d.kind }));
-  const placements: Placements = {};
-  STARTER_DECOR.forEach((d, i) => {
-    placements[decorKey(decor[i].id)] = { col: d.col, row: d.row, rot: 0 };
-  });
-  // The first chicken stands where she can see it: middle of the island, a
-  // row back from the front edge. The automatic spot is the front-left corner,
-  // which a narrow screen crops — and on an empty farm it is the only thing
-  // there, so it should not be the one thing half off the screen.
-  const starterSpec = specOf({ decor, placements } as FarmState);
-  const HOME = { col: Math.floor(PLACE_COLS / 2), row: PLACE_ROWS - 3 };
-  for (const animal of animals) {
-    const cell = canPlace(placements, animalKey(animal.id), HOME.col, HOME.row, undefined, starterSpec)
-      ? HOME
-      : firstFreeSpot(placements, ANIMAL_SPEC, undefined, starterSpec);
-    if (cell) placements[animalKey(animal.id)] = { ...cell, rot: 0 };
-  }
   return {
     cols: FARM_COLS,
     rows: FARM_ROWS,
@@ -98,9 +80,9 @@ export function initialFarm(): FarmState {
       id: `t${i + 1}`,
       kind: "grass" as const,
     })),
-    animals,
-    decor,
-    placements,
+    animals: [],
+    decor: [],
+    placements: {},
   };
 }
 
@@ -556,8 +538,7 @@ export function migratePlotsToTiles(
       tile.crop = plot.crop;
     }
   });
-  return withPlacements({
-    ...farm,
-    animals: animals.length > 0 ? animals : farm.animals,
-  });
+  // Whatever the old save had is what she keeps. There is no starter animal
+  // to fall back on any more: an empty farm is empty.
+  return withPlacements({ ...farm, animals });
 }

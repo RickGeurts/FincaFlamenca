@@ -11,17 +11,19 @@ import {
 } from "./farm";
 
 describe("initialFarm", () => {
-  it("starts as an open meadow with one chicken", () => {
+  it("starts as an empty island with nothing standing on it", () => {
     const farm = initialFarm();
     expect(farm.tiles).toHaveLength(FARM_COLS * FARM_ROWS);
-    expect(farm.tiles.every((t) => t.kind === "grass")).toBe(true);
-    expect(farm.animals).toHaveLength(1);
-    expect(farm.animals[0].speciesId).toBe("kip");
+    expect(farm.tiles.every((t) => t.kind === "grass" && !t.crop)).toBe(true);
+    // Not one thing is placed for her — no hen, no buildings, no cells taken.
+    expect(farm.animals).toEqual([]);
+    expect(farm.decor).toEqual([]);
+    expect(farm.placements).toEqual({});
   });
 });
 
 describe("tillTile", () => {
-  /** The starting layout puts a building over some tiles; pick a free one. */
+  /** Nothing stands on a bare island, so any tile will do. */
   const openTile = (farm = initialFarm()) => farm.tiles.find((t) => canTill(farm, t.id))!.id;
 
   it("turns grass into a field", () => {
@@ -43,8 +45,8 @@ describe("tillTile", () => {
     // is anything standing in the way of the plough.
     const farm = addDecor(initialFarm(), "huis");
     const covered = farm.tiles.filter((t) => !canTill(farm, t.id));
-    // Four plots under the 2x2 house, and one under the starting hen.
-    expect(covered).toHaveLength(5);
+    // The 2x2 house, and nothing else on the island to get in the way.
+    expect(covered).toHaveLength(4);
     for (const tile of covered) expect(tillTile(farm, tile.id)).toBe(farm);
   });
 });
@@ -60,7 +62,8 @@ describe("migratePlotsToTiles", () => {
     expect(fields).toHaveLength(2);
     expect(fields[0].crop).toEqual(crop);
     expect(fields[1].crop).toBeUndefined();
-    expect(farm.animals).toHaveLength(1); // falls back to the starter chicken
+    // An old save with no animals stays a farm with no animals.
+    expect(farm.animals).toEqual([]);
   });
 
   it("keeps existing animals", () => {

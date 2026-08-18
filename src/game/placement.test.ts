@@ -174,13 +174,10 @@ describe("default layout", () => {
     expect(farm.tiles).toHaveLength(PLACE_COLS * PLACE_ROWS);
   });
 
-  it("lets her plough every cell on the island bar the one the hen is on", () => {
+  it("lets her plough every cell on the island", () => {
+    // Nothing is standing anywhere, so there is nothing to plough around.
     const farm = initialFarm();
-    const refused = farm.tiles.filter((t) => !canTill(farm, t.id));
-    expect(refused).toHaveLength(1);
-    expect(cellOfTile(farm, refused[0].id)).toEqual(
-      pick(farm.placements[animalKey(farm.animals[0].id)]),
-    );
+    expect(farm.tiles.every((t) => canTill(farm, t.id))).toBe(true);
   });
 
   it("fills from the front row so new objects are visible", () => {
@@ -193,8 +190,8 @@ describe("default layout", () => {
     expect(firstFreeCell(backRow)?.row).toBe(PLACE_ROWS - 1);
   });
 
-  it("puts the first animal on a cell of its own", () => {
-    const farm = initialFarm();
+  it("puts a bought animal on a cell of its own", () => {
+    const farm = stocked();
     const animal = farm.placements[animalKey(farm.animals[0].id)];
     expect(animal).toBeDefined();
     const decorCells = farm.decor.map((d) => {
@@ -205,13 +202,6 @@ describe("default layout", () => {
   });
 });
 
-/** Which island cell a tile sits on, by id. */
-const cellOfTile = (farm: FarmState, tileId: string) =>
-  tileCell(farm.cols, farm.rows, farm.tiles.findIndex((t) => t.id === tileId));
-
-/** Just the cell of a placement, without its rotation. */
-const pick = (p: { col: number; row: number }) => ({ col: p.col, row: p.row });
-
 /**
  * A furnished farm. The starting farm is bare now — she puts up her own
  * buildings — so the placement rules are exercised against a farm that has
@@ -220,12 +210,20 @@ const pick = (p: { col: number; row: number }) => ({ col: p.col, row: p.row });
 const settled = (...kinds: string[]): FarmState =>
   kinds.reduce((farm, kind) => addDecor(farm, kind), initialFarm());
 
+/**
+ * A farm with an animal on it. She starts without one — the hen used to be
+ * given, and now it is bought like everything else — so any rule about
+ * animals needs one put there first.
+ */
+const stocked = (farm: FarmState = initialFarm(), species = "kip"): FarmState =>
+  addAnimal(farm, species);
+
 /** The first decoration on a furnished farm, whatever kind it happens to be. */
 const firstDecor = (farm: FarmState) => decorKey(farm.decor[0].id);
 
 describe("farm integration", () => {
-  it("starts with a placement for every decoration and the first chicken", () => {
-    const farm = initialFarm();
+  it("gives everything she puts down a cell of its own", () => {
+    const farm = stocked(settled("boom", "huis"));
     for (const item of farm.decor) {
       expect(farm.placements[decorKey(item.id)]).toBeDefined();
     }
@@ -281,7 +279,7 @@ describe("farm integration", () => {
   it("backfills placements when the save has none at all", () => {
     // The shape a save takes when it skips the migration that adds placements:
     // the field is absent, not empty. Reading it must not throw.
-    const legacy = { ...settled("boom") } as Partial<FarmState> as FarmState;
+    const legacy = { ...stocked(settled("boom")) } as Partial<FarmState> as FarmState;
     delete (legacy as Partial<FarmState>).placements;
     const farm = withPlacements(legacy);
     expect(farm.placements[firstDecor(farm)]).toBeDefined();
@@ -456,7 +454,7 @@ describe("buying animals", () => {
 describe("pens", () => {
   /** A farm with one pen of the given kind, anchored at (0, 2). */
   const withPen = (kind = "wei2") => {
-    const farm = addDecor(settled("boom"), kind);
+    const farm = addDecor(stocked(settled("boom")), kind);
     const pen = farm.decor[farm.decor.length - 1];
     return { farm: moveObject(farm, decorKey(pen.id), 0, 2), penId: pen.id };
   };
@@ -642,7 +640,7 @@ describe("ploughing", () => {
   it("refuses to plough out from under a hen standing on the grass", () => {
     // The meadow covers the island now, so an animal stands on ploughable
     // ground rather than on a ring no plough could reach.
-    const farm = initialFarm();
+    const farm = stocked();
     const place = farm.placements[animalKey(farm.animals[0].id)];
     const under = farm.tiles.find(
       (_t, i) => {
@@ -704,7 +702,7 @@ describe("keeping objects off the farmland", () => {
 
   /** A furnished farm with a row of fields running from cell (1, 1). */
   const withFields = (howMany = 5) => {
-    const base = settled("huis", "boom");
+    const base = stocked(settled("huis", "boom"));
     return {
       ...base,
       tiles: base.tiles.map((t, i) =>
@@ -887,14 +885,14 @@ describe("removing things", () => {
   });
 
   it("takes an animal off the farm", () => {
-    const base = initialFarm();
+    const base = stocked();
     const after = removeObject(base, animalKey(base.animals[0].id));
     expect(after.animals).toHaveLength(0);
     expect(after.placements[animalKey(base.animals[0].id)]).toBeUndefined();
   });
 
   it("turns penned animals back out onto the grass when their pen goes", () => {
-    const farm = addDecor(initialFarm(), "wei2");
+    const farm = addDecor(stocked(), "wei2");
     const pen = farm.decor[farm.decor.length - 1];
     const placed = moveObject(farm, decorKey(pen.id), 0, 2);
     const withAnimal = moveObject(placed, animalKey(placed.animals[0].id), 0, 2);
