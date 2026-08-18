@@ -180,4 +180,33 @@ describe("every quest that ships", () => {
       expect(written.length, `${quest.id} never asks her to write`).toBeGreaterThan(0);
     }
   });
+
+  it("grades the canonical answer of every written node as correct", () => {
+    // Only the canonical answer is worth asserting here. `grade` normalises
+    // both sides and compares, so anything listed in `accept` matches itself
+    // by construction — asserting on those would be a test that cannot fail.
+    // What can genuinely break is a node whose own answer_nl never reaches the
+    // grader, which is what this pins, for every quest rather than just one.
+    for (const quest of QUESTS) {
+      let state = startDialogue(quest);
+      for (let guard = 0; guard < 30 && !state.done; guard++) {
+        const node = currentNode(quest, state)!;
+        if (node.choices) {
+          state = choose(quest, state, 0);
+          continue;
+        }
+        if (!node.answer_nl) break;
+        const result = answer(quest, state, node.answer_nl).result;
+        expect(
+          result.correct,
+          `${quest.id}/${node.id}: its own answer is not accepted`,
+        ).toBe(true);
+        expect(
+          result.typo,
+          `${quest.id}/${node.id}: its own answer only scrapes through as a typo`,
+        ).toBe(false);
+        state = answer(quest, state, node.answer_nl).state;
+      }
+    }
+  });
 });
