@@ -4,7 +4,7 @@
 // still hand the UI a farm it can render.
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { initialFarm, type FarmState } from "../game/farm";
+import { addDecor, initialFarm, type FarmState } from "../game/farm";
 import { ECONOMY, getDecorDef, getSpeciesDef } from "../game/economy";
 import { getQuest } from "../content";
 import { COLOR_REWARD_MUNTEN, getWearable } from "../game/avatar";
@@ -91,7 +91,8 @@ describe("loading a save", () => {
   });
 
   it("migrates a v3 save and places its decor", async () => {
-    const farm = { ...initialFarm() } as Partial<FarmState>;
+    // The starting farm is bare, so give the save something to place.
+    const farm = { ...addDecor(initialFarm(), "huis") } as Partial<FarmState>;
     delete farm.placements;
     writeSave(farm, 3);
 
@@ -121,7 +122,9 @@ describe("loading a save", () => {
 
     const loaded = (await loadStore()).getState().farm;
     expect(loaded.tiles).toHaveLength(initialFarm().tiles.length);
-    expect(loaded.decor.length).toBeGreaterThan(0);
+    // A fresh farm is bare ground: nothing is placed for her.
+    expect(loaded.decor).toEqual([]);
+    expect(loaded.tiles.every((t) => t.kind === "grass")).toBe(true);
   });
 
   it("defaults the first-purchase lists when the save predates them", async () => {
@@ -299,15 +302,20 @@ describe("finishing a quest", () => {
     expect(store.getState().player.completedQuests).toContain("buurvrouw-welkom");
   });
 
-  it("grows the meadow when the town hall sells her land", async () => {
+  it("pays for the town hall visit without moving the ground", async () => {
+    // The meadow is the whole island from the first morning, so there is no
+    // land left for the town hall to sell. The visit pays coins instead.
     const store = await loadStore();
     const before = store.getState().farm.tiles.length;
+    const purse = store.getState().player.munten;
+    const reward = getQuest("gemeente-land-1")!.reward.munten;
 
     const outcome = store.getState().completeQuest("gemeente-land-1");
 
-    expect(outcome.landLevel).toBe(2);
-    expect(store.getState().player.landLevel).toBe(2);
-    expect(store.getState().farm.tiles.length).toBeGreaterThan(before);
+    expect(outcome.landLevel).toBeUndefined();
+    expect(outcome.munten).toBe(reward);
+    expect(store.getState().player.munten).toBe(purse + reward);
+    expect(store.getState().farm.tiles).toHaveLength(before);
   });
 
   it("hands over the promised pasture", async () => {

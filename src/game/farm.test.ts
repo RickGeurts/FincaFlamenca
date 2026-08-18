@@ -3,6 +3,7 @@ import { plant } from "./crops";
 import {
   FARM_COLS,
   FARM_ROWS,
+  addDecor,
   canTill,
   initialFarm,
   migratePlotsToTiles,
@@ -38,9 +39,12 @@ describe("tillTile", () => {
   });
 
   it("refuses the tiles the farmhouse stands on", () => {
-    const farm = initialFarm();
+    // She starts on bare ground, so the house has to be put up before there
+    // is anything standing in the way of the plough.
+    const farm = addDecor(initialFarm(), "huis");
     const covered = farm.tiles.filter((t) => !canTill(farm, t.id));
-    expect(covered.length, "the 2x2 farmhouse should cover some farmland").toBeGreaterThan(0);
+    // Four plots under the 2x2 house, and one under the starting hen.
+    expect(covered).toHaveLength(5);
     for (const tile of covered) expect(tillTile(farm, tile.id)).toBe(farm);
   });
 });

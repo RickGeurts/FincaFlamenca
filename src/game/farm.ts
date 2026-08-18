@@ -1,5 +1,6 @@
 // Farm layout: a grid of grass tiles the player tills into farmable fields,
-// plus animals. Land expansion beyond the grid is quest-gated (M3+).
+// plus animals. The grid covers the whole island: every cell she can see is
+// one she may plough, so where the farm takes shape is her decision.
 
 import { createAnimal, type Animal } from "./animals";
 import type { PlantedCrop } from "./crops";
@@ -24,8 +25,12 @@ import {
   type SpecOf,
 } from "./placement";
 
-export const FARM_COLS = 5;
-export const FARM_ROWS = 6;
+/**
+ * The meadow is the whole island. She decides where a field goes by ploughing
+ * it, so there is no smaller patch of "her" land sitting inside a wider one.
+ */
+export const FARM_COLS = PLACE_COLS;
+export const FARM_ROWS = PLACE_ROWS;
 
 export type TileKind = "grass" | "field";
 
@@ -52,18 +57,13 @@ export interface FarmState {
   placements: Placements;
 }
 
-/** The farm she wakes up to: a back row of buildings and two front corners. */
-const STARTER_DECOR: { kind: string; col: number; row: number }[] = [
-  // The farmhouse is 2x2, so it sits in the corner where it costs the least
-  // farmland: only cell (1,1) of the crop grid ends up underneath it.
-  { kind: "huis", col: 0, row: 0 },
-  { kind: "boom", col: 2, row: 0 },
-  { kind: "kraam", col: 3, row: 0 },
-  { kind: "molen", col: 5, row: 0 },
-  { kind: "boom", col: 6, row: 0 },
-  { kind: "put", col: 0, row: PLACE_ROWS - 1 },
-  { kind: "kar", col: 6, row: PLACE_ROWS - 1 },
-];
+/**
+ * The farm she wakes up to: bare grass. Nothing is placed for her, because
+ * where the house and the fields go is hers to decide — and a farm she built
+ * herself out of words she earned is the whole point. Every one of these is
+ * still in the shop when she wants it.
+ */
+const STARTER_DECOR: { kind: string; col: number; row: number }[] = [];
 
 /** Decor ids are `d1`, `d2`, ... — sequential so saves stay diffable. */
 export function nextDecorId(farm: FarmState): string {
@@ -71,7 +71,7 @@ export function nextDecorId(farm: FarmState): string {
   return `d${Math.max(0, ...used) + 1}`;
 }
 
-/** Starting farm: an open meadow (she tills it herself) and 1 chicken. */
+/** Starting farm: an empty island (she tills it herself) and 1 chicken. */
 export function initialFarm(): FarmState {
   const animals = [createAnimal("a1", "kip")];
   const decor = STARTER_DECOR.map((d, i) => ({ id: `d${i + 1}`, kind: d.kind }));
@@ -79,10 +79,16 @@ export function initialFarm(): FarmState {
   STARTER_DECOR.forEach((d, i) => {
     placements[decorKey(decor[i].id)] = { col: d.col, row: d.row, rot: 0 };
   });
-  // Spec-aware, or the chicken could be tucked under the 2x2 farmhouse.
+  // The first chicken stands where she can see it: middle of the island, a
+  // row back from the front edge. The automatic spot is the front-left corner,
+  // which a narrow screen crops — and on an empty farm it is the only thing
+  // there, so it should not be the one thing half off the screen.
   const starterSpec = specOf({ decor, placements } as FarmState);
+  const HOME = { col: Math.floor(PLACE_COLS / 2), row: PLACE_ROWS - 3 };
   for (const animal of animals) {
-    const cell = firstFreeSpot(placements, ANIMAL_SPEC, undefined, starterSpec);
+    const cell = canPlace(placements, animalKey(animal.id), HOME.col, HOME.row, undefined, starterSpec)
+      ? HOME
+      : firstFreeSpot(placements, ANIMAL_SPEC, undefined, starterSpec);
     if (cell) placements[animalKey(animal.id)] = { ...cell, rot: 0 };
   }
   return {
@@ -437,14 +443,33 @@ export function decorCells(farm: FarmState): Set<string> {
 }
 
 /**
+ * Cells with something standing on them — decorations, pens, and the animals
+ * that are out on the grass rather than shut in a pen.
+ *
+ * Animals count now that the meadow covers the whole island: before, they
+ * grazed on a ring of ground no plough could reach, so the question never came
+ * up. Today the hen is standing on ploughable land like everything else.
+ */
+export function occupiedCells(farm: FarmState): Set<string> {
+  const taken = decorCells(farm);
+  for (const animal of farm.animals ?? []) {
+    if (animal.penId) continue; // Penned animals hold no cell of their own.
+    const place = farm.placements[animalKey(animal.id)];
+    if (place) taken.add(`${place.col},${place.row}`);
+  }
+  return taken;
+}
+
+/**
  * Ploughing is only for open grass. You cannot plough the ground under a barn
- * or inside a pen — the pen is pasture, not a field.
+ * or inside a pen — the pen is pasture, not a field — nor out from under a
+ * hen standing on it.
  */
 export function canTill(farm: FarmState, tileId: string): boolean {
   const index = farm.tiles.findIndex((t) => t.id === tileId);
   if (index < 0 || farm.tiles[index].kind !== "grass") return false;
   const cell = tileCell(farm.cols, farm.rows, index);
-  return !decorCells(farm).has(`${cell.col},${cell.row}`);
+  return !occupiedCells(farm).has(`${cell.col},${cell.row}`);
 }
 
 /** Turn a grass tile into a farmable field. No-op where ploughing isn't allowed. */
@@ -467,15 +492,12 @@ export function untillTile(farm: FarmState, tileId: string): FarmState {
 }
 
 /**
- * How big the meadow is at each level of land. Level 1 is what she starts
- * with; the town hall sells her the rest of the island.
- *
- * Both steps keep the parity of the island grid (7 x 8): a meadow with a
- * different parity would sit half a cell off centre, and everything from
- * ploughing to placing a pen is reckoned in whole cells.
+ * How big the meadow is at each level of land. There is only one size now —
+ * the whole island, from the first morning — but the level stays in the save
+ * and in the quest rewards, because a farm that grew under an older build
+ * still carries its number and must keep loading.
  */
 export const LAND_SIZES: readonly { cols: number; rows: number }[] = [
-  { cols: FARM_COLS, rows: FARM_ROWS },
   { cols: PLACE_COLS, rows: PLACE_ROWS },
 ];
 
@@ -489,9 +511,12 @@ export function landSize(level: number): { cols: number; rows: number } {
  * the old tiles are matched up by their cell on the island, not by position in
  * the array. Get that wrong and her coffee moves house overnight.
  *
- * Newly revealed ground is plain grass, including the cells under the
- * farmhouse and the mill: `canTill` already refuses those, so they simply
- * stay lawn.
+ * This is now a migration rather than a reward: a farm saved when the meadow
+ * was a 5 x 6 patch in the middle is grown out to the full island on load,
+ * and every crop stays on the ground it was planted on.
+ *
+ * Newly revealed ground is plain grass, including the cells under a house or
+ * a mill: `canTill` already refuses those, so they simply stay lawn.
  */
 export function expandFarm(farm: FarmState, level: number): FarmState {
   const size = landSize(level);

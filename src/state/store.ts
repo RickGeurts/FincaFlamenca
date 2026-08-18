@@ -299,7 +299,11 @@ export function normalizePlayer(saved: Player | undefined): Player {
 function normalizeFarm(saved: unknown): FarmState {
   const farm = saved as FarmState | undefined;
   if (!farm || !Array.isArray(farm.tiles) || !Array.isArray(farm.animals)) return initialFarm();
-  return withPlacements(migrateDecorKinds(migrateDecorToItems(farm)));
+  // A farm saved when the meadow was a 5 x 6 patch in the middle is grown out
+  // to the whole island here, which is what makes every cell ploughable on an
+  // old save too. expandFarm matches tiles up by their cell, so nothing she
+  // planted moves.
+  return withPlacements(expandFarm(migrateDecorKinds(migrateDecorToItems(farm)), 1));
 }
 
 function updateTile(farm: FarmState, tileId: string, fn: (tile: Tile) => Tile): FarmState {

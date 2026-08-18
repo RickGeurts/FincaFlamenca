@@ -6,8 +6,8 @@
   "location": "alcaldia",
   "npc_emoji": "🧑‍💼",
   "requires": { "unit": 5 },
-  "reward": { "munten": 150, "unlock": "landLevel:2" },
-  "reviewed": true,
+  "reward": { "munten": 250 },
+  "reviewed": false,
   "nodes": [
     {
       "id": "start",

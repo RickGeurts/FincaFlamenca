@@ -83,7 +83,7 @@ interface Props {
 
 const TILE = 1;
 const MIN_ZOOM = 5;
-const MAX_ZOOM = 22;
+const MAX_ZOOM = 30;
 /** Clicks that moved further than this many pixels are drags, not taps. */
 const TAP_SLOP_PX = 6;
 /** Tilt limits: never fully top-down, never low enough to see under the island. */
@@ -191,7 +191,10 @@ export function FarmScene({
       <Canvas
         shadows
         dpr={[1, 2]}
-        camera={{ position: [0, 11.2, 10.4], fov: 36 }}
+        // Framed for the whole island. The meadow grew from a 5 x 6 patch to
+        // the full 7 x 8, so standing where the old camera stood would put her
+        // nose against the grass.
+        camera={{ position: [0, 16.5, 15.4], fov: 36 }}
       >
         <MapControls
           ref={controls}
@@ -212,10 +215,10 @@ export function FarmScene({
           intensity={1.6}
           castShadow
           shadow-mapSize={[1024, 1024]}
-          shadow-camera-left={-7}
-          shadow-camera-right={7}
-          shadow-camera-top={7}
-          shadow-camera-bottom={-7}
+          shadow-camera-left={-9}
+          shadow-camera-right={9}
+          shadow-camera-top={9}
+          shadow-camera-bottom={-9}
         />
         <Suspense
           fallback={
@@ -1656,7 +1659,6 @@ function TileCell({
     () => getSoilTexture(PLOT_SKIRT_TEXTURE.radius, PLOT_SKIRT_TEXTURE.feather),
     [],
   );
-  const checker = (index + Math.floor(index / farm.cols)) % 2 === 0;
   const [hover, setHover] = useState(false);
   const field = tile.kind === "field";
   // Grass highlights only while ploughing; a field always answers taps.
@@ -1723,13 +1725,28 @@ function TileCell({
       }}
       onPointerOut={() => setHover(false)}
     >
-      {/* Grass stays under every tile; a plot is earth laid on top of it. */}
-      <mesh position={[0, 0.03, 0]} receiveShadow>
-        <boxGeometry args={[TILE * 0.98, 0.06, TILE * 0.98]} />
-        <meshStandardMaterial
-          color={!field && lit ? "#8ade6f" : checker ? "#66cf62" : "#5ec95f"}
-        />
-      </mesh>
+      {/*
+        A plot is earth laid on a raised bed of grass. Plain meadow draws no
+        bed at all — the island's own surface is the grass — so an untouched
+        farm is one unbroken field instead of a grid of waiting slots. Drawing
+        a bed per cell also meant every cell edge met its neighbour's, and
+        those seams showed as lines across the lawn.
+
+        The grid comes back the moment she picks up the plough, because then
+        the cells are what she is aiming at.
+      */}
+      {field || tilling ? (
+        <mesh position={[0, 0.03, 0]} receiveShadow>
+          <boxGeometry args={[TILE * 0.98, 0.06, TILE * 0.98]} />
+          <meshStandardMaterial color={!field && lit ? "#8ade6f" : "#66cf62"} />
+        </mesh>
+      ) : (
+        // Nothing to see, but the cell still has to answer a tap.
+        <mesh position={[0, 0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[TILE, TILE]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+      )}
 
       {field && (
         <>

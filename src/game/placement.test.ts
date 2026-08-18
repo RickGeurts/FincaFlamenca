@@ -73,11 +73,12 @@ describe("grid geometry", () => {
   });
 
   it("puts crop tiles on the same lattice as placements", () => {
-    // Tile 0 is the back-left field; it must line up with a placement cell.
+    // The meadow is the island now, so tile 0 is the island's own back-left
+    // corner rather than one cell in from it.
     const cell = tileCell(FARM_COLS, FARM_ROWS, 0);
-    expect(cell).toEqual({ col: 1, row: 1 });
+    expect(cell).toEqual({ col: 0, row: 0 });
     const world = cellToWorld(cell.col, cell.row);
-    expect(world).toEqual({ x: -2, z: -2.5 });
+    expect(world).toEqual({ x: -3, z: -3.5 });
   });
 
   it("rejects cells outside the grid", () => {
@@ -164,25 +165,32 @@ describe("default layout", () => {
     expect(new Set(cells).size).toBe(cells.length);
   });
 
-  it("keeps the starting decor off the crop tiles", () => {
+  it("hands her a bare island and nothing else", () => {
+    // She places her own house and ploughs her own fields. Anything standing
+    // there on the first morning is ground she did not choose.
     const farm = initialFarm();
-    const cropCells = new Set(
-      Array.from({ length: FARM_COLS * FARM_ROWS }, (_, i) => {
-        const c = tileCell(FARM_COLS, FARM_ROWS, i);
-        return `${c.col},${c.row}`;
-      }),
+    expect(farm.decor).toEqual([]);
+    expect(farm.tiles.every((t) => t.kind === "grass" && !t.crop)).toBe(true);
+    expect(farm.tiles).toHaveLength(PLACE_COLS * PLACE_ROWS);
+  });
+
+  it("lets her plough every cell on the island bar the one the hen is on", () => {
+    const farm = initialFarm();
+    const refused = farm.tiles.filter((t) => !canTill(farm, t.id));
+    expect(refused).toHaveLength(1);
+    expect(cellOfTile(farm, refused[0].id)).toEqual(
+      pick(farm.placements[animalKey(farm.animals[0].id)]),
     );
-    for (const item of farm.decor) {
-      const p = farm.placements[decorKey(item.id)];
-      expect(cropCells.has(`${p.col},${p.row}`)).toBe(false);
-    }
   });
 
   it("fills from the front row so new objects are visible", () => {
-    const decorOnly: Placements = Object.fromEntries(
-      initialFarm().decor.map((d, i) => [decorKey(d.id), { col: i, row: 0, rot: 0 as const }]),
+    const backRow: Placements = Object.fromEntries(
+      Array.from({ length: PLACE_COLS }, (_, col) => [
+        decorKey(`d${col}`),
+        { col, row: 0, rot: 0 as const },
+      ]),
     );
-    expect(firstFreeCell(decorOnly)?.row).toBe(PLACE_ROWS - 1);
+    expect(firstFreeCell(backRow)?.row).toBe(PLACE_ROWS - 1);
   });
 
   it("puts the first animal on a cell of its own", () => {
@@ -197,7 +205,22 @@ describe("default layout", () => {
   });
 });
 
-/** The first decoration on a fresh farm, whatever kind it happens to be. */
+/** Which island cell a tile sits on, by id. */
+const cellOfTile = (farm: FarmState, tileId: string) =>
+  tileCell(farm.cols, farm.rows, farm.tiles.findIndex((t) => t.id === tileId));
+
+/** Just the cell of a placement, without its rotation. */
+const pick = (p: { col: number; row: number }) => ({ col: p.col, row: p.row });
+
+/**
+ * A furnished farm. The starting farm is bare now — she puts up her own
+ * buildings — so the placement rules are exercised against a farm that has
+ * been arranged the way she would arrange it.
+ */
+const settled = (...kinds: string[]): FarmState =>
+  kinds.reduce((farm, kind) => addDecor(farm, kind), initialFarm());
+
+/** The first decoration on a furnished farm, whatever kind it happens to be. */
 const firstDecor = (farm: FarmState) => decorKey(farm.decor[0].id);
 
 describe("farm integration", () => {
@@ -210,37 +233,37 @@ describe("farm integration", () => {
   });
 
   it("moves an object through the store-facing helper", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const farm = moveObject(base, firstDecor(base), 3, 4);
     expect(farm.placements[firstDecor(base)]).toMatchObject({ col: 3, row: 4 });
   });
 
   it("will not drop an object onto a growing crop", () => {
-    const base = initialFarm();
-    // Tile 0 sits at placement cell (1, 1).
+    const base = settled("boom");
+    // Tile 0 sits at placement cell (0, 0).
     const withCrop = {
       ...base,
       tiles: base.tiles.map((t, i) =>
         i === 0 ? { ...t, kind: "field" as const, crop: plant("wortel", 0) } : t,
       ),
     };
-    const moved = moveObject(withCrop, firstDecor(base), 1, 1);
+    const moved = moveObject(withCrop, firstDecor(base), 0, 0);
     expect(moved).toBe(withCrop);
   });
 
   it("refuses to drop an object onto farmland, planted or not", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const tilled = {
       ...base,
       tiles: base.tiles.map((t, i) => (i === 0 ? { ...t, kind: "field" as const } : t)),
     };
-    // Tile 0 is placement cell (1, 1). Farmland stays farmland.
-    expect(moveObject(tilled, firstDecor(base), 1, 1)).toBe(tilled);
-    expect(canDropOn(tilled, firstDecor(base), 1, 1)).toBe(false);
+    // Tile 0 is placement cell (0, 0). Farmland stays farmland.
+    expect(moveObject(tilled, firstDecor(base), 0, 0)).toBe(tilled);
+    expect(canDropOn(tilled, firstDecor(base), 0, 0)).toBe(false);
   });
 
   it("still allows dropping onto open grass beside a field", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const tilled = {
       ...base,
       tiles: base.tiles.map((t, i) => (i === 0 ? { ...t, kind: "field" as const } : t)),
@@ -250,7 +273,7 @@ describe("farm integration", () => {
   });
 
   it("rotates through the store-facing helper", () => {
-    const base = initialFarm();
+    const base = settled("kar");
     const farm = rotateObject(base, firstDecor(base));
     expect(farm.placements[firstDecor(base)].rot).toBe(1);
   });
@@ -258,7 +281,7 @@ describe("farm integration", () => {
   it("backfills placements when the save has none at all", () => {
     // The shape a save takes when it skips the migration that adds placements:
     // the field is absent, not empty. Reading it must not throw.
-    const legacy = { ...initialFarm() } as Partial<FarmState> as FarmState;
+    const legacy = { ...settled("boom") } as Partial<FarmState> as FarmState;
     delete (legacy as Partial<FarmState>).placements;
     const farm = withPlacements(legacy);
     expect(farm.placements[firstDecor(farm)]).toBeDefined();
@@ -266,7 +289,7 @@ describe("farm integration", () => {
   });
 
   it("backfills placements for a save that predates them", () => {
-    const legacy = { ...initialFarm(), placements: {} };
+    const legacy = { ...settled("boom", "struik"), placements: {} };
     const farm = withPlacements(legacy);
     expect(Object.keys(farm.placements).length).toBe(
       legacy.decor.length + legacy.animals.length,
@@ -274,7 +297,7 @@ describe("farm integration", () => {
   });
 
   it("keeps arrangements the player already made", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const arranged = moveObject(base, firstDecor(base), 3, 4);
     expect(withPlacements(arranged).placements[firstDecor(base)]).toMatchObject({
       col: 3,
@@ -283,13 +306,13 @@ describe("farm integration", () => {
   });
 
   it("drops placements for decorations that no longer exist", () => {
-    const base = initialFarm();
+    const base = settled("boom", "struik", "steen");
     const farm = withPlacements({ ...base, decor: base.decor.slice(0, 2) });
     expect(Object.keys(farm.placements)).toHaveLength(2 + base.animals.length);
   });
 
   it("drops placements for animals that no longer exist", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const farm = withPlacements({ ...base, animals: [] });
     expect(Object.keys(farm.placements)).toHaveLength(base.decor.length);
   });
@@ -433,7 +456,7 @@ describe("buying animals", () => {
 describe("pens", () => {
   /** A farm with one pen of the given kind, anchored at (0, 2). */
   const withPen = (kind = "wei2") => {
-    const farm = addDecor(initialFarm(), kind);
+    const farm = addDecor(settled("boom"), kind);
     const pen = farm.decor[farm.decor.length - 1];
     return { farm: moveObject(farm, decorKey(pen.id), 0, 2), penId: pen.id };
   };
@@ -567,12 +590,12 @@ describe("pens", () => {
 });
 
 describe("ploughing", () => {
-  /** Tile index 0 sits at placement cell (1, 1). */
-  const FIRST_TILE_CELL = { col: 1, row: 1 };
+  /** The meadow fills the island, so tile index 0 is cell (0, 0). */
+  const FIRST_TILE_CELL = { col: 0, row: 0 };
 
   it("turns open grass into a field", () => {
     const farm = initialFarm();
-    // Tile 0 sits under the 2x2 farmhouse, so pick the first that is free.
+    // Nothing is standing on a bare island, so every tile is free.
     const open = farm.tiles.find((t) => canTill(farm, t.id))!;
     const after = tillTile(farm, open.id);
     expect(after.tiles.find((t) => t.id === open.id)?.kind).toBe("field");
@@ -588,7 +611,7 @@ describe("ploughing", () => {
   });
 
   it("refuses to plough under a decoration", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const moved = moveObject(base, decorKey(base.decor[0].id), FIRST_TILE_CELL.col, FIRST_TILE_CELL.row);
     expect(canTill(moved, moved.tiles[0].id)).toBe(false);
   });
@@ -597,7 +620,7 @@ describe("ploughing", () => {
     const farm = addDecor(initialFarm(), "wei2");
     const pen = farm.decor[farm.decor.length - 1];
     const placed = moveObject(farm, decorKey(pen.id), FIRST_TILE_CELL.col, FIRST_TILE_CELL.row);
-    // The pen covers (1,1)..(2,2); tile index 3 is at column 4, well clear.
+    // The pen covers (0,0)..(1,1); tile index 3 is at column 3, well clear.
     expect(canTill(placed, placed.tiles[3].id)).toBe(true);
   });
 
@@ -616,6 +639,21 @@ describe("ploughing", () => {
     expect(untillTile(planted, "t1")).toBe(planted);
   });
 
+  it("refuses to plough out from under a hen standing on the grass", () => {
+    // The meadow covers the island now, so an animal stands on ploughable
+    // ground rather than on a ring no plough could reach.
+    const farm = initialFarm();
+    const place = farm.placements[animalKey(farm.animals[0].id)];
+    const under = farm.tiles.find(
+      (_t, i) => {
+        const cell = tileCell(farm.cols, farm.rows, i);
+        return cell.col === place.col && cell.row === place.row;
+      },
+    )!;
+    expect(canTill(farm, under.id)).toBe(false);
+    expect(tillTile(farm, under.id)).toBe(farm);
+  });
+
   it("ignores a tile that isn't there", () => {
     const farm = initialFarm();
     expect(tillTile(farm, "nope")).toBe(farm);
@@ -625,13 +663,13 @@ describe("ploughing", () => {
 
 describe("setting rotation outright", () => {
   it("takes the quarter turn the twist gesture landed on", () => {
-    const base = initialFarm();
+    const base = settled("kar");
     const id = decorKey(base.decor[0].id);
     expect(setObjectRotation(base, id, 3).placements[id].rot).toBe(3);
   });
 
   it("leaves the cell alone", () => {
-    const base = initialFarm();
+    const base = settled("kar");
     const id = decorKey(base.decor[0].id);
     const before = base.placements[id];
     const after = setObjectRotation(base, id, 2).placements[id];
@@ -640,7 +678,7 @@ describe("setting rotation outright", () => {
   });
 
   it("is a no-op when nothing changes", () => {
-    const base = initialFarm();
+    const base = settled("kar");
     const id = decorKey(base.decor[0].id);
     expect(setObjectRotation(base, id, base.placements[id].rot)).toBe(base);
   });
@@ -661,19 +699,24 @@ describe("setting rotation outright", () => {
 });
 
 describe("keeping objects off the farmland", () => {
-  /** A farm with the whole first crop row ploughed. */
+  /** Island cell (1, 1), one in from the back-left corner. */
+  const FIELD_START = PLACE_COLS + 1;
+
+  /** A furnished farm with a row of fields running from cell (1, 1). */
   const withFields = (howMany = 5) => {
-    const base = initialFarm();
+    const base = settled("huis", "boom");
     return {
       ...base,
-      tiles: base.tiles.map((t, i) => (i < howMany ? { ...t, kind: "field" as const } : t)),
+      tiles: base.tiles.map((t, i) =>
+        i >= FIELD_START && i < FIELD_START + howMany ? { ...t, kind: "field" as const } : t,
+      ),
     };
   };
 
   it("blocks every ploughed cell, not just the planted ones", () => {
     const farm = withFields();
     const blocked = blockedCells(farm);
-    for (let i = 0; i < 5; i++) {
+    for (let i = FIELD_START; i < FIELD_START + 5; i++) {
       const cell = tileCell(FARM_COLS, FARM_ROWS, i);
       expect(blocked(cell.col, cell.row), `tile ${i}`).toBe(true);
     }
@@ -740,14 +783,14 @@ describe("the farmhouse", () => {
   });
 
   it("takes all four of its cells on the grid", () => {
-    const base = initialFarm();
+    const base = settled("huis");
     const house = base.decor.find((d) => d.kind === "huis")!;
     const cells = footprintOf(base.placements[decorKey(house.id)], specForKind("huis"));
     expect(cells).toHaveLength(4);
   });
 
   it("blocks every cell it stands on, not just its anchor", () => {
-    const base = initialFarm();
+    const base = settled("huis", "boom");
     const house = base.decor.find((d) => d.kind === "huis")!;
     const moved = moveObject(base, decorKey(house.id), 2, 2);
     // It now covers (2,2)..(3,3); a tree must not fit on any of those.
@@ -759,25 +802,32 @@ describe("the farmhouse", () => {
   });
 
   it("cannot hang off the edge of the island", () => {
-    const base = initialFarm();
+    const base = settled("huis");
     const house = decorKey(base.decor.find((d) => d.kind === "huis")!.id);
     expect(moveObject(base, house, PLACE_COLS - 1, 0)).toBe(base);
     expect(moveObject(base, house, 0, PLACE_ROWS - 1)).toBe(base);
   });
 
-  it("costs some farmland, which is unavoidable on a grid this size", () => {
-    const farm = initialFarm();
-    const covered = farm.tiles.filter((t) => !canTill(farm, t.id));
-    // Two adjacent columns always fall inside the crop area, so a 2x2 building
-    // eats at least one plot wherever it stands.
-    expect(covered.length).toBeGreaterThan(0);
-    expect(covered.length).toBeLessThanOrEqual(2);
+  it("costs exactly the four plots it stands on", () => {
+    const farm = settled("huis");
+    const house = farm.placements[decorKey(farm.decor.find((d) => d.kind === "huis")!.id)];
+    const under = new Set(
+      footprintOf(house, specForKind("huis")).map((c) => `${c.col},${c.row}`),
+    );
+    const refused = farm.tiles.filter((t, i) => {
+      const cell = tileCell(farm.cols, farm.rows, i);
+      return under.has(`${cell.col},${cell.row}`) && !canTill(farm, t.id);
+    });
+    // Every cell on the island is ploughable now, so a 2x2 building costs its
+    // own four plots — never fewer by standing on ground that was not
+    // farmland to begin with.
+    expect(refused).toHaveLength(4);
   });
 });
 
 describe("a save whose objects outgrew their spot", () => {
   it("re-places a house that no longer fits where it stood", () => {
-    const base = initialFarm();
+    const base = settled("huis", "boom");
     const house = base.decor.find((d) => d.kind === "huis")!;
     const tree = base.decor.find((d) => d.kind === "boom")!;
 
@@ -803,7 +853,7 @@ describe("a save whose objects outgrew their spot", () => {
   });
 
   it("leaves nothing overlapping after the repair", () => {
-    const base = initialFarm();
+    const base = settled("huis", "boom");
     const house = base.decor.find((d) => d.kind === "huis")!;
     const legacy: FarmState = {
       ...base,
@@ -826,7 +876,7 @@ describe("a save whose objects outgrew their spot", () => {
 
 describe("removing things", () => {
   it("takes a decoration off the farm and frees its cell", () => {
-    const base = initialFarm();
+    const base = settled("boom");
     const id = decorKey(base.decor[0].id);
     const cell = base.placements[id];
     const after = removeObject(base, id);
