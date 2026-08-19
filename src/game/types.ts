@@ -5,6 +5,8 @@ import { STARTER_ITEMS, defaultAvatar } from "./avatar";
 export type { AvatarConfig };
 
 export interface Player {
+  /** Her name. The game is hers, so it says so. */
+  name: string;
   munten: number;
   xp: number;
   streak: Streak;

@@ -153,6 +153,16 @@ export const STRINGS = {
   welcomeStart: "Empezar 🌱",
   welcomeSkip: "Saltar",
 
+  // El cumpleaños — se muestra una sola vez, el día que la finca es suya
+  birthdayTitle: (name: string) => `¡Feliz cumpleaños, ${name}!`,
+  birthdayNl: "Gefeliciteerd met je verjaardag!",
+  birthdayNlHint: "Así se felicita en neerlandés. Tu primera palabra de hoy 💚",
+  birthdayBody:
+    "Esta finca es tu regalo. Es tuya entera: la tierra sin arar, los animales que elijas, la casa que construyas y cada palabra en neerlandés que te lleves de aquí.",
+  birthdayBody2: "No hay prisa, no se pierde nada y nadie te va a corregir. Sólo tú, tu finca y un idioma nuevo.",
+  birthdaySigned: "Con todo mi cariño 💚",
+  birthdayStart: "Abrir mi finca 🌻",
+
   // Mi look — el armario
   myLook: "Mi look",
   myLookNl: "mijn outfit",

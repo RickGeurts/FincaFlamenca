@@ -24,6 +24,8 @@ import { QuestPlace } from "../ui/quests/QuestPlace";
 import { LookScreen } from "../ui/avatar/LookScreen";
 import { Celebration } from "../ui/Celebration";
 import { Onboarding } from "../ui/Onboarding";
+import { Birthday } from "../ui/Birthday";
+import { isBirthday } from "../content/player";
 import { Stage } from "./Stage";
 
 type View =
@@ -51,11 +53,22 @@ export function Shell() {
   const reviveWiltedCrops = useGameStore((s) => s.reviveWiltedCrops);
   const onboarded = useGameStore((s) => s.onboarded);
   const finishOnboarding = useGameStore((s) => s.finishOnboarding);
+  const birthdayGreeted = useGameStore((s) => s.birthdayGreeted);
+  const finishBirthday = useGameStore((s) => s.finishBirthday);
 
   const dueCount = useMemo(
     () => dueWords(Object.values(words), Date.now()).length,
     [words],
   );
+
+  // The gift comes before the instructions: on the day, and once ever.
+  if (hydrated && !birthdayGreeted && isBirthday(Date.now())) {
+    return (
+      <Stage>
+        <Birthday name={player.name} onDone={finishBirthday} />
+      </Stage>
+    );
+  }
 
   if (hydrated && !onboarded) {
     return (

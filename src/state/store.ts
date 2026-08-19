@@ -47,6 +47,7 @@ import { SESSION_MAX } from "../learning/lesson";
 import { getQuest, VOCAB } from "../content";
 import { parseUnlock, payoutFor } from "../quests/quests";
 import { dateString } from "../utils/time";
+import { PLAYER_NAME } from "../content/player";
 import { setPreferredVoice } from "../utils/speak";
 import { setMuted } from "../utils/sfx";
 
@@ -112,6 +113,9 @@ interface GameState {
   /** She has seen the welcome. Persisted: it is shown exactly once. */
   onboarded: boolean;
   finishOnboarding(): void;
+  /** She has been wished a happy birthday. Persisted: it happens once, ever. */
+  birthdayGreeted: boolean;
+  finishBirthday(): void;
   hydrated: boolean;
   /** Dev only, not persisted: crops grow in 10 seconds. */
   devFast: boolean;
@@ -260,6 +264,7 @@ const idbStorage: StateStorage = {
 };
 
 export const initialPlayer = (): Player => ({
+  name: PLAYER_NAME,
   munten: ECONOMY.START_MUNTEN,
   xp: 0,
   streak: EMPTY_STREAK,
@@ -285,6 +290,8 @@ export function normalizePlayer(saved: Player | undefined): Player {
     ...base,
     ...saved,
     avatar: wardrobeReady ? saved.avatar : base.avatar,
+    // An empty or missing name falls back to hers rather than greeting nobody.
+    name: saved.name || base.name,
     ownedItems: saved.ownedItems ?? base.ownedItems,
     usedColors: saved.usedColors ?? [],
   };
@@ -321,12 +328,17 @@ export const useGameStore = create<GameState>()(
       purchasedDecor: [],
       purchasedAnimals: [],
       onboarded: false,
+      birthdayGreeted: false,
       hydrated: false,
       devFast: import.meta.env.DEV,
 
       place: "finca",
       farmTool: "none",
       marketCategory: "seeds",
+
+      finishBirthday() {
+        setState({ birthdayGreeted: true });
+      },
 
       finishOnboarding() {
         setState({ onboarded: true });
@@ -755,6 +767,7 @@ export const useGameStore = create<GameState>()(
       partialize: (s) => ({
         place: s.place,
         onboarded: s.onboarded,
+        birthdayGreeted: s.birthdayGreeted,
         player: s.player,
         words: s.words,
         exposures: s.exposures,

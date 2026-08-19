@@ -9,6 +9,7 @@ import { ECONOMY, getDecorDef, getSpeciesDef } from "../game/economy";
 import { getQuest } from "../content";
 import { COLOR_REWARD_MUNTEN, getWearable } from "../game/avatar";
 import { SAVE_VERSION, exportSave, parseSave } from "./store";
+import { PLAYER_NAME } from "../content/player";
 import { getSyncEmail } from "./sync";
 import { animalKey, decorKey } from "../game/placement";
 
@@ -493,6 +494,41 @@ describe("the welcome", () => {
   });
 });
 
+
+describe("the birthday greeting", () => {
+  beforeEach(() => mem.clear());
+
+  it("is waiting for somebody who has never played", async () => {
+    const store = await loadStore();
+    expect(store.getState().birthdayGreeted).toBe(false);
+  });
+
+  it("is over for good once she has been wished", async () => {
+    const store = await loadStore();
+    store.getState().finishBirthday();
+    expect(store.getState().birthdayGreeted).toBe(true);
+  });
+
+  it("survives a reload, so it never greets her twice", async () => {
+    const store = await loadStore();
+    store.getState().finishBirthday();
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    const fresh = await loadStore();
+    expect(fresh.getState().birthdayGreeted).toBe(true);
+  });
+
+  it("knows her name from the first load", async () => {
+    const store = await loadStore();
+    expect(store.getState().player.name).toBe(PLAYER_NAME);
+  });
+
+  it("keeps her name on a save written before names existed", async () => {
+    writeSave(initialFarm(), SAVE_VERSION);
+    const store = await loadStore();
+    expect(store.getState().player.name).toBe(PLAYER_NAME);
+  });
+});
 describe("starting over (dev tools)", () => {
   beforeEach(() => mem.clear());
 
