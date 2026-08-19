@@ -25,7 +25,7 @@ import { LookScreen } from "../ui/avatar/LookScreen";
 import { Celebration } from "../ui/Celebration";
 import { Onboarding } from "../ui/Onboarding";
 import { Birthday } from "../ui/Birthday";
-import { isBirthday } from "../content/player";
+import { isBirthdayWindow } from "../content/player";
 import { Stage } from "./Stage";
 
 type View =
@@ -61,8 +61,8 @@ export function Shell() {
     [words],
   );
 
-  // The gift comes before the instructions: on the day, and once ever.
-  if (hydrated && !birthdayGreeted && isBirthday(Date.now())) {
+  // The gift comes before the instructions: around the day, and once ever.
+  if (hydrated && !birthdayGreeted && isBirthdayWindow(Date.now())) {
     return (
       <Stage>
         <Birthday name={player.name} onDone={finishBirthday} />
