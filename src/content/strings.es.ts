@@ -160,7 +160,7 @@ export const STRINGS = {
   birthdayBody:
     "Esta finca es tu regalo. Es tuya entera: la tierra sin arar, los animales que elijas, la casa que construyas y cada palabra en neerlandés que te lleves de aquí.",
   birthdayBody2: "No hay prisa, no se pierde nada y nadie te va a corregir. Sólo tú, tu finca y un idioma nuevo.",
-  birthdaySigned: "Con todo mi cariño 💚",
+  birthdaySigned: "Con todo mi cariño, Rick 💚",
   birthdayStart: "Abrir mi finca 🌻",
 
   // Mi look — el armario
